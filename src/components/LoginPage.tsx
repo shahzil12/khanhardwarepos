@@ -7,19 +7,15 @@ import {
   User, 
   Eye, 
   EyeOff, 
-  ShieldCheck, 
   ArrowRight, 
-  Sparkles,
-  CreditCard,
-  Truck,
-  Sun,
-  Moon
+  Sun, 
+  Moon 
 } from 'lucide-react';
-import { useStore, demoUsers } from '@/store/useStore';
+import { useStore } from '@/store/useStore';
 import confetti from 'canvas-confetti';
 
 export default function LoginPage() {
-  const { login, loginAsDemo, themeMode, toggleThemeMode } = useStore();
+  const { login, themeMode, toggleThemeMode } = useStore();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -44,17 +40,8 @@ export default function LoginPage() {
         origin: { y: 0.6 }
       });
     } else {
-      setErrorMessage('Invalid username or password. Try demo buttons below.');
+      setErrorMessage('Invalid username or password. Please check your credentials.');
     }
-  };
-
-  const handleDemoClick = (role: 'Admin' | 'Cashier' | 'Driver') => {
-    loginAsDemo(role);
-    confetti({
-      particleCount: 120,
-      spread: 80,
-      origin: { y: 0.6 }
-    });
   };
 
   return (
@@ -130,7 +117,7 @@ export default function LoginPage() {
           </div>
         )}
 
-        {/* Standard Form */}
+        {/* Sign-In Form */}
         <form onSubmit={handleSubmit} className="space-y-4 text-xs sm:text-sm">
           
           <div>
@@ -141,7 +128,7 @@ export default function LoginPage() {
               <User className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4.5 w-4.5 text-slate-400" />
               <input
                 type="text"
-                placeholder="Enter username (e.g. admin)"
+                placeholder="Enter your username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 className={`w-full pl-10 pr-4 py-2.5 border rounded-xl font-semibold transition-all focus:outline-none shadow-sm ${
@@ -161,7 +148,7 @@ export default function LoginPage() {
               <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4.5 w-4.5 text-slate-400" />
               <input
                 type={showPassword ? 'text' : 'password'}
-                placeholder="Enter password (e.g. admin123)"
+                placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className={`w-full pl-10 pr-10 py-2.5 border rounded-xl font-semibold transition-all focus:outline-none shadow-sm ${
@@ -192,66 +179,6 @@ export default function LoginPage() {
             <ArrowRight className="h-4.5 w-4.5" />
           </button>
         </form>
-
-        {/* Quick Demo Logins Section */}
-        <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="text-xs font-extrabold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
-              <Sparkles className="h-3.5 w-3.5 text-amber-500" />
-              1-Click Demo Login
-            </span>
-            <span className="text-[10px] text-slate-400">Select Role</span>
-          </div>
-
-          <div className="grid grid-cols-3 gap-2">
-            <button
-              onClick={() => handleDemoClick('Admin')}
-              className={`py-2 px-2 border rounded-xl flex flex-col items-center gap-1 transition-all text-xs font-bold shadow-sm ${
-                isDark 
-                  ? 'bg-slate-800/80 hover:bg-slate-800 border-cyan-500/40 text-cyan-400' 
-                  : 'bg-orange-50 hover:bg-orange-100 border-orange-200 text-orange-700'
-              }`}
-            >
-              <ShieldCheck className="h-4 w-4" />
-              <span>Admin</span>
-            </button>
-
-            <button
-              onClick={() => handleDemoClick('Cashier')}
-              className={`py-2 px-2 border rounded-xl flex flex-col items-center gap-1 transition-all text-xs font-bold shadow-sm ${
-                isDark 
-                  ? 'bg-slate-800/80 hover:bg-slate-800 border-slate-700 text-slate-200' 
-                  : 'bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-800'
-              }`}
-            >
-              <CreditCard className="h-4 w-4" />
-              <span>Cashier</span>
-            </button>
-
-            <button
-              onClick={() => handleDemoClick('Driver')}
-              className={`py-2 px-2 border rounded-xl flex flex-col items-center gap-1 transition-all text-xs font-bold shadow-sm ${
-                isDark 
-                  ? 'bg-slate-800/80 hover:bg-slate-800 border-slate-700 text-slate-200' 
-                  : 'bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-800'
-              }`}
-            >
-              <Truck className="h-4 w-4" />
-              <span>Driver</span>
-            </button>
-          </div>
-        </div>
-
-        {/* Demo Credentials Reference Table */}
-        <div className="mt-4 p-3 rounded-2xl bg-slate-100 dark:bg-slate-950/60 border border-slate-200/80 dark:border-slate-800/80 text-[10px] text-slate-500 dark:text-slate-400 space-y-1">
-          <p className="font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300 mb-1">Pre-configured Accounts:</p>
-          {demoUsers.map((u) => (
-            <div key={u.id} className="flex justify-between font-mono">
-              <span>{u.role}: <strong>{u.username}</strong></span>
-              <span>pass: <strong>{u.password}</strong></span>
-            </div>
-          ))}
-        </div>
 
       </div>
     </div>

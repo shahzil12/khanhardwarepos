@@ -89,7 +89,7 @@ export interface UserAccount {
   avatar?: string;
 }
 
-export const demoUsers: (UserAccount & { password: string })[] = [
+export const registeredUsers: (UserAccount & { password: string })[] = [
   { id: 'u1', username: 'admin', password: 'admin123', name: 'Shahzil Ahmed (Owner)', role: 'Admin' },
   { id: 'u2', username: 'cashier', password: 'cashier123', name: 'Muhammad Bilal (POS)', role: 'Cashier' },
   { id: 'u3', username: 'driver', password: 'driver123', name: 'Zeeshan Khan (Delivery)', role: 'Driver' },
@@ -107,7 +107,6 @@ interface AppState {
   
   // Auth actions
   login: (username: string, password: string) => boolean;
-  loginAsDemo: (role: 'Admin' | 'Cashier' | 'Driver') => void;
   logout: () => void;
   
   // Cylinder actions
@@ -358,7 +357,7 @@ export const useStore = create<AppState>()(
       cart: [],
       workers: initialWorkers,
       themeMode: 'light',
-      currentUser: demoUsers[0],
+      currentUser: registeredUsers[0],
       isAuthenticated: true,
 
       // Cylinder status changes
@@ -678,7 +677,7 @@ export const useStore = create<AppState>()(
       },
 
       login: (username, password) => {
-        const found = demoUsers.find(
+        const found = registeredUsers.find(
           (u) => u.username.toLowerCase() === username.toLowerCase() && u.password === password
         );
         if (found) {
@@ -687,12 +686,6 @@ export const useStore = create<AppState>()(
           return true;
         }
         return false;
-      },
-
-      loginAsDemo: (role) => {
-        const found = demoUsers.find((u) => u.role === role) || demoUsers[0];
-        const { password: _, ...user } = found;
-        set({ currentUser: user, isAuthenticated: true });
       },
 
       logout: () => {
