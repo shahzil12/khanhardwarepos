@@ -81,6 +81,20 @@ export interface SalesTransaction {
   createdAt: string;
 }
 
+export interface UserAccount {
+  id: string;
+  username: string;
+  name: string;
+  role: 'Admin' | 'Cashier' | 'Driver';
+  avatar?: string;
+}
+
+export const demoUsers: (UserAccount & { password: string })[] = [
+  { id: 'u1', username: 'admin', password: 'admin123', name: 'Shahzil Ahmed (Owner)', role: 'Admin' },
+  { id: 'u2', username: 'cashier', password: 'cashier123', name: 'Muhammad Bilal (POS)', role: 'Cashier' },
+  { id: 'u3', username: 'driver', password: 'driver123', name: 'Zeeshan Khan (Delivery)', role: 'Driver' },
+];
+
 interface AppState {
   cylinders: Cylinder[];
   products: Product[];
@@ -88,6 +102,13 @@ interface AppState {
   cart: CartItem[];
   workers: Worker[];
   themeMode: 'light' | 'dark';
+  currentUser: UserAccount | null;
+  isAuthenticated: boolean;
+  
+  // Auth actions
+  login: (username: string, password: string) => boolean;
+  loginAsDemo: (role: 'Admin' | 'Cashier' | 'Driver') => void;
+  logout: () => void;
   
   // Cylinder actions
   issueCylinder: (serialNumber: string, details: CustomerDetails) => boolean;
@@ -337,6 +358,8 @@ export const useStore = create<AppState>()(
       cart: [],
       workers: initialWorkers,
       themeMode: 'light',
+      currentUser: demoUsers[0],
+      isAuthenticated: true,
 
       // Cylinder status changes
       issueCylinder: (serialNumber, details) => {
@@ -652,6 +675,28 @@ export const useStore = create<AppState>()(
         set((state) => ({
           themeMode: state.themeMode === 'light' ? 'dark' : 'light'
         }));
+      },
+
+      login: (username, password) => {
+        const found = demoUsers.find(
+          (u) => u.username.toLowerCase() === username.toLowerCase() && u.password === password
+        );
+        if (found) {
+          const { password: _, ...user } = found;
+          set({ currentUser: user, isAuthenticated: true });
+          return true;
+        }
+        return false;
+      },
+
+      loginAsDemo: (role) => {
+        const found = demoUsers.find((u) => u.role === role) || demoUsers[0];
+        const { password: _, ...user } = found;
+        set({ currentUser: user, isAuthenticated: true });
+      },
+
+      logout: () => {
+        set({ currentUser: null, isAuthenticated: false });
       }
     }),
     {
