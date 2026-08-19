@@ -715,9 +715,9 @@ function CylinderPageContent() {
 
       {/* 1. ISSUE CYLINDER MODAL */}
       {isIssueModalOpen && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className={`border rounded-2xl w-full max-w-md p-6 relative overflow-hidden shadow-2xl animate-scale-in transition-colors duration-200 ${
-            isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 -800'
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
+          <div className={`border rounded-2xl w-full max-w-md p-6 relative max-h-[90vh] overflow-y-auto shadow-2xl animate-scale-in transition-colors duration-200 ${
+            isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
           }`}>
             <button 
               onClick={() => setIsIssueModalOpen(false)}
@@ -903,8 +903,8 @@ function CylinderPageContent() {
 
       {/* 2. RECEIVE RETURN / FAST RETURN MODAL */}
       {isReturnModalOpen && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className={`border rounded-2xl w-full max-w-md p-6 relative overflow-hidden shadow-2xl animate-scale-in transition-colors duration-200 ${
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
+          <div className={`border rounded-2xl w-full max-w-md p-6 relative max-h-[90vh] overflow-y-auto shadow-2xl animate-scale-in transition-colors duration-200 ${
             isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
           }`}>
             <button 
@@ -1022,8 +1022,8 @@ function CylinderPageContent() {
 
       {/* 3. ADD CYLINDER MODAL */}
       {isAddCylinderModalOpen && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className={`border rounded-2xl w-full max-w-md p-6 relative overflow-hidden shadow-2xl animate-scale-in transition-colors duration-200 ${
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
+          <div className={`border rounded-2xl w-full max-w-md p-6 relative max-h-[90vh] overflow-y-auto shadow-2xl animate-scale-in transition-colors duration-200 ${
             isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
           }`}>
             <button 
@@ -1111,7 +1111,7 @@ function CylinderPageContent() {
 
       {/* 4. WORKERS & DRIVERS REGISTRY MODAL */}
       {isWorkerModalOpen && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto">
           <div className={`border rounded-2xl w-full max-w-xl p-6 relative shadow-2xl flex flex-col justify-between max-h-[90vh] overflow-y-auto animate-scale-in transition-colors duration-200 ${
             isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
           }`}>

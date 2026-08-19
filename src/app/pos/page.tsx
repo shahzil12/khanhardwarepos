@@ -523,7 +523,7 @@ export default function POSPage() {
       {activeReceipt && (
         <div className="fixed inset-0 bg-slate-900/85 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto print:static print:bg-white print:p-0">
           
-          <div className={`border rounded-2xl w-full max-w-sm p-6 relative shadow-2xl flex flex-col justify-between print:border-0 print:shadow-none print:w-full print:max-w-none print:bg-white print:p-0 ${
+          <div className={`border rounded-2xl w-full max-w-sm p-6 relative max-h-[90vh] overflow-y-auto shadow-2xl flex flex-col justify-between print:border-0 print:shadow-none print:w-full print:max-w-none print:bg-white print:p-0 ${
             isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
           }`}>
             
