@@ -715,8 +715,8 @@ function CylinderPageContent() {
 
       {/* 1. ISSUE CYLINDER MODAL */}
       {isIssueModalOpen && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-center py-6">
-          <div className={`border rounded-2xl w-full max-w-md my-auto relative shadow-2xl flex flex-col max-h-[85vh] animate-scale-in transition-colors duration-200 ${
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-start py-8 sm:py-12">
+          <div className={`border rounded-2xl w-full max-w-md relative shadow-2xl flex flex-col max-h-[80vh] sm:max-h-[85vh] animate-scale-in transition-colors duration-200 ${
             isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
           }`}>
             {/* Pinned Modal Header */}
@@ -912,8 +912,8 @@ function CylinderPageContent() {
 
       {/* 2. RECEIVE RETURN / FAST RETURN MODAL */}
       {isReturnModalOpen && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-center py-6">
-          <div className={`border rounded-2xl w-full max-w-md my-auto relative shadow-2xl flex flex-col max-h-[85vh] animate-scale-in transition-colors duration-200 ${
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-start py-8 sm:py-12">
+          <div className={`border rounded-2xl w-full max-w-md relative shadow-2xl flex flex-col max-h-[80vh] sm:max-h-[85vh] animate-scale-in transition-colors duration-200 ${
             isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
           }`}>
             {/* Pinned Header */}
@@ -1040,8 +1040,8 @@ function CylinderPageContent() {
 
       {/* 3. ADD CYLINDER MODAL */}
       {isAddCylinderModalOpen && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-center py-6">
-          <div className={`border rounded-2xl w-full max-w-md my-auto relative shadow-2xl flex flex-col max-h-[85vh] animate-scale-in transition-colors duration-200 ${
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-start py-8 sm:py-12">
+          <div className={`border rounded-2xl w-full max-w-md relative shadow-2xl flex flex-col max-h-[80vh] sm:max-h-[85vh] animate-scale-in transition-colors duration-200 ${
             isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
           }`}>
             {/* Pinned Header */}
@@ -1138,8 +1138,8 @@ function CylinderPageContent() {
 
       {/* 4. WORKERS & DRIVERS REGISTRY MODAL */}
       {isWorkerModalOpen && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-center py-6">
-          <div className={`border rounded-2xl w-full max-w-xl my-auto relative shadow-2xl flex flex-col max-h-[85vh] animate-scale-in transition-colors duration-200 ${
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-start py-8 sm:py-12">
+          <div className={`border rounded-2xl w-full max-w-xl relative shadow-2xl flex flex-col max-h-[80vh] sm:max-h-[85vh] animate-scale-in transition-colors duration-200 ${
             isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
           }`}>
             {/* Pinned Header */}
