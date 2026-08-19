@@ -20,7 +20,8 @@ import {
   ShieldCheck,
   Plus,
   Truck,
-  UserCheck
+  UserCheck,
+  CheckCircle
 } from 'lucide-react';
 import { useStore, Cylinder, CylinderStatus, CustomerDetails } from '@/store/useStore';
 import confetti from 'canvas-confetti';
@@ -258,12 +259,30 @@ function CylinderPageContent() {
     const success = settleDriverCash(serialNumber, amount);
     if (success) {
       confetti({
-        particleCount: 70,
-        spread: 50,
+        particleCount: 50,
+        spread: 40,
         origin: { y: 0.6 }
       });
     } else {
       alert('Failed to settle cash.');
+    }
+  };
+
+  const handleSendToRefill = (serialNumber: string) => {
+    const success = sendToRefill(serialNumber);
+    if (success) {
+      confetti({ particleCount: 50, spread: 40 });
+    } else {
+      alert('Failed to send cylinder to refill.');
+    }
+  };
+
+  const handleCompleteRefill = (serialNumber: string) => {
+    const success = completeRefill(serialNumber);
+    if (success) {
+      confetti({ particleCount: 60, spread: 50 });
+    } else {
+      alert('Failed to mark refill complete.');
     }
   };
 
