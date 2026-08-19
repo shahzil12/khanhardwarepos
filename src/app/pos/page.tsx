@@ -16,7 +16,10 @@ import {
   History,
   RotateCcw,
   Printer,
-  X
+  X,
+  Pause,
+  Play,
+  BookOpen
 } from 'lucide-react';
 import { useStore, Product } from '@/store/useStore';
 import confetti from 'canvas-confetti';
@@ -26,10 +29,15 @@ export default function POSPage() {
     products, 
     sales, 
     cart, 
+    heldCarts,
+    khatas,
     addToCart: storeAddToCart, 
     removeFromCart, 
     updateCartQuantity, 
     clearCart: storeClearCart, 
+    holdCart,
+    resumeCart,
+    deleteHeldCart,
     checkoutCart,
     refundTransaction,
     themeMode
@@ -44,9 +52,15 @@ export default function POSPage() {
   const [historyFilter, setHistoryFilter] = useState<'All' | 'Completed' | 'Refunded'>('All');
   const [historySearch, setHistorySearch] = useState('');
 
+  // Hold Cart Modal State
+  const [isHoldModalOpen, setIsHoldModalOpen] = useState(false);
+  const [holdNote, setHoldNote] = useState('');
+  const [isHeldListOpen, setIsHeldListOpen] = useState(false);
+
   // Payment Details
-  const [paymentMethod, setPaymentMethod] = useState<'Cash' | 'Card' | 'Wallet'>('Cash');
+  const [paymentMethod, setPaymentMethod] = useState<'Cash' | 'Card' | 'Wallet' | 'Customer Khata'>('Cash');
   const [cashReceived, setCashReceived] = useState('');
+  const [selectedKhataId, setSelectedKhataId] = useState('');
   
   // Active receipt for post-checkout modal rendering
   const [activeReceipt, setActiveReceipt] = useState<any>(null);
@@ -172,8 +186,13 @@ export default function POSPage() {
       return;
     }
 
+    if (paymentMethod === 'Customer Khata' && !selectedKhataId) {
+      alert('Please select a Customer Khata credit account');
+      return;
+    }
+
     // Perform transaction checkout (0 discount, 17% tax rate)
-    const newSale = checkoutCart(0, 17, paymentMethod);
+    const newSale = checkoutCart(0, 17, paymentMethod, selectedKhataId || undefined);
 
     if (newSale) {
       // Fire confetti celebrate
@@ -215,7 +234,7 @@ export default function POSPage() {
 
       setActiveReceipt(receiptData);
     } else {
-      alert('Checkout failed. Please verify stock levels.');
+      alert('Checkout failed. Please verify stock levels or Khata credit limit.');
     }
   };
 
@@ -248,6 +267,16 @@ export default function POSPage() {
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
+          {heldCarts.length > 0 && (
+            <button
+              onClick={() => setIsHeldListOpen(true)}
+              className="flex items-center gap-2 px-3 py-2 bg-amber-500 text-white font-bold rounded-xl text-xs shadow-md animate-pulse"
+            >
+              <Play className="h-4 w-4" />
+              Held Carts ({heldCarts.length})
+            </button>
+          )}
+
           <button
             onClick={() => setIsHistoryModalOpen(true)}
             className={`flex items-center gap-2 px-4 py-2 border rounded-xl text-xs sm:text-sm font-bold transition-all shadow-sm ${
@@ -439,14 +468,25 @@ export default function POSPage() {
                 <Receipt className={`h-5 w-5 ${isDark ? 'text-cyan-400' : 'text-blue-600'}`} />
                 Checkout Cart
               </h3>
-              {cart.length > 0 && (
-                <button 
-                  onClick={clearCart}
-                  className="text-slate-500 hover:text-red-500 text-xs font-bold transition-colors"
-                >
-                  Clear All
-                </button>
-              )}
+              <div className="flex items-center gap-2">
+                {cart.length > 0 && (
+                  <button
+                    onClick={() => setIsHoldModalOpen(true)}
+                    className="flex items-center gap-1 text-amber-600 hover:text-amber-500 text-xs font-bold transition-colors"
+                  >
+                    <Pause className="h-3.5 w-3.5" />
+                    Hold Cart
+                  </button>
+                )}
+                {cart.length > 0 && (
+                  <button 
+                    onClick={clearCart}
+                    className="text-slate-500 hover:text-red-500 text-xs font-bold transition-colors"
+                  >
+                    Clear All
+                  </button>
+                )}
+              </div>
             </div>
 
             {/* Cart Items List */}
@@ -463,7 +503,7 @@ export default function POSPage() {
                     <div className="space-y-0.5 pr-2 truncate">
                       <p className={`font-bold truncate ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>{item.product.name}</p>
                       <p className="text-[9px] text-slate-400 font-semibold font-mono uppercase tracking-wider">
-                        Price: {formatCurrency(item.product.retailPrice)} • SKU: {item.product.barcode}
+                        Price: {formatCurrency(item.product.retailPrice)} • Unit: {item.product.unit || 'piece'}
                       </p>
                     </div>
 
@@ -523,11 +563,12 @@ export default function POSPage() {
               </div>
 
               {/* Payment Method Selector */}
-              <div className={`grid grid-cols-3 gap-2 border-t pt-3.5 ${isDark ? 'border-slate-800' : 'border-slate-200'}`}>
+              <div className={`grid grid-cols-4 gap-1.5 border-t pt-3.5 ${isDark ? 'border-slate-800' : 'border-slate-200'}`}>
                 {[
                   { name: 'Cash', icon: Coins },
                   { name: 'Card', icon: CreditCard },
-                  { name: 'Wallet', icon: Wallet }
+                  { name: 'Wallet', icon: Wallet },
+                  { name: 'Customer Khata', icon: BookOpen }
                 ].map((p) => {
                   const Icon = p.icon;
                   return (
@@ -550,6 +591,25 @@ export default function POSPage() {
                   );
                 })}
               </div>
+
+              {/* Customer Khata Selector */}
+              {paymentMethod === 'Customer Khata' && (
+                <div className={`space-y-2 border-t pt-3 animate-fade-in ${isDark ? 'border-slate-800' : 'border-slate-200'}`}>
+                  <label className="block text-slate-500 font-bold">Select Khata Credit Account:</label>
+                  <select
+                    value={selectedKhataId}
+                    onChange={(e) => setSelectedKhataId(e.target.value)}
+                    className={`w-full px-3 py-2 border rounded-xl font-bold text-xs ${isDark ? 'bg-slate-950 border-slate-800 text-cyan-400' : 'bg-white border-slate-300 text-blue-600'}`}
+                  >
+                    <option value="">-- Select Customer Khata Account --</option>
+                    {khatas.map((k) => (
+                      <option key={k.id} value={k.id}>
+                        {k.customerName} ({k.phone}) • Current Debt: Rs. {k.currentBalance}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
 
               {/* Cash Received & Change Due */}
               {paymentMethod === 'Cash' && (
@@ -877,6 +937,90 @@ export default function POSPage() {
               >
                 Close History
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* HOLD CART MODAL */}
+      {isHoldModalOpen && (
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 p-4 flex items-center justify-center">
+          <div className={`border rounded-2xl w-full max-w-md p-6 shadow-2xl ${isDark ? 'bg-slate-900 border-slate-800 text-slate-100' : 'bg-white border-slate-200 text-slate-800'}`}>
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-bold flex items-center gap-2">
+                <Pause className="h-5 w-5 text-amber-500" />
+                Hold POS Cart
+              </h3>
+              <button onClick={() => setIsHoldModalOpen(false)}><X className="h-5 w-5 text-slate-400" /></button>
+            </div>
+            <div className="space-y-4 text-xs sm:text-sm">
+              <div>
+                <label className="block font-bold text-slate-500 mb-1">Customer / Reference Note</label>
+                <input
+                  type="text"
+                  placeholder="e.g. Asif (will return with cash)"
+                  value={holdNote}
+                  onChange={(e) => setHoldNote(e.target.value)}
+                  className={`w-full px-3.5 py-2 border rounded-xl ${isDark ? 'bg-slate-950 border-slate-800 text-slate-200' : 'bg-white border-slate-300'}`}
+                />
+              </div>
+              <button
+                onClick={() => {
+                  holdCart(holdNote);
+                  setHoldNote('');
+                  setIsHoldModalOpen(false);
+                }}
+                className="w-full py-3 bg-amber-500 hover:bg-amber-400 text-white font-bold rounded-xl shadow-md transition-all"
+              >
+                Confirm Hold Cart
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* HELD CARTS RESUME LIST MODAL */}
+      {isHeldListOpen && (
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 p-4 flex items-center justify-center">
+          <div className={`border rounded-2xl w-full max-w-lg p-6 shadow-2xl flex flex-col max-h-[85vh] ${isDark ? 'bg-slate-900 border-slate-800 text-slate-100' : 'bg-white border-slate-200 text-slate-800'}`}>
+            <div className="flex justify-between items-center mb-4 shrink-0">
+              <h3 className="text-lg font-bold flex items-center gap-2">
+                <Play className="h-5 w-5 text-amber-500" />
+                Held Active Carts ({heldCarts.length})
+              </h3>
+              <button onClick={() => setIsHeldListOpen(false)}><X className="h-5 w-5 text-slate-400" /></button>
+            </div>
+
+            <div className="overflow-y-auto flex-1 custom-scrollbar space-y-3">
+              {heldCarts.length === 0 ? (
+                <p className="text-slate-400 text-center py-8 text-xs">No held carts available.</p>
+              ) : (
+                heldCarts.map((hc) => (
+                  <div key={hc.id} className={`p-4 border rounded-xl flex items-center justify-between text-xs ${isDark ? 'border-slate-800 bg-slate-950/50' : 'border-slate-200 bg-slate-50'}`}>
+                    <div>
+                      <span className="font-bold text-slate-800 dark:text-slate-200">{hc.note}</span>
+                      <p className="text-slate-500 mt-0.5">{hc.items.length} items • {new Date(hc.createdAt).toLocaleTimeString()}</p>
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => {
+                          resumeCart(hc.id);
+                          setIsHeldListOpen(false);
+                        }}
+                        className="px-3 py-1.5 bg-blue-600 text-white font-bold text-xs rounded-xl hover:bg-blue-500"
+                      >
+                        Resume Cart
+                      </button>
+                      <button
+                        onClick={() => deleteHeldCart(hc.id)}
+                        className="p-1.5 text-slate-400 hover:text-red-500"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </button>
+                    </div>
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>

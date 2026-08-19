@@ -17,7 +17,11 @@ import {
   LogOut,
   ShieldCheck,
   CreditCard,
-  Truck
+  Truck,
+  Building2,
+  Wallet,
+  BookOpen,
+  BarChart3
 } from 'lucide-react';
 import { useStore } from '@/store/useStore';
 import LoginPage from './LoginPage';
@@ -60,6 +64,10 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
       icon: Database,
       badge: overdueCount > 0 ? overdueCount : undefined 
     },
+    { name: 'Vendors & POs', href: '/vendors', icon: Building2 },
+    { name: 'Expenses & Cash', href: '/expenses', icon: Wallet },
+    { name: 'Customer Khata', href: '/khata', icon: BookOpen },
+    { name: 'Analytics & Audit', href: '/analytics', icon: BarChart3 }
   ];
 
   const isDark = themeMode === 'dark';
