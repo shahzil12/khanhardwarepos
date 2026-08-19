@@ -94,7 +94,7 @@ export default function Dashboard() {
         isDark ? 'bg-slate-900 -800 shadow-cyan-glow' : 'bg-white border-slate-200 shadow-sm'
       }`}>
         <div className={`absolute top-0 right-0 w-64 h-64 rounded-full blur-3xl -z-10 pointer-events-none ${
-          isDark ? 'bg-cyan-500/10' : 'bg-orange-600/5'
+          isDark ? 'bg-cyan-500/10' : 'bg-emerald-600/5'
         }`}></div>
         <div>
           <h2 className={`text-2xl font-bold tracking-tight sm:text-3xl ${isDark ? 'text-white' : 'text-slate-800'}`}>
@@ -110,7 +110,7 @@ export default function Dashboard() {
             className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm transition-all border ${
               isDark 
                 ? 'bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white border-cyan-500/30 shadow-cyan-glow' 
-                : 'bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white border-orange-500/10 shadow-md shadow-orange-600/10'
+                : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white border-emerald-500/10 shadow-md shadow-emerald-600/10'
             }`}
           >
             <PlusCircle className="h-4.5 w-4.5" />
@@ -120,8 +120,8 @@ export default function Dashboard() {
             href="/cylinder" 
             className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm transition-all border ${
               isDark 
-                ? 'bg-slate-800 hover:-700 text-slate-200 border-slate-700' 
-                : 'bg-slate-100 hover:-200 text-slate-700 border-slate-200'
+                ? 'bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700' 
+                : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-200'
             }`}
           >
             <Activity className="h-4.5 w-4.5 text-slate-400" />
@@ -137,11 +137,11 @@ export default function Dashboard() {
         <div className={`border p-5 rounded-2xl flex flex-col justify-between transition-all duration-300 group shadow-sm ${
           isDark 
             ? 'bg-slate-900 border-slate-800 hover:border-emerald-500/40 shadow-emerald-glow' 
-            : 'bg-white border-slate-200 hover:-300 hover:shadow-md'
+            : 'bg-white border-slate-200 hover:border-slate-300 hover:shadow-md'
         }`}>
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-500 tracking-wider uppercase">Today's Sales</span>
-            <span className="p-2 rounded-xl bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:-400 group-hover:scale-110 transition-transform">
+            <span className="p-2 rounded-xl bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400 group-hover:scale-110 transition-transform">
               <TrendingUp className="h-5 w-5" />
             </span>
           </div>
@@ -158,12 +158,12 @@ export default function Dashboard() {
         <div className={`border p-5 rounded-2xl flex flex-col justify-between transition-all duration-300 group shadow-sm ${
           isDark 
             ? 'bg-slate-900 border-slate-800 hover:border-cyan-500/40 shadow-cyan-glow' 
-            : 'bg-white border-slate-200 hover:-300 hover:shadow-md'
+            : 'bg-white border-slate-200 hover:border-slate-300 hover:shadow-md'
         }`}>
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-500 tracking-wider uppercase">Active Cylinders Out</span>
             <span className={`p-2 rounded-xl group-hover:scale-110 transition-transform ${
-              isDark ? 'bg-cyan-500/10 text-cyan-400' : 'bg-orange-50 text-orange-600'
+              isDark ? 'bg-cyan-500/10 text-cyan-400' : 'bg-emerald-50 text-emerald-600'
             }`}>
               <Database className="h-5 w-5" />
             </span>
@@ -298,7 +298,7 @@ export default function Dashboard() {
             </div>
             <Link 
               href="/cylinder?filter=overdue" 
-              className={`text-xs font-semibold hover:underline ${isDark ? 'text-cyan-400' : 'text-orange-600'}`}
+              className={`text-xs font-semibold hover:underline ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`}
             >
               View All Overdue &rarr;
             </Link>
@@ -383,7 +383,7 @@ export default function Dashboard() {
             
             <div className="space-y-4">
               <div>
-                <div className="flex justify-between text-xs font-semibold mb-1 -600">
+                <div className="flex justify-between text-xs font-semibold mb-1 text-slate-600">
                   <span className="flex items-center gap-1.5">
                     <span className="h-2 w-2 rounded-full bg-emerald-500"></span>
                     Filled / In Stock
@@ -401,14 +401,14 @@ export default function Dashboard() {
               <div>
                 <div className="flex justify-between text-xs font-semibold mb-1 text-slate-600">
                   <span className="flex items-center gap-1.5">
-                    <span className={`h-2 w-2 rounded-full ${isDark ? 'bg-cyan-500' : 'bg-orange-500'}`}></span>
+                    <span className={`h-2 w-2 rounded-full ${isDark ? 'bg-cyan-500' : 'bg-emerald-500'}`}></span>
                     With Customers
                   </span>
                   <span>{activeCylinders.length} / {cylinders.length}</span>
                 </div>
                 <div className={`w-full h-2 rounded-full overflow-hidden ${isDark ? 'bg-slate-950' : 'bg-slate-100'}`}>
                   <div 
-                    className={`h-full transition-all duration-500 ${isDark ? 'bg-cyan-500' : 'bg-orange-500'}`} 
+                    className={`h-full transition-all duration-500 ${isDark ? 'bg-cyan-500' : 'bg-emerald-500'}`} 
                     style={{ width: `${(activeCylinders.length / cylinders.length) * 100}%` }}
                   ></div>
                 </div>
@@ -460,7 +460,7 @@ export default function Dashboard() {
                 }`}
               >
                 <span className="flex items-center gap-2">
-                  <Truck className={`h-4 w-4 ${isDark ? 'text-cyan-400' : 'text-orange-600'}`} />
+                  <Truck className={`h-4 w-4 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
                   Issue Oxygen Cylinder
                 </span>
                 <ArrowUpRight className="h-4 w-4 text-slate-400" />
@@ -517,7 +517,7 @@ export default function Dashboard() {
                     <p className={`text-xs font-bold ${isDark ? 'text-amber-400' : 'text-amber-600'}`}>{formatCurrency((cyl.customer?.securityDeposit || 0) + (cyl.customer?.refillCharges || 0))}</p>
                     <Link 
                       href="/cylinder?filter=deliveries"
-                      className={`text-[10px] font-bold hover:underline block mt-0.5 ${isDark ? 'text-cyan-400' : 'text-orange-600'}`}
+                      className={`text-[10px] font-bold hover:underline block mt-0.5 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`}
                     >
                       Settle Cash &rarr;
                     </Link>
@@ -538,7 +538,7 @@ export default function Dashboard() {
         }`}>
           {sales.length === 0 ? (
             <div className={`p-8 text-center text-slate-400 text-sm ${isDark ? 'bg-slate-900' : 'bg-white'}`}>
-              No transactions recorded today yet. Go to <Link href="/pos" className={`underline font-semibold ${isDark ? 'text-cyan-400' : 'text-orange-600'}`}>POS Checkout</Link> to start selling!
+              No transactions recorded today yet. Go to <Link href="/pos" className={`underline font-semibold ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`}>POS Checkout</Link> to start selling!
             </div>
           ) : (
             <div className="overflow-x-auto">

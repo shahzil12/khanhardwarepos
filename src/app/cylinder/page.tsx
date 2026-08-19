@@ -313,7 +313,7 @@ function CylinderPageContent() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h2 className="text-2xl font-bold tracking-tight flex items-center gap-2 text-slate-800 dark:text-slate-200">
-            <Database className={`h-6 w-6 ${isDark ? '-400' : 'text-orange-600'}`} />
+            <Database className={`h-6 w-6 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
             Cylinder Lifecycle Management
           </h2>
           <p className="text-slate-500 text-sm mt-0.5">
@@ -326,7 +326,7 @@ function CylinderPageContent() {
             onClick={() => setIsWorkerModalOpen(true)}
             className={`flex items-center gap-2 px-4 py-2 border text-sm font-semibold rounded-xl transition-all shadow-sm ${
               isDark 
-                ? 'bg-slate-900 border-slate-800 hover:-800 text-slate-200' 
+                ? 'bg-slate-900 border-slate-800 hover:bg-slate-800 text-slate-200' 
                 : 'bg-white border-slate-200 hover:bg-slate-50 text-slate-700'
             }`}
           >
@@ -337,7 +337,7 @@ function CylinderPageContent() {
             onClick={() => setIsAddCylinderModalOpen(true)}
             className={`flex items-center gap-2 px-4 py-2 border text-sm font-semibold rounded-xl transition-all shadow-sm ${
               isDark 
-                ? 'bg-slate-900 border-slate-800 hover:-800 text-slate-200' 
+                ? 'bg-slate-900 border-slate-800 hover:bg-slate-800 text-slate-200' 
                 : 'bg-white border-slate-200 hover:bg-slate-50 text-slate-700'
             }`}
           >
@@ -353,7 +353,7 @@ function CylinderPageContent() {
             className={`flex items-center gap-2 px-4 py-2 border text-sm font-semibold rounded-xl transition-all ${
               isDark 
                 ? 'bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white border-cyan-500/20 shadow-cyan-glow' 
-                : 'bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white border-orange-500/10 shadow-md shadow-orange-600/10'
+                : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white border-emerald-500/10 shadow-md shadow-emerald-600/10'
             }`}
           >
             <UserPlus className="h-4.5 w-4.5" />
@@ -600,11 +600,10 @@ function CylinderPageContent() {
                         {cyl.capacity} • {cyl.gasType}
                       </p>
                     </div>
-                    
-                    {/* Status Badge */}
+                                     {/* Status Badge */}
                     <span className={`px-2.5 py-1 text-[10px] font-bold rounded-full border whitespace-nowrap shrink-0 ${
                       cyl.status === 'Filled (In Stock)' ? 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20' :
-                      cyl.status === 'Issued to Customer' ? (isOverdue ? 'bg-red-50 text-red-700 border-red-200 dark:bg-red-500/20 dark:text-red-400 dark:border-red-500/30' : 'bg-orange-50 text-orange-700 border-orange-200 dark:bg-cyan-500/10 dark:text-cyan-400 dark:border-cyan-500/20') :
+                      cyl.status === 'Issued to Customer' ? (isOverdue ? 'bg-red-50 text-red-700 border-red-200 dark:bg-red-500/20 dark:text-red-400 dark:border-red-500/30' : 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-cyan-500/10 dark:text-cyan-400 dark:border-cyan-500/20') :
                       cyl.status === 'Returned (Empty)' ? 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/20' :
                       'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-500/10 dark:text-blue-400 dark:border-blue-500/20'
                     }`}>
@@ -616,113 +615,81 @@ function CylinderPageContent() {
                   <div className={`my-5 border-t pt-4 flex-1 ${isDark ? 'border-slate-800/80' : 'border-slate-100'}`}>
                     {cyl.status === 'Issued to Customer' && cyl.customer ? (
                       // Customer Detail Mode
-                      <div className="space-y-2.5 text-xs text-slate-600 dark:-300">
+                      <div className="space-y-2.5 text-xs text-slate-600 dark:text-slate-300">
                         <div className="flex items-center gap-2">
-                          <User className="h-3.5 w-3.5 text-slate-400" />
-                          <span className="font-semibold truncate">{cyl.customer.customerName}</span>
+                          <User className="h-4 w-4 text-slate-400 shrink-0" />
+                          <span className="font-bold truncate">{cyl.customer.customerName}</span>
                         </div>
                         <div className="flex items-center gap-2">
-                          <Phone className="h-3.5 w-3.5 text-slate-400" />
+                          <Phone className="h-4 w-4 text-slate-400 shrink-0" />
                           <span>{cyl.customer.customerPhone}</span>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <FileText className="h-3.5 w-3.5 text-slate-400" />
-                          <span className="font-mono text-[11px]">{cyl.customer.customerCnic}</span>
+                        <div className="flex items-center justify-between pt-1 border-t border-slate-100 dark:border-slate-800/60 text-[11px]">
+                          <span className="text-slate-400">Security Deposit:</span>
+                          <span className="font-bold text-emerald-600 dark:text-emerald-400">PKR {cyl.customer.securityDeposit}</span>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <Calendar className="h-3.5 w-3.5 text-slate-400" />
-                          <span>Due: <FormattedDate dateString={cyl.customer.expectedReturnDate} /></span>
-                        </div>
-                        <div className={`flex items-center gap-2 font-bold border-t pt-2 justify-between ${
-                          isDark ? 'text-cyan-400 border-slate-800' : 'text-amber-700 border-slate-100'
-                        }`}>
-                          <div className="flex items-center gap-1">
-                            <DollarSign className="h-3.5 w-3.5 text-amber-500" />
-                            <span>Deposit: PKR {cyl.customer.securityDeposit}</span>
-                          </div>
-                          {cyl.customer.deliveryType === 'Delivery' && (
-                            <span className={`text-[10px] px-1.5 py-0.2 rounded border font-bold uppercase ${
-                              isDark ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/25' : 'bg-amber-50 text-amber-700 border-amber-200'
-                            }`}>
-                              Delivery
-                            </span>
-                          )}
+                        <div className="flex items-center justify-between text-[11px]">
+                          <span className="text-slate-400">Due Date:</span>
+                          <span className={`font-bold ${isOverdue ? 'text-red-500 animate-pulse' : 'text-slate-700 dark:text-slate-300'}`}>
+                            <FormattedDate dateString={cyl.customer.expectedReturnDate} />
+                          </span>
                         </div>
                       </div>
                     ) : (
-                      // Stock/Refill Mode details
-                      <div className="h-full flex flex-col justify-center text-xs -400 py-2">
-                        <p>Last checked: <FormattedDate dateString={cyl.updatedAt} /></p>
-                        <p className="mt-1">
-                          {cyl.status === 'Filled (In Stock)' ? 'Ready to be issued.' :
-                           cyl.status === 'Returned (Empty)' ? 'Awaiting refill deployment.' :
-                           'Currently at cylinder refilling plant.'}
+                      // Idle Status Details
+                      <div className="space-y-2 text-xs text-slate-500">
+                        <p className="flex items-center gap-2">
+                          <ShieldCheck className="h-4 w-4 text-slate-400" />
+                          <span>Status: <strong className="text-slate-700 dark:text-slate-300">{cyl.status}</strong></span>
                         </p>
+                        <p className="text-[11px] text-slate-400">Last updated: <FormattedDate dateString={cyl.updatedAt} /></p>
                       </div>
                     )}
                   </div>
 
-                  {/* Footer Buttons for Lifecycle Transitions */}
-                  <div className={`border-t pt-3 flex items-center justify-between gap-2.5 ${isDark ? 'border-slate-800' : 'border-slate-100'}`}>
+                  {/* Actions Footer */}
+                  <div className={`border-t pt-3 flex gap-2 ${isDark ? 'border-slate-800' : 'border-slate-100'}`}>
                     {cyl.status === 'Issued to Customer' ? (
-                      <>
-                        <button
-                          onClick={() => {
-                            setReturnSearchSerial(cyl.serialNumber);
-                            setIsReturnModalOpen(true);
-                          }}
-                          className={`flex-1 text-center py-1.5 border text-xs font-semibold rounded-lg transition-all shadow-sm ${
-                            isDark 
-                              ? 'bg-slate-800 hover:-700 border-slate-700 text-slate-300' 
-                              : 'bg-slate-50 hover:bg-slate-100 -200 text-slate-700'
-                          }`}
-                        >
-                          Receive Return
-                        </button>
-                        {isOverdue && (
-                          <a
-                            href={getWhatsAppLink(cyl)}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="px-2.5 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg flex items-center justify-center transition-colors shadow-sm"
-                            title="Send WhatsApp Reminder"
-                          >
-                            <MessageSquare className="h-4 w-4" />
-                          </a>
-                        )}
-                      </>
-                    ) : cyl.status === 'Returned (Empty)' ? (
                       <button
                         onClick={() => {
-                          sendToRefill(cyl.serialNumber);
-                          confetti({ particleCount: 30, colors: ['#3B82F6'] });
+                          setSelectedSerial(cyl.serialNumber);
+                          setReturnSearchSerial(cyl.serialNumber);
+                          setIsReturnModalOpen(true);
                         }}
-                        className={`w-full py-1.5 border text-xs font-semibold rounded-lg flex items-center justify-center gap-1.5 transition-all shadow-sm ${
+                        className={`w-full py-1.5 border text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
                           isDark 
-                            ? 'bg-blue-600/15 hover:bg-blue-600 border-blue-500/25 text-blue-400 hover:text-white' 
-                            : 'bg-blue-50 hover:bg-blue-100 border-blue-200 -700'
+                            ? 'bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700' 
+                            : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-200'
                         }`}
                       >
-                        <RefreshCw className="h-3.5 w-3.5 animate-spin" style={{ animationDuration: '6s' }} />
-                        Send to Refill
+                        <ArrowLeftRight className="h-3.5 w-3.5" />
+                        Receive & Settle Deposit
+                      </button>
+                    ) : cyl.status === 'Returned (Empty)' ? (
+                      <button
+                        onClick={() => handleSendToRefill(cyl.serialNumber)}
+                        className={`w-full py-1.5 border text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
+                          isDark 
+                            ? 'bg-amber-950/40 hover:bg-amber-900/50 text-amber-400 border-amber-900/50' 
+                            : 'bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-200'
+                        }`}
+                      >
+                        <RefreshCw className="h-3.5 w-3.5" />
+                        Send to Gas Plant Refill
                       </button>
                     ) : cyl.status === 'Under Refill' ? (
                       <button
-                        onClick={() => {
-                          completeRefill(cyl.serialNumber);
-                          confetti({ particleCount: 50, colors: ['#10B981'] });
-                        }}
-                        className={`w-full py-1.5 border text-xs font-semibold rounded-lg flex items-center justify-center gap-1.5 transition-all shadow-sm ${
+                        onClick={() => handleCompleteRefill(cyl.serialNumber)}
+                        className={`w-full py-1.5 border text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
                           isDark 
-                            ? '-600 border border-emerald-600/40 text-white shadow-sm' 
-                            : 'bg-emerald-600 hover:bg-emerald-500 text-white border-emerald-500/10'
+                            ? 'bg-emerald-950/40 hover:bg-emerald-900/50 text-emerald-400 border-emerald-900/50' 
+                            : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border-emerald-200'
                         }`}
                       >
-                        <Check className="h-3.5 w-3.5" />
+                        <CheckCircle className="h-3.5 w-3.5" />
                         Mark Refill Complete
                       </button>
                     ) : (
-                      // Filled / Stocked
                       <button
                         onClick={() => {
                           setSelectedSerial(cyl.serialNumber);
@@ -731,7 +698,7 @@ function CylinderPageContent() {
                         className={`w-full py-1.5 border text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
                           isDark 
                             ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border-cyan-500/20 text-white shadow-cyan-glow' 
-                            : 'bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white border-orange-500/10 shadow-md shadow-orange-600/10'
+                            : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white border-emerald-500/10 shadow-md shadow-emerald-600/10'
                         }`}
                       >
                         <UserPlus className="h-3.5 w-3.5" />
@@ -760,7 +727,7 @@ function CylinderPageContent() {
             </button>
 
             <h3 className="text-lg font-bold flex items-center gap-2 mb-1">
-              <UserPlus className={`h-5 w-5 ${isDark ? 'text-cyan-400' : 'text-orange-600'}`} />
+              <UserPlus className={`h-5 w-5 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
               Issue Cylinder to Customer
             </h3>
             <p className="text-xs text-slate-500 mb-6">Assign cylinder stock and track deposits.</p>
@@ -774,7 +741,7 @@ function CylinderPageContent() {
                   className={`w-full px-3 py-2 border rounded-xl focus:outline-none shadow-sm ${
                     isDark 
                       ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
-                      : 'bg-white -300 text-slate-800 focus:border-orange-500'
+                      : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
                   }`}
                 >
                   <option value="">-- Choose Cylinder --</option>
@@ -798,7 +765,7 @@ function CylinderPageContent() {
                     className={`w-full px-3 py-2 border rounded-xl focus:outline-none placeholder:text-slate-400 shadow-sm ${
                       isDark 
                         ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
-                        : 'bg-white -300 text-slate-800 focus:border-orange-500'
+                        : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
                     }`}
                   />
                 </div>
@@ -812,8 +779,8 @@ function CylinderPageContent() {
                     onChange={(e) => setCustomerPhone(e.target.value)}
                     className={`w-full px-3 py-2 border rounded-xl focus:outline-none placeholder:text-slate-400 shadow-sm ${
                       isDark 
-                        ? '-950 -800 text-slate-200 focus:border-slate-700' 
-                        : 'bg-white -300 text-slate-800 focus:border-orange-500'
+                        ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
+                        : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
                     }`}
                   />
                 </div>
@@ -830,7 +797,7 @@ function CylinderPageContent() {
                   className={`w-full px-3 py-2 border rounded-xl focus:outline-none placeholder:text-slate-400 shadow-sm ${
                     isDark 
                       ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
-                      : 'bg-white -300 text-slate-800 focus:border-orange-500'
+                      : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
                   }`}
                 />
               </div>
@@ -846,7 +813,7 @@ function CylinderPageContent() {
                     className={`w-full px-3 py-2 border rounded-xl focus:outline-none font-bold shadow-sm ${
                       isDark 
                         ? 'bg-slate-950 border-slate-800 text-cyan-400 focus:border-slate-700' 
-                        : 'bg-white -300 text-orange-600 focus:border-orange-500'
+                        : 'bg-white border-slate-300 text-emerald-600 focus:border-emerald-500'
                     }`}
                   />
                 </div>
@@ -860,7 +827,7 @@ function CylinderPageContent() {
                     className={`w-full px-3 py-2 border rounded-xl focus:outline-none font-bold shadow-sm ${
                       isDark 
                         ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
-                        : 'bg-white -300 text-slate-800 focus:border-orange-500'
+                        : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
                     }`}
                   />
                 </div>
@@ -875,8 +842,8 @@ function CylinderPageContent() {
                   onChange={(e) => setExpectedReturnDate(e.target.value)}
                   className={`w-full px-3 py-2 border rounded-xl focus:outline-none shadow-sm ${
                     isDark 
-                      ? '-950 border-slate-800 text-slate-200 focus:border-slate-700' 
-                      : 'bg-white -300 text-slate-800 focus:border-orange-500'
+                      ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
+                      : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
                   }`}
                 />
               </div>
@@ -890,7 +857,7 @@ function CylinderPageContent() {
                     className={`w-full px-3 py-2 border rounded-xl focus:outline-none font-bold shadow-sm ${
                       isDark 
                         ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
-                        : 'bg-white -300 -800 focus:border-orange-500'
+                        : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
                     }`}
                   >
                     <option value="Pickup">Self-Pickup</option>
@@ -907,7 +874,7 @@ function CylinderPageContent() {
                       className={`w-full px-3 py-2 border rounded-xl focus:outline-none font-bold shadow-sm ${
                         isDark 
                           ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
-                          : 'bg-white -300 -800 focus:border-orange-500'
+                          : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
                       }`}
                     >
                       <option value="">-- Select Driver --</option>
@@ -924,7 +891,7 @@ function CylinderPageContent() {
                 className={`w-full py-2.5 mt-2 text-white font-bold rounded-xl transition-all border ${
                   isDark 
                     ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border-cyan-500/20 shadow-cyan-glow' 
-                    : 'bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 border-orange-500/10 shadow-md shadow-orange-600/10'
+                    : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 border-emerald-500/10 shadow-md shadow-emerald-600/10'
                 }`}
               >
                 Complete Issue & Collect Deposit
@@ -946,7 +913,7 @@ function CylinderPageContent() {
                 setReturnSearchSerial('');
                 setFoundReturnCylinder(null);
               }}
-              className={`absolute top-4 right-4 ${isDark ? 'text-slate-500 hover:-300' : 'text-slate-400 hover:-600'}`}
+              className={`absolute top-4 right-4 ${isDark ? 'text-slate-500 hover:text-slate-300' : 'text-slate-400 hover:text-slate-600'}`}
             >
               <X className="h-5 w-5" />
             </button>
@@ -961,7 +928,7 @@ function CylinderPageContent() {
               <div>
                 <label className="block text-xs font-bold text-slate-500 mb-1.5">Cylinder Serial Number / Scan Tag</label>
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 -400" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
                   <input
                     type="text"
                     required
@@ -970,8 +937,8 @@ function CylinderPageContent() {
                     onChange={(e) => setReturnSearchSerial(e.target.value)}
                     className={`w-full pl-9 pr-3 py-2 border rounded-xl focus:outline-none placeholder:text-slate-400 font-bold shadow-sm ${
                       isDark 
-                        ? '-950 border-slate-800 text-slate-200 focus:border-slate-700' 
-                        : 'bg-white -300 text-slate-800 focus:border-orange-500'
+                        ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
+                        : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
                     }`}
                     autoFocus
                   />
@@ -980,16 +947,16 @@ function CylinderPageContent() {
 
               {foundReturnCylinder ? (
                 <div className={`border p-4 rounded-xl space-y-3 animate-fade-in text-xs ${
-                  isDark ? '-950/50 -800' : '-50 border-slate-200'
+                  isDark ? 'bg-slate-950/50 border-slate-800' : 'bg-slate-50 border-slate-200'
                 }`}>
                   <div className={`flex justify-between items-start border-b pb-2 ${isDark ? 'border-slate-800' : 'border-slate-100'}`}>
                     <div>
                       <span className="text-[10px] text-slate-400 uppercase block font-semibold">Cylinder Info</span>
                       <span className={`font-bold ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>{foundReturnCylinder.serialNumber}</span>
-                      <span className="-400 ml-1.5">({foundReturnCylinder.capacity})</span>
+                      <span className="text-slate-400 ml-1.5">({foundReturnCylinder.capacity})</span>
                     </div>
                     <span className={`px-2 py-0.5 border font-bold rounded-full text-[9px] ${
-                      isDark ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20' : 'bg-orange-50 text-orange-700 border-orange-200'
+                      isDark ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20' : 'bg-emerald-50 text-emerald-700 border-emerald-200'
                     }`}>
                       Issued Out
                     </span>
@@ -997,15 +964,15 @@ function CylinderPageContent() {
 
                   <div className="space-y-1.5">
                     <div className="flex justify-between">
-                      <span className="-400">Customer:</span>
+                      <span className="text-slate-400">Customer:</span>
                       <span className={`font-bold ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>{foundReturnCylinder.customer?.customerName}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="-400">Phone:</span>
+                      <span className="text-slate-400">Phone:</span>
                       <span className={isDark ? 'text-slate-300' : 'text-slate-700'}>{foundReturnCylinder.customer?.customerPhone}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="-400">Issue Date:</span>
+                      <span className="text-slate-400">Issue Date:</span>
                       <span className={isDark ? 'text-slate-300' : 'text-slate-700'}><FormattedDate dateString={foundReturnCylinder.customer!.issueDate} /></span>
                     </div>
                     <div className={`flex justify-between border-t pt-2 font-bold ${isDark ? 'text-cyan-400 border-slate-800' : 'text-amber-700 border-slate-100'}`}>
@@ -1020,7 +987,7 @@ function CylinderPageContent() {
                     <ShieldCheck className="h-4.5 w-4.5 shrink-0 mt-0.5" />
                     <div>
                       <p className="text-[10px] font-bold uppercase">Ready for Settlement</p>
-                      <p className="-400 dark:text-slate-400 text-[10px] leading-relaxed mt-0.5 font-medium">Settle deposit refund. The cylinder will be marked as "Returned (Empty)" and ready for refilling.</p>
+                      <p className="text-slate-500 dark:text-slate-400 text-[10px] leading-relaxed mt-0.5 font-medium">Settle deposit refund. The cylinder will be marked as "Returned (Empty)" and ready for refilling.</p>
                     </div>
                   </div>
 
@@ -1029,7 +996,7 @@ function CylinderPageContent() {
                     className={`w-full py-2.5 mt-2 text-white font-bold rounded-xl transition-all border ${
                       isDark 
                         ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border-cyan-500/20 shadow-cyan-glow' 
-                        : 'bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 border-orange-500/10 shadow-md shadow-orange-600/10'
+                        : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 border-emerald-500/10 shadow-md shadow-emerald-600/10'
                     }`}
                   >
                     Confirm Settle & Return
@@ -1038,7 +1005,7 @@ function CylinderPageContent() {
               ) : (
                 returnSearchSerial.trim() && (
                   <div className={`p-4 border rounded-xl flex items-start gap-2.5 text-xs ${
-                    isDark ? 'bg-red-950/20 border-red-900/40 text-red-400' : 'bg-red-50 -100 -700'
+                    isDark ? 'bg-red-950/20 border-red-900/40 text-red-400' : 'bg-red-50 border-red-100 text-red-700'
                   }`}>
                     <AlertTriangle className="h-5 w-5 text-red-500 shrink-0 animate-bounce" />
                     <div>
@@ -1061,13 +1028,13 @@ function CylinderPageContent() {
           }`}>
             <button 
               onClick={() => setIsAddCylinderModalOpen(false)}
-              className={`absolute top-4 right-4 ${isDark ? 'text-slate-500 hover:-300' : 'text-slate-400 hover:-600'}`}
+              className={`absolute top-4 right-4 ${isDark ? 'text-slate-500 hover:text-slate-300' : 'text-slate-400 hover:text-slate-600'}`}
             >
               <X className="h-5 w-5" />
             </button>
 
             <h3 className="text-lg font-bold flex items-center gap-2 mb-1">
-              <Database className={`h-5 w-5 ${isDark ? '-400' : '-600'}`} />
+              <Database className={`h-5 w-5 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
               Register New Cylinder
             </h3>
             <p className="text-xs text-slate-500 mb-6">Create inventory cylinder profile for tracking.</p>
@@ -1083,8 +1050,8 @@ function CylinderPageContent() {
                   onChange={(e) => setNewSerial(e.target.value)}
                   className={`w-full px-3 py-2 border rounded-xl focus:outline-none placeholder:text-slate-400 font-bold tracking-wider shadow-sm ${
                     isDark 
-                      ? 'bg-slate-950 border-slate-800 -200 focus:border-slate-700' 
-                      : 'bg-white -300 text-slate-800 focus:border-orange-500'
+                      ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
+                      : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
                   }`}
                   autoFocus
                 />
@@ -1099,7 +1066,7 @@ function CylinderPageContent() {
                     className={`w-full px-3 py-2 border rounded-xl focus:outline-none font-bold shadow-sm ${
                       isDark 
                         ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
-                        : 'bg-white -300 text-slate-800 focus:border-orange-500'
+                        : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
                     }`}
                   >
                     <option value="Medical Oxygen">Medical Oxygen</option>
@@ -1116,7 +1083,7 @@ function CylinderPageContent() {
                     className={`w-full px-3 py-2 border rounded-xl focus:outline-none font-bold shadow-sm ${
                       isDark 
                         ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
-                        : 'bg-white -300 text-slate-800 focus:border-orange-500'
+                        : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
                     }`}
                   >
                     <option value="240 cu ft">240 cu ft (Jumbo)</option>
@@ -1132,7 +1099,7 @@ function CylinderPageContent() {
                 className={`w-full py-2.5 mt-2 text-white font-bold rounded-xl transition-all border ${
                   isDark 
                     ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border-cyan-500/20 shadow-cyan-glow' 
-                    : 'bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 border-orange-500/10 shadow-md shadow-orange-600/10'
+                    : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 border-emerald-500/10 shadow-md shadow-emerald-600/10'
                 }`}
               >
                 Add Cylinder to Inventory
@@ -1150,14 +1117,14 @@ function CylinderPageContent() {
           }`}>
             <button 
               onClick={() => setIsWorkerModalOpen(false)}
-              className={`absolute top-4 right-4 ${isDark ? 'text-slate-500 hover:-300' : 'text-slate-400 hover:-600'}`}
+              className={`absolute top-4 right-4 ${isDark ? 'text-slate-500 hover:text-slate-300' : 'text-slate-400 hover:text-slate-600'}`}
             >
               <X className="h-5 w-5" />
             </button>
 
             <div>
               <h3 className="text-lg font-bold flex items-center gap-2 mb-1">
-                <UserCheck className={`h-5 w-5 ${isDark ? '-400' : 'text-orange-600'}`} />
+                <UserCheck className={`h-5 w-5 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
                 Workers & Drivers Management
               </h3>
               <p className="text-xs text-slate-500 mb-6">Register and track drivers and loaders responsible for deliveries.</p>
@@ -1169,7 +1136,7 @@ function CylinderPageContent() {
                   <h4 className={`text-xs font-bold uppercase tracking-wider border-b pb-1 ${isDark ? 'text-slate-400 border-slate-800' : 'text-slate-500 border-slate-100'}`}>Register New Worker</h4>
                   <form onSubmit={handleAddWorkerSubmit} className="space-y-3.5 text-xs">
                     <div>
-                      <label className="block -500 dark:text-slate-400 font-bold mb-1">Full Name</label>
+                      <label className="block text-slate-500 dark:text-slate-400 font-bold mb-1">Full Name</label>
                       <input
                         type="text"
                         required
@@ -1178,13 +1145,13 @@ function CylinderPageContent() {
                         onChange={(e) => setNewWorkerName(e.target.value)}
                         className={`w-full px-2.5 py-1.5 border rounded-lg focus:outline-none shadow-sm ${
                           isDark 
-                            ? 'bg-slate-950 border-slate-800 -200 focus:border-slate-700' 
-                            : 'bg-white -300 text-slate-800 focus:border-orange-500'
+                            ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
+                            : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
                         }`}
                       />
                     </div>
                     <div>
-                      <label className="block -500 dark:text-slate-400 font-bold mb-1">Phone Number</label>
+                      <label className="block text-slate-500 dark:text-slate-400 font-bold mb-1">Phone Number</label>
                       <input
                         type="tel"
                         required
@@ -1193,20 +1160,20 @@ function CylinderPageContent() {
                         onChange={(e) => setNewWorkerPhone(e.target.value)}
                         className={`w-full px-2.5 py-1.5 border rounded-lg focus:outline-none shadow-sm ${
                           isDark 
-                            ? '-950 -800 -200 focus:border-slate-700' 
-                            : 'bg-white -300 text-slate-800 focus:border-orange-500'
+                            ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
+                            : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
                         }`}
                       />
                     </div>
                     <div>
-                      <label className="block -500 dark:text-slate-400 font-bold mb-1">Role Type</label>
+                      <label className="block text-slate-500 dark:text-slate-400 font-bold mb-1">Role Type</label>
                       <select
                         value={newWorkerRole}
                         onChange={(e) => setNewWorkerRole(e.target.value as any)}
                         className={`w-full px-2.5 py-1.5 border rounded-lg focus:outline-none shadow-sm ${
                           isDark 
-                            ? 'bg-slate-950 border-slate-800 -200 focus:border-slate-700' 
-                            : 'bg-white -300 text-slate-800 focus:border-orange-500'
+                            ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
+                            : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
                         }`}
                       >
                         <option value="Driver">Driver / Deliveryman</option>
@@ -1218,7 +1185,7 @@ function CylinderPageContent() {
                       className={`w-full py-2 text-white font-bold rounded-lg transition-colors border shadow-sm ${
                         isDark 
                           ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border-cyan-500/20 shadow-cyan-glow' 
-                          : 'bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 border-orange-500/10'
+                          : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 border-emerald-500/10'
                       }`}
                     >
                       Save Register Details
@@ -1228,22 +1195,22 @@ function CylinderPageContent() {
 
                 {/* Workers List Display */}
                 <div className="space-y-4">
-                  <h4 className={`text-xs font-bold uppercase tracking-wider border-b pb-1 ${isDark ? 'text-slate-400 border-slate-800' : '-500 border-slate-100'}`}>Active Store Personnel</h4>
+                  <h4 className={`text-xs font-bold uppercase tracking-wider border-b pb-1 ${isDark ? 'text-slate-400 border-slate-800' : 'text-slate-500 border-slate-100'}`}>Active Store Personnel</h4>
                   <div className={`space-y-2 max-h-[220px] overflow-y-auto divide-y ${isDark ? 'divide-slate-800/40' : 'divide-slate-100'}`}>
                     {workers.map((w) => (
                       <div key={w.id} className="pt-2 pb-2 flex items-center justify-between text-xs text-slate-700 dark:text-slate-300">
                         <div>
                           <p className="font-bold text-slate-800 dark:text-slate-200">{w.name}</p>
-                          <p className="text-[10px] -400 mt-0.5">{w.phone}</p>
+                          <p className="text-[10px] text-slate-400 mt-0.5">{w.phone}</p>
                         </div>
                         <span className={`px-2 py-0.5 text-[9px] font-bold rounded border ${
                           w.role === 'Driver' 
                             ? isDark 
                               ? 'bg-blue-500/10 text-blue-400 border-blue-500/20' 
-                              : 'bg-blue-50 -700 border-blue-200' 
+                              : 'bg-blue-50 text-blue-700 border-blue-200' 
                             : isDark
                               ? 'bg-slate-800 border-slate-700 text-slate-400'
-                              : 'bg-slate-100 text-slate-600 -200'
+                              : 'bg-slate-100 text-slate-600 border-slate-200'
                         }`}>
                           {w.role}
                         </span>
@@ -1260,7 +1227,7 @@ function CylinderPageContent() {
                 onClick={() => setIsWorkerModalOpen(false)}
                 className={`px-4 py-2 border font-bold rounded-xl text-xs sm:text-sm shadow-sm ${
                   isDark 
-                    ? '-800 -700 text-slate-300 hover:bg-slate-800' 
+                    ? 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700'
                     : 'bg-slate-100 hover:bg-slate-200 -700 border-slate-200'
                 }`}
               >

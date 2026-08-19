@@ -172,7 +172,7 @@ export default function POSPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4 print:hidden">
         <div>
           <h2 className="text-2xl font-bold tracking-tight flex items-center gap-2 text-slate-800 dark:text-slate-200">
-            <ShoppingCart className={`h-6 w-6 ${isDark ? '-400' : 'text-orange-600'}`} />
+            <ShoppingCart className={`h-6 w-6 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
             Hardware POS Billing Terminal
           </h2>
           <p className="text-slate-500 text-sm mt-0.5">
@@ -191,7 +191,7 @@ export default function POSPage() {
             className={`w-full pl-10 pr-4 py-2 border rounded-xl text-sm transition-colors shadow-sm ${
               isDark 
                 ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700 placeholder:text-slate-500' 
-                : 'bg-white border-slate-200 text-slate-800 focus:border-orange-500 placeholder:text-slate-400'
+                : 'bg-white border-slate-200 text-slate-800 focus:border-emerald-500 placeholder:text-slate-400'
             }`}
           />
         </form>
@@ -208,11 +208,11 @@ export default function POSPage() {
             className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all whitespace-nowrap border ${
               selectedCategory === cat
                 ? isDark
-                  ? 'bg-gradient-to-r from-cyan-600 to-blue-600 -500 text-white shadow-cyan-glow'
-                  : 'bg-gradient-to-r from-orange-600 to-amber-600 text-white border-orange-500/10 shadow-md shadow-orange-600/10'
+                  ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border-cyan-500 text-white shadow-cyan-glow'
+                  : 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white border-emerald-500/10 shadow-md shadow-emerald-600/10'
                 : isDark
-                  ? '-400 hover:-200 hover:bg-slate-900 border-transparent'
-                  : '-500 hover:text-slate-800 hover:bg-slate-100 border-transparent'
+                  ? 'text-slate-400 hover:text-slate-200 hover:bg-slate-900 border-transparent'
+                  : 'text-slate-500 hover:text-slate-800 hover:bg-slate-100 border-transparent'
             }`}
           >
             {cat}
@@ -222,7 +222,7 @@ export default function POSPage() {
 
       {/* Mobile Screen Toggle */}
       <div className={`flex md:hidden border rounded-xl p-1 print:hidden shadow-sm ${
-        isDark ? 'bg-slate-950 -800' : '-100 border-slate-200'
+        isDark ? 'bg-slate-950 border-slate-800' : 'bg-slate-100 border-slate-200'
       }`}>
         <button
           onClick={() => setMobileView('products')}
@@ -230,7 +230,7 @@ export default function POSPage() {
             mobileView === 'products' 
               ? isDark 
                 ? 'bg-slate-800 text-cyan-400 font-bold shadow-cyan-glow border border-slate-700' 
-                : 'bg-white text-orange-600 shadow-sm border border-slate-200'
+                : 'bg-white text-emerald-600 shadow-sm border border-slate-200'
               : 'text-slate-500'
           }`}
         >
@@ -242,7 +242,7 @@ export default function POSPage() {
             mobileView === 'cart' 
               ? isDark 
                 ? 'bg-slate-800 text-cyan-400 font-bold shadow-cyan-glow border border-slate-700' 
-                : 'bg-white text-orange-600 shadow-sm border border-slate-200'
+                : 'bg-white text-emerald-600 shadow-sm border border-slate-200'
               : 'text-slate-500'
           }`}
         >
@@ -273,10 +273,10 @@ export default function POSPage() {
                       : inCart 
                         ? isDark
                           ? 'border-cyan-500 bg-cyan-950/10 shadow-cyan-glow'
-                          : 'border-orange-500 bg-orange-50/5 shadow-md shadow-orange-600/5'
+                          : 'border-emerald-500 bg-emerald-50/5 shadow-md shadow-emerald-600/5'
                         : isDark
-                          ? 'bg-slate-900 border-slate-800 hover:-700 hover:scale-[1.01] hover:shadow-cyan-glow'
-                          : 'bg-white border-slate-200 hover:-300 hover:scale-[1.01] hover:shadow-md text-slate-800'
+                          ? 'bg-slate-900 border-slate-800 hover:border-slate-700 hover:scale-[1.01] hover:shadow-cyan-glow'
+                          : 'bg-white border-slate-200 hover:border-slate-300 hover:scale-[1.01] hover:shadow-md text-slate-800'
                   }`}
                 >
                   <div className="space-y-1">
@@ -316,13 +316,13 @@ export default function POSPage() {
                       disabled={isOutOfStock}
                       className={`p-1.5 rounded-lg transition-all border ${
                         isOutOfStock 
-                          ? 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:-800 text-slate-400' 
+                          ? 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-800 text-slate-400' 
                           : inCart 
                             ? isDark
                               ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white border-cyan-500/20 shadow-cyan-glow'
-                              : 'bg-orange-600 text-white border-orange-500/10 shadow-sm shadow-orange-600/10'
+                              : 'bg-emerald-600 text-white border-emerald-500/10 shadow-sm shadow-emerald-600/10'
                             : isDark
-                              ? 'bg-slate-800 hover:-700 border-slate-700 text-slate-300 shadow-sm'
+                              ? 'bg-slate-800 hover:bg-slate-700 border-slate-700 text-slate-300 shadow-sm'
                               : 'bg-slate-50 hover:bg-slate-100 text-slate-600 border-slate-200 shadow-sm'
                       }`}
                     >
@@ -341,15 +341,15 @@ export default function POSPage() {
         }`}>
           
           <div className={`border rounded-2xl flex flex-col justify-between overflow-hidden shadow-md ${
-            isDark ? 'bg-slate-900 border-slate-800 -200' : 'bg-white border-slate-200 -800'
+            isDark ? 'bg-slate-900 border-slate-800 text-slate-200' : 'bg-white border-slate-200 text-slate-800'
           }`}>
             
             {/* Cart Header */}
             <div className={`p-4 border-b flex justify-between items-center ${
-              isDark ? 'border-slate-800 bg-slate-900/50' : 'border-slate-200 -50'
+              isDark ? 'border-slate-800 bg-slate-900/50' : 'border-slate-200 bg-slate-50'
             }`}>
               <h3 className={`font-bold flex items-center gap-2 text-sm sm:text-base ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
-                <Receipt className={`h-5 w-5 ${isDark ? '-400' : 'text-orange-600'}`} />
+                <Receipt className={`h-5 w-5 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
                 Checkout Cart
               </h3>
               {cart.length > 0 && (
@@ -375,7 +375,7 @@ export default function POSPage() {
                   <div key={item.product.id} className="py-3 flex items-center justify-between gap-3 text-xs">
                     <div className="space-y-0.5 pr-2 truncate">
                       <p className={`font-bold truncate ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>{item.product.name}</p>
-                      <p className="text-[9px] -400 font-semibold font-mono uppercase tracking-wider">
+                      <p className="text-[9px] text-slate-400 font-semibold font-mono uppercase tracking-wider">
                         Price: {formatCurrency(item.product.retailPrice)} • SKU: {item.product.barcode}
                       </p>
                     </div>
@@ -403,7 +403,7 @@ export default function POSPage() {
 
                       <button
                         onClick={() => removeFromCart(item.product.id)}
-                        className="p-1 text-slate-400 hover:-500 transition-colors"
+                        className="p-1 text-slate-400 hover:text-red-500 transition-colors"
                         title="Remove product"
                       >
                         <Trash2 className="h-4.5 w-4.5" />
@@ -416,15 +416,15 @@ export default function POSPage() {
 
             {/* Calculations Breakdown block */}
             <div className={`border-t p-4 space-y-3.5 text-xs ${
-              isDark ? 'bg-slate-950 -800' : 'bg-slate-50 border-slate-200'
+              isDark ? 'bg-slate-950 border-slate-800' : 'bg-slate-50 border-slate-200'
             }`}>
               <div className="space-y-1.5">
                 <div className="flex justify-between">
-                  <span className="-500">Subtotal:</span>
+                  <span className="text-slate-500">Subtotal:</span>
                   <span className={`font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>{formatCurrency(subtotal)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="-500">GST Sales Tax (17%):</span>
+                  <span className="text-slate-500">GST Sales Tax (17%):</span>
                   <span className={`font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>{formatCurrency(taxAmount)}</span>
                 </div>
               </div>
@@ -432,7 +432,7 @@ export default function POSPage() {
               {/* Total Row */}
               <div className={`flex justify-between items-center border-t pt-3 ${isDark ? 'border-slate-800' : 'border-slate-200'}`}>
                 <span className="font-bold text-slate-700 dark:text-slate-300 text-sm">Grand Total:</span>
-                <span className={`font-bold text-2xl ${isDark ? 'text-cyan-400' : 'text-orange-600'}`}>{formatCurrency(grandTotal)}</span>
+                <span className={`font-bold text-2xl ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`}>{formatCurrency(grandTotal)}</span>
               </div>
 
               {/* Payment Method Selector */}
@@ -450,11 +450,11 @@ export default function POSPage() {
                       className={`py-2 px-1 flex flex-col items-center gap-1 border rounded-xl transition-all shadow-sm ${
                         paymentMethod === p.name 
                           ? isDark
-                            ? 'bg-slate-800 -500 text-cyan-400 font-bold shadow-cyan-glow'
-                            : '-50 -500 text-orange-700 font-bold shadow-sm'
+                            ? 'bg-slate-800 border-cyan-500 text-cyan-400 font-bold shadow-cyan-glow'
+                            : 'bg-emerald-50 border-emerald-500 text-emerald-700 font-bold shadow-sm'
                           : isDark
-                            ? 'bg-slate-900 border-slate-800 text-slate-500 hover:-700 hover:-300'
-                            : 'bg-white border-slate-200 text-slate-500 hover:-300 hover:text-slate-700'
+                            ? 'bg-slate-900 border-slate-800 text-slate-500 hover:border-slate-700 hover:text-slate-300'
+                            : 'bg-white border-slate-200 text-slate-500 hover:border-slate-300 hover:text-slate-700'
                       }`}
                     >
                       <Icon className="h-4 w-4" />
@@ -479,7 +479,7 @@ export default function POSPage() {
                         className={`w-full pl-6 pr-2 py-1 border rounded-lg text-xs font-bold text-right focus:outline-none shadow-sm ${
                           isDark 
                             ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
-                            : 'bg-white border-slate-300 text-slate-800 focus:border-orange-500'
+                            : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
                         }`}
                       />
                     </div>
@@ -487,7 +487,7 @@ export default function POSPage() {
                   {cashNum >= grandTotal && (
                     <div className={`flex justify-between items-center p-2 rounded-lg text-[10px] font-bold border ${
                       isDark 
-                        ? 'bg-cyan-950/20 -800 text-cyan-400' 
+                        ? 'bg-cyan-950/20 border-cyan-800 text-cyan-400' 
                         : 'bg-emerald-50 border-emerald-100 text-emerald-800'
                     }`}>
                       <span>Change to Return:</span>
@@ -503,10 +503,10 @@ export default function POSPage() {
                 disabled={cart.length === 0}
                 className={`w-full py-3 rounded-xl font-bold transition-all shadow-md text-sm sm:text-base border ${
                   cart.length === 0
-                    ? 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:-800 -400 cursor-not-allowed shadow-none'
+                    ? 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-800 text-slate-400 cursor-not-allowed shadow-none'
                     : isDark
                       ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border-cyan-500/20 text-white shadow-cyan-glow'
-                      : 'bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white border-orange-500/10'
+                      : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white border-emerald-500/10 shadow-emerald-600/10'
                 }`}
               >
                 Pay & Print Thermal Receipt
@@ -521,7 +521,7 @@ export default function POSPage() {
 
       {/* 3. THERMAL RECEIPT DIALOG MODAL */}
       {activeReceipt && (
-        <div className="fixed inset-0 -900/85 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto print:static print:bg-white print:p-0">
+        <div className="fixed inset-0 bg-slate-900/85 backdrop-blur-sm z-50 flex items-center justify-center p-4 overflow-y-auto print:static print:bg-white print:p-0">
           
           <div className={`border rounded-2xl w-full max-w-sm p-6 relative shadow-2xl flex flex-col justify-between print:border-0 print:shadow-none print:w-full print:max-w-none print:bg-white print:p-0 ${
             isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
@@ -600,8 +600,8 @@ export default function POSPage() {
                 onClick={triggerPrint}
                 className={`flex-1 py-2.5 font-bold rounded-xl border flex items-center justify-center gap-1.5 text-xs sm:text-sm shadow-sm ${
                   isDark 
-                    ? 'bg-slate-800 hover:-700 text-slate-300 border-slate-700' 
-                    : 'bg-slate-100 hover:bg-slate-200 text-slate-700 -200'
+                    ? 'bg-slate-800 hover:bg-slate-700 text-slate-300 border-slate-700' 
+                    : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-200'
                 }`}
               >
                 <FileText className="h-4.5 w-4.5" />
@@ -615,7 +615,7 @@ export default function POSPage() {
                 className={`flex-1 py-2.5 font-bold rounded-xl flex items-center justify-center gap-1.5 text-xs sm:text-sm shadow-md border ${
                   isDark 
                     ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border-cyan-500/20 text-white shadow-cyan-glow' 
-                    : 'bg-gradient-to-r from-orange-600 to-amber-600 hover:from-orange-500 hover:to-amber-500 text-white border-orange-500/10 shadow-orange-600/10'
+                    : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white border-emerald-500/10 shadow-emerald-600/10'
                 }`}
               >
                 <CheckCircle className="h-4.5 w-4.5" />

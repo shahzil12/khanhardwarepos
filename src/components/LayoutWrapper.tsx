@@ -67,7 +67,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
   const getRoleBadgeColor = (role: string) => {
     switch (role) {
       case 'Admin':
-        return isDark ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30' : 'bg-orange-100 text-orange-700 border-orange-200';
+        return isDark ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30' : 'bg-emerald-100 text-emerald-700 border-emerald-200';
       case 'Cashier':
         return isDark ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' : 'bg-emerald-100 text-emerald-700 border-emerald-200';
       case 'Driver':
@@ -94,13 +94,13 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
             <div className={`flex h-10 w-10 items-center justify-center rounded-lg transition-all duration-200 ${
               isDark 
                 ? 'bg-cyan-950 border border-cyan-400/50 shadow-cyan-glow' 
-                : 'bg-orange-600 shadow-sm shadow-orange-600/20'
+                : 'bg-emerald-600 shadow-sm shadow-emerald-600/20'
             }`}>
               <Flame className="h-6 w-6 text-white animate-pulse" />
             </div>
             <div>
               <h1 className={`text-md font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r ${
-                isDark ? 'from-cyan-400 to-blue-200' : 'from-orange-600 to-amber-500'
+                isDark ? 'from-cyan-400 to-blue-200' : 'from-emerald-600 to-teal-600'
               }`}>
                 Khan Hardware
               </h1>
@@ -124,7 +124,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
                   isActive
                     ? isDark
                       ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border-cyan-500/20 text-white shadow-cyan-glow'
-                      : 'bg-gradient-to-r from-orange-600 to-amber-600 border-orange-500/10 text-white shadow-md shadow-orange-600/10'
+                      : 'bg-gradient-to-r from-emerald-600 to-teal-600 border-emerald-500/10 text-white shadow-md shadow-emerald-600/10'
                     : isDark
                       ? 'text-slate-400 hover:bg-slate-800 hover:text-slate-200 border-transparent'
                       : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border-transparent'
@@ -143,7 +143,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
                 {item.badge !== undefined && (
                   <span className={`px-2 py-0.5 text-xs font-bold rounded-full ${
                     isActive 
-                      ? 'bg-white text-orange-600' 
+                      ? 'bg-white text-emerald-600' 
                       : isDark
                         ? 'bg-red-500/20 text-red-400 border border-red-500/20'
                         : 'bg-red-50 text-red-600 border border-red-100'
@@ -163,8 +163,8 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
           }`}>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2.5 min-w-0">
-                <div className="h-9 w-9 rounded-xl bg-orange-100 dark:bg-slate-800 flex items-center justify-center shrink-0">
-                  <User className="h-5 w-5 text-orange-600 dark:text-cyan-400" />
+                <div className="h-9 w-9 rounded-xl bg-emerald-100 dark:bg-slate-800 flex items-center justify-center shrink-0">
+                  <User className="h-5 w-5 text-emerald-600 dark:text-cyan-400" />
                 </div>
                 <div className="truncate">
                   <p className={`text-xs font-bold truncate ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
@@ -214,13 +214,13 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
           <div className={`flex h-8 w-8 items-center justify-center rounded-lg transition-all duration-200 ${
             isDark 
               ? 'bg-cyan-950 border border-cyan-400/50 shadow-cyan-glow' 
-              : 'bg-orange-600 shadow-sm'
+              : 'bg-emerald-600 shadow-sm'
           }`}>
             <Flame className="h-5 w-5 text-white" />
           </div>
           <div>
             <h1 className={`text-sm font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r ${
-              isDark ? 'from-cyan-400 to-blue-200' : 'from-orange-600 to-amber-500'
+              isDark ? 'from-cyan-400 to-blue-200' : 'from-emerald-600 to-teal-600'
             }`}>
               Khan Hardware
             </h1>
@@ -278,7 +278,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
                     isActive
                       ? isDark
                         ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border-cyan-500/20 text-white shadow-cyan-glow'
-                        : 'bg-gradient-to-r from-orange-600 to-amber-600 border-orange-500/10 text-white shadow-md shadow-orange-600/10'
+                        : 'bg-gradient-to-r from-emerald-600 to-teal-600 border-emerald-500/10 text-white shadow-md shadow-emerald-600/10'
                       : isDark
                         ? 'bg-slate-950 border border-slate-800 text-slate-400'
                         : 'bg-slate-50 border border-slate-200 text-slate-600'
@@ -291,7 +291,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
                   {item.badge !== undefined && (
                     <span className={`px-2.5 py-1 text-xs font-bold rounded-full ${
                       isActive 
-                        ? 'bg-white text-orange-600' 
+                        ? 'bg-white text-emerald-600' 
                         : isDark
                           ? 'bg-red-500/20 text-red-400 border border-red-500/20'
                           : 'bg-red-50 text-red-600 border border-red-100'
@@ -309,8 +309,8 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
               isDark ? 'bg-slate-950/40 border-slate-800' : 'bg-slate-50 border-slate-100'
             }`}>
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-full bg-orange-100 dark:bg-slate-800 flex items-center justify-center">
-                  <User className="h-6 w-6 text-orange-600 dark:text-cyan-400" />
+                <div className="h-10 w-10 rounded-full bg-emerald-100 dark:bg-slate-800 flex items-center justify-center">
+                  <User className="h-6 w-6 text-emerald-600 dark:text-cyan-400" />
                 </div>
                 <div>
                   <p className={`text-sm font-bold ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>
