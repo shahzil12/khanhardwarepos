@@ -529,7 +529,7 @@ export default function POSPage() {
 
       {/* 3. THERMAL RECEIPT DIALOG MODAL */}
       {activeReceipt && (
-        <div className="fixed inset-0 bg-slate-900/85 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-start sm:items-center py-6 sm:py-10 print:static print:bg-white print:p-0">
+        <div className="fixed inset-0 bg-slate-900/85 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-start sm:items-center py-6 sm:py-10 print-receipt-modal-backdrop print:static print:bg-white print:p-0">
           
           <div className={`border rounded-2xl w-full max-w-sm my-auto p-6 relative shadow-2xl flex flex-col justify-between print:border-0 print:shadow-none print:w-full print:max-w-none print:bg-white print:p-0 ${
             isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'

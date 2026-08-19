@@ -83,7 +83,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
     }`}>
       
       {/* Sidebar for Desktop */}
-      <aside className={`hidden md:flex flex-col w-64 shrink-0 border-r sticky top-0 h-screen transition-colors duration-200 ${
+      <aside className={`hidden md:flex flex-col w-64 shrink-0 border-r sticky top-0 h-screen transition-colors duration-200 print:hidden ${
         isDark ? 'bg-slate-900 border-slate-800 text-slate-200' : 'bg-white border-slate-200 text-slate-800'
       }`}>
         {/* Header / Logo */}
@@ -207,7 +207,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
       </aside>
 
       {/* Top Navigation for Mobile */}
-      <header className={`md:hidden h-16 flex items-center justify-between px-6 shrink-0 z-50 sticky top-0 border-b transition-colors duration-200 ${
+      <header className={`md:hidden h-16 flex items-center justify-between px-6 shrink-0 z-50 sticky top-0 border-b transition-colors duration-200 print:hidden ${
         isDark ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'
       }`}>
         <div className="flex items-center gap-2">
