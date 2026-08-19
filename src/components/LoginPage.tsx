@@ -52,10 +52,10 @@ export default function LoginPage() {
       {/* Background ambient lighting */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <div className={`absolute -top-40 -left-40 w-96 h-96 rounded-full blur-3xl opacity-20 ${
-          isDark ? 'bg-cyan-500' : 'bg-emerald-500'
+          isDark ? 'bg-cyan-500' : 'bg-blue-500'
         }`}></div>
         <div className={`absolute -bottom-40 -right-40 w-96 h-96 rounded-full blur-3xl opacity-20 ${
-          isDark ? 'bg-blue-600' : 'bg-teal-500'
+          isDark ? 'bg-blue-600' : 'bg-indigo-500'
         }`}></div>
       </div>
 
@@ -72,13 +72,13 @@ export default function LoginPage() {
             <div className={`flex h-11 w-11 items-center justify-center rounded-2xl transition-all duration-200 ${
               isDark 
                 ? 'bg-cyan-950 border border-cyan-400/50 shadow-cyan-glow' 
-                : 'bg-emerald-600 shadow-md shadow-emerald-600/20'
+                : 'bg-blue-600 shadow-md shadow-blue-600/20'
             }`}>
               <Flame className="h-6 w-6 text-white animate-pulse" />
             </div>
             <div>
               <h1 className={`text-lg font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r ${
-                isDark ? 'from-cyan-400 to-blue-200' : 'from-emerald-600 to-teal-600'
+                isDark ? 'from-cyan-400 to-blue-200' : 'from-blue-600 to-indigo-600'
               }`}>
                 Khan Hardware
               </h1>
@@ -134,7 +134,7 @@ export default function LoginPage() {
                 className={`w-full pl-10 pr-4 py-2.5 border rounded-xl font-semibold transition-all focus:outline-none shadow-sm ${
                   isDark 
                     ? 'bg-slate-950 border-slate-800 text-slate-100 focus:border-cyan-500' 
-                    : 'bg-white border-slate-200 text-slate-800 focus:border-emerald-500'
+                    : 'bg-white border-slate-200 text-slate-800 focus:border-blue-500'
                 }`}
               />
             </div>
@@ -154,7 +154,7 @@ export default function LoginPage() {
                 className={`w-full pl-10 pr-10 py-2.5 border rounded-xl font-semibold transition-all focus:outline-none shadow-sm ${
                   isDark 
                     ? 'bg-slate-950 border-slate-800 text-slate-100 focus:border-cyan-500' 
-                    : 'bg-white border-slate-200 text-slate-800 focus:border-emerald-500'
+                    : 'bg-white border-slate-200 text-slate-800 focus:border-blue-500'
                 }`}
               />
               <button
@@ -172,7 +172,7 @@ export default function LoginPage() {
             className={`w-full py-3 rounded-xl font-bold transition-all shadow-md flex items-center justify-center gap-2 border text-sm sm:text-base ${
               isDark 
                 ? 'bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white border-cyan-500/20 shadow-cyan-glow' 
-                : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white border-emerald-500/10 shadow-emerald-600/10'
+                : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white border-blue-500/10 shadow-blue-600/10'
             }`}
           >
             Sign In to Terminal

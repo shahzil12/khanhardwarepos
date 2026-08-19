@@ -12,7 +12,11 @@ import {
   CreditCard, 
   Wallet, 
   CheckCircle,
-  FileText
+  FileText,
+  History,
+  RotateCcw,
+  Printer,
+  X
 } from 'lucide-react';
 import { useStore, Product } from '@/store/useStore';
 import confetti from 'canvas-confetti';
@@ -27,6 +31,7 @@ export default function POSPage() {
     updateCartQuantity, 
     clearCart: storeClearCart, 
     checkoutCart,
+    refundTransaction,
     themeMode
   } = useStore();
   
@@ -34,6 +39,11 @@ export default function POSPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   
+  // Invoice History & Refund Modal State
+  const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
+  const [historyFilter, setHistoryFilter] = useState<'All' | 'Completed' | 'Refunded'>('All');
+  const [historySearch, setHistorySearch] = useState('');
+
   // Payment Details
   const [paymentMethod, setPaymentMethod] = useState<'Cash' | 'Card' | 'Wallet'>('Cash');
   const [cashReceived, setCashReceived] = useState('');
@@ -48,6 +58,63 @@ export default function POSPage() {
   const receiptRef = useRef<HTMLDivElement>(null);
 
   const isDark = themeMode === 'dark';
+
+  // Refund handler
+  const handleRefundSubmit = (transactionId: string, receiptNum: string) => {
+    const reason = prompt(`Enter reason for refunding Invoice ${receiptNum}:`, 'Customer return / order cancel');
+    if (reason === null) return;
+
+    const success = refundTransaction(transactionId, reason);
+    if (success) {
+      confetti({ particleCount: 80, spread: 60, colors: ['#EF4444', '#F87171'] });
+      alert(`Invoice ${receiptNum} successfully refunded! Product stock restored to inventory.`);
+    } else {
+      alert('Failed to process refund. Invoice may already be refunded.');
+    }
+  };
+
+  // Re-print receipt handler
+  const handleReprintReceipt = (sale: any) => {
+    const receiptItems = sale.items.map((item: any) => {
+      const product = products.find(p => p.id === item.productId) || {
+        id: item.productId || '',
+        name: item.productName,
+        retailPrice: item.unitPrice,
+        barcode: '',
+        category: '',
+        costPrice: item.costPrice || 0,
+        stockQuantity: 0,
+        minThreshold: 0
+      };
+      return { product, quantity: item.quantity };
+    });
+
+    const receiptData = {
+      transactionId: sale.receiptNumber,
+      timestamp: sale.createdAt,
+      items: receiptItems,
+      subtotal: sale.subtotal,
+      taxAmount: sale.tax,
+      grandTotal: sale.total,
+      paymentMethod: sale.paymentMethod,
+      cashReceived: sale.total,
+      changeDue: 0
+    };
+
+    setActiveReceipt(receiptData);
+  };
+
+  // Filtered Sales History
+  const filteredSalesHistory = sales.filter(s => {
+    const matchesSearch = 
+      s.receiptNumber.toLowerCase().includes(historySearch.toLowerCase()) ||
+      s.items.some(i => i.productName.toLowerCase().includes(historySearch.toLowerCase()));
+    
+    if (!matchesSearch) return false;
+    const saleStatus = s.status || 'Completed';
+    if (historyFilter === 'All') return true;
+    return saleStatus === historyFilter;
+  });
 
   // Categories list
   const categories = ['All', 'Hardware', 'Electrical', 'Plumbing', 'Safety', 'Tools'];
@@ -172,29 +239,43 @@ export default function POSPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4 print:hidden">
         <div>
           <h2 className="text-2xl font-bold tracking-tight flex items-center gap-2 text-slate-800 dark:text-slate-200">
-            <ShoppingCart className={`h-6 w-6 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
+            <ShoppingCart className={`h-6 w-6 ${isDark ? 'text-cyan-400' : 'text-blue-600'}`} />
             Hardware POS Billing Terminal
           </h2>
           <p className="text-slate-500 text-sm mt-0.5">
-            Add items, handle cash drawers, choose payment types, and print printed thermal invoices.
+            Add items, handle cash drawers, process refunds, and print thermal invoices.
           </p>
         </div>
 
-        {/* Barcode Search Field */}
-        <form onSubmit={(e) => e.preventDefault()} className="relative w-full md:max-w-xs">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4.5 w-4.5 text-slate-400" />
-          <input
-            type="text"
-            placeholder="Search by Product Name or Barcode..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className={`w-full pl-10 pr-4 py-2 border rounded-xl text-sm transition-colors shadow-sm ${
+        <div className="flex flex-wrap items-center gap-3">
+          <button
+            onClick={() => setIsHistoryModalOpen(true)}
+            className={`flex items-center gap-2 px-4 py-2 border rounded-xl text-xs sm:text-sm font-bold transition-all shadow-sm ${
               isDark 
-                ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700 placeholder:text-slate-500' 
-                : 'bg-white border-slate-200 text-slate-800 focus:border-emerald-500 placeholder:text-slate-400'
+                ? 'bg-slate-900 border-slate-800 hover:bg-slate-800 text-cyan-400 border-cyan-500/20 shadow-cyan-glow' 
+                : 'bg-white border-slate-200 hover:bg-slate-50 text-blue-600 shadow-sm'
             }`}
-          />
-        </form>
+          >
+            <History className="h-4.5 w-4.5" />
+            Invoice History & Refunds
+          </button>
+
+          {/* Barcode Search Field */}
+          <form onSubmit={(e) => e.preventDefault()} className="relative w-full md:w-64">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4.5 w-4.5 text-slate-400" />
+            <input
+              type="text"
+              placeholder="Search Name or Barcode..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className={`w-full pl-10 pr-4 py-2 border rounded-xl text-sm transition-colors shadow-sm ${
+                isDark 
+                  ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700 placeholder:text-slate-500' 
+                  : 'bg-white border-slate-200 text-slate-800 focus:border-blue-500 placeholder:text-slate-400'
+              }`}
+            />
+          </form>
+        </div>
       </div>
 
       {/* Category Selection Bar */}
@@ -209,7 +290,7 @@ export default function POSPage() {
               selectedCategory === cat
                 ? isDark
                   ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border-cyan-500 text-white shadow-cyan-glow'
-                  : 'bg-gradient-to-r from-emerald-600 to-teal-600 text-white border-emerald-500/10 shadow-md shadow-emerald-600/10'
+                  : 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white border-blue-500/10 shadow-md shadow-blue-600/10'
                 : isDark
                   ? 'text-slate-400 hover:text-slate-200 hover:bg-slate-900 border-transparent'
                   : 'text-slate-500 hover:text-slate-800 hover:bg-slate-100 border-transparent'
@@ -230,7 +311,7 @@ export default function POSPage() {
             mobileView === 'products' 
               ? isDark 
                 ? 'bg-slate-800 text-cyan-400 font-bold shadow-cyan-glow border border-slate-700' 
-                : 'bg-white text-emerald-600 shadow-sm border border-slate-200'
+                : 'bg-white text-blue-600 shadow-sm border border-slate-200'
               : 'text-slate-500'
           }`}
         >
@@ -242,7 +323,7 @@ export default function POSPage() {
             mobileView === 'cart' 
               ? isDark 
                 ? 'bg-slate-800 text-cyan-400 font-bold shadow-cyan-glow border border-slate-700' 
-                : 'bg-white text-emerald-600 shadow-sm border border-slate-200'
+                : 'bg-white text-blue-600 shadow-sm border border-slate-200'
               : 'text-slate-500'
           }`}
         >
@@ -273,7 +354,7 @@ export default function POSPage() {
                       : inCart 
                         ? isDark
                           ? 'border-cyan-500 bg-cyan-950/10 shadow-cyan-glow'
-                          : 'border-emerald-500 bg-emerald-50/5 shadow-md shadow-emerald-600/5'
+                          : 'border-blue-500 bg-blue-50/10 shadow-md shadow-blue-600/5'
                         : isDark
                           ? 'bg-slate-900 border-slate-800 hover:border-slate-700 hover:scale-[1.01] hover:shadow-cyan-glow'
                           : 'bg-white border-slate-200 hover:border-slate-300 hover:scale-[1.01] hover:shadow-md text-slate-800'
@@ -326,7 +407,7 @@ export default function POSPage() {
                           : inCart 
                             ? isDark
                               ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white border-cyan-500/20 shadow-cyan-glow'
-                              : 'bg-emerald-600 text-white border-emerald-500/10 shadow-sm shadow-emerald-600/10'
+                              : 'bg-blue-600 text-white border-blue-500/10 shadow-sm shadow-blue-600/10'
                             : isDark
                               ? 'bg-slate-800 hover:bg-slate-700 border-slate-700 text-slate-300 shadow-sm'
                               : 'bg-slate-50 hover:bg-slate-100 text-slate-600 border-slate-200 shadow-sm'
@@ -355,7 +436,7 @@ export default function POSPage() {
               isDark ? 'border-slate-800 bg-slate-900/50' : 'border-slate-200 bg-slate-50'
             }`}>
               <h3 className={`font-bold flex items-center gap-2 text-sm sm:text-base ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
-                <Receipt className={`h-5 w-5 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
+                <Receipt className={`h-5 w-5 ${isDark ? 'text-cyan-400' : 'text-blue-600'}`} />
                 Checkout Cart
               </h3>
               {cart.length > 0 && (
@@ -438,7 +519,7 @@ export default function POSPage() {
               {/* Total Row */}
               <div className={`flex justify-between items-center border-t pt-3 ${isDark ? 'border-slate-800' : 'border-slate-200'}`}>
                 <span className="font-bold text-slate-700 dark:text-slate-300 text-sm">Grand Total:</span>
-                <span className={`font-bold text-2xl ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`}>{formatCurrency(grandTotal)}</span>
+                <span className={`font-bold text-2xl ${isDark ? 'text-cyan-400' : 'text-blue-600'}`}>{formatCurrency(grandTotal)}</span>
               </div>
 
               {/* Payment Method Selector */}
@@ -457,7 +538,7 @@ export default function POSPage() {
                         paymentMethod === p.name 
                           ? isDark
                             ? 'bg-slate-800 border-cyan-500 text-cyan-400 font-bold shadow-cyan-glow'
-                            : 'bg-emerald-50 border-emerald-500 text-emerald-700 font-bold shadow-sm'
+                            : 'bg-blue-50 border-blue-500 text-blue-700 font-bold shadow-sm'
                           : isDark
                             ? 'bg-slate-900 border-slate-800 text-slate-500 hover:border-slate-700 hover:text-slate-300'
                             : 'bg-white border-slate-200 text-slate-500 hover:border-slate-300 hover:text-slate-700'
@@ -485,7 +566,7 @@ export default function POSPage() {
                         className={`w-full pl-6 pr-2 py-1 border rounded-lg text-xs font-bold text-right focus:outline-none shadow-sm ${
                           isDark 
                             ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
-                            : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
+                            : 'bg-white border-slate-300 text-slate-800 focus:border-blue-500'
                         }`}
                       />
                     </div>
@@ -494,7 +575,7 @@ export default function POSPage() {
                     <div className={`flex justify-between items-center p-2 rounded-lg text-[10px] font-bold border ${
                       isDark 
                         ? 'bg-cyan-950/20 border-cyan-800 text-cyan-400' 
-                        : 'bg-emerald-50 border-emerald-100 text-emerald-800'
+                        : 'bg-blue-50 border-blue-100 text-blue-800'
                     }`}>
                       <span>Change to Return:</span>
                       <span className="text-sm">{formatCurrency(changeDue)}</span>
@@ -514,7 +595,7 @@ export default function POSPage() {
                       : 'bg-slate-200 border-slate-300 text-slate-500 cursor-not-allowed shadow-none'
                     : isDark
                       ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border-cyan-500/20 text-white shadow-cyan-glow'
-                      : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white border-emerald-500/10 shadow-emerald-600/20'
+                      : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white border-blue-500/10 shadow-blue-600/20'
                 }`}
               >
                 Pay & Print Thermal Receipt
@@ -622,7 +703,7 @@ export default function POSPage() {
                 className={`flex-1 py-2.5 font-bold rounded-xl flex items-center justify-center gap-1.5 text-xs sm:text-sm shadow-md border ${
                   isDark 
                     ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border-cyan-500/20 text-white shadow-cyan-glow' 
-                    : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white border-emerald-500/10 shadow-emerald-600/10'
+                    : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white border-blue-500/10 shadow-blue-600/10'
                 }`}
               >
                 <CheckCircle className="h-4.5 w-4.5" />
@@ -630,6 +711,173 @@ export default function POSPage() {
               </button>
             </div>
 
+          </div>
+        </div>
+      )}
+
+      {/* 4. INVOICE HISTORY & REFUNDS MODAL */}
+      {isHistoryModalOpen && (
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 p-4 sm:p-6 flex items-center justify-center animate-fade-in print:hidden">
+          <div className={`border rounded-2xl w-full max-w-3xl relative shadow-2xl flex flex-col max-h-[85vh] sm:max-h-[90vh] animate-scale-in transition-colors duration-200 ${
+            isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
+          }`}>
+            {/* Pinned Modal Header */}
+            <div className="p-5 sm:p-6 pb-4 relative shrink-0 border-b border-slate-100 dark:border-slate-800 flex justify-between items-center">
+              <div>
+                <h3 className="text-lg sm:text-xl font-bold flex items-center gap-2">
+                  <History className={`h-5.5 w-5.5 shrink-0 ${isDark ? 'text-cyan-400' : 'text-blue-600'}`} />
+                  Invoice History & Refunds
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed mt-0.5">View transactions, process refunds, and re-print customer receipts.</p>
+              </div>
+
+              <button 
+                onClick={() => setIsHistoryModalOpen(false)}
+                className={`p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
+                title="Close modal"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            {/* Filter & Search Bar */}
+            <div className={`p-4 border-b flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${isDark ? 'border-slate-800 bg-slate-950/30' : 'border-slate-100 bg-slate-50'}`}>
+              <div className="flex gap-2">
+                {(['All', 'Completed', 'Refunded'] as const).map(tab => (
+                  <button
+                    key={tab}
+                    onClick={() => setHistoryFilter(tab)}
+                    className={`px-3 py-1.5 text-xs font-bold rounded-lg border transition-all ${
+                      historyFilter === tab
+                        ? isDark
+                          ? 'bg-cyan-600 text-white border-cyan-500 shadow-cyan-glow'
+                          : 'bg-blue-600 text-white border-blue-500 shadow-sm'
+                        : isDark
+                          ? 'bg-slate-800 text-slate-400 border-slate-700 hover:text-white'
+                          : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-100'
+                    }`}
+                  >
+                    {tab} ({tab === 'All' ? sales.length : sales.filter(s => (s.status || 'Completed') === tab).length})
+                  </button>
+                ))}
+              </div>
+
+              <div className="relative w-full sm:max-w-xs">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+                <input
+                  type="text"
+                  placeholder="Search receipt # or product..."
+                  value={historySearch}
+                  onChange={(e) => setHistorySearch(e.target.value)}
+                  className={`w-full pl-8 pr-3 py-1.5 text-xs border rounded-lg focus:outline-none ${
+                    isDark ? 'bg-slate-950 border-slate-800 text-slate-200' : 'bg-white border-slate-200 text-slate-800'
+                  }`}
+                />
+              </div>
+            </div>
+
+            {/* Scrollable Invoices List */}
+            <div className="p-5 sm:p-6 overflow-y-auto flex-1 custom-scrollbar space-y-4">
+              {filteredSalesHistory.length === 0 ? (
+                <div className="py-12 text-center text-slate-400 text-sm">
+                  <History className="h-10 w-10 mx-auto mb-2 opacity-50" />
+                  <p className="font-bold">No Invoices Found</p>
+                  <p className="text-xs text-slate-500 mt-1">Completed sales transactions will appear here.</p>
+                </div>
+              ) : (
+                filteredSalesHistory.map(sale => {
+                  const isRefunded = sale.status === 'Refunded';
+                  return (
+                    <div 
+                      key={sale.id}
+                      className={`border p-4 rounded-xl space-y-3 transition-all ${
+                        isRefunded 
+                          ? isDark ? 'bg-red-950/20 border-red-900/40' : 'bg-red-50/50 border-red-200'
+                          : isDark ? 'bg-slate-950/50 border-slate-800 hover:border-slate-700' : 'bg-white border-slate-200 hover:border-slate-300'
+                      }`}
+                    >
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b pb-2.5 border-slate-100 dark:border-slate-800">
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <span className="font-mono font-bold text-sm text-slate-800 dark:text-slate-100">{sale.receiptNumber}</span>
+                            <span className={`px-2 py-0.5 text-[10px] font-bold rounded-full border ${
+                              isRefunded 
+                                ? 'bg-red-100 text-red-700 border-red-200 dark:bg-red-950/40 dark:text-red-400 dark:border-red-900/50'
+                                : 'bg-blue-100 text-blue-700 border-blue-200 dark:bg-blue-950/40 dark:text-blue-400 dark:border-blue-900/50'
+                            }`}>
+                              {isRefunded ? 'Refunded' : 'Completed'}
+                            </span>
+                          </div>
+                          <p className="text-[10px] text-slate-400 mt-0.5 font-medium">
+                            {new Date(sale.createdAt).toLocaleString()} • Method: {sale.paymentMethod}
+                          </p>
+                        </div>
+
+                        <div className="text-left sm:text-right">
+                          <span className="text-xs text-slate-400 block font-medium">Total Amount</span>
+                          <span className={`font-bold text-base ${isRefunded ? 'text-slate-400 line-through' : isDark ? 'text-cyan-400' : 'text-blue-600'}`}>
+                            {formatCurrency(sale.total)}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Items breakdown */}
+                      <div className="space-y-1 text-xs">
+                        {sale.items.map((item, idx) => (
+                          <div key={idx} className="flex justify-between text-slate-600 dark:text-slate-300">
+                            <span>{item.productName} (x{item.quantity})</span>
+                            <span className="font-mono">{formatCurrency(item.totalPrice)}</span>
+                          </div>
+                        ))}
+                      </div>
+
+                      {isRefunded && sale.refundReason && (
+                        <div className="text-[10px] p-2 bg-red-100/60 dark:bg-red-950/40 text-red-700 dark:text-red-300 rounded-lg border border-red-200 dark:border-red-900/50">
+                          <strong>Refund Reason:</strong> {sale.refundReason} (Refunded on {new Date(sale.refundedAt!).toLocaleString()})
+                        </div>
+                      )}
+
+                      {/* Action buttons */}
+                      <div className="flex gap-2 pt-2 border-t border-slate-100 dark:border-slate-800 justify-end">
+                        <button
+                          onClick={() => handleReprintReceipt(sale)}
+                          className={`px-3 py-1.5 text-xs font-bold rounded-lg border flex items-center gap-1.5 transition-all ${
+                            isDark 
+                              ? 'bg-slate-800 hover:bg-slate-700 text-slate-200 border-slate-700' 
+                              : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-200'
+                          }`}
+                        >
+                          <Printer className="h-3.5 w-3.5 text-slate-400" />
+                          Re-Print Receipt
+                        </button>
+
+                        {!isRefunded && (
+                          <button
+                            onClick={() => handleRefundSubmit(sale.id, sale.receiptNumber)}
+                            className="px-3 py-1.5 text-xs font-bold rounded-lg border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-950/30 text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-900/40 flex items-center gap-1.5 transition-all"
+                          >
+                            <RotateCcw className="h-3.5 w-3.5" />
+                            Refund Invoice
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+            </div>
+
+            {/* Modal Footer */}
+            <div className={`p-4 px-6 border-t flex justify-end shrink-0 ${isDark ? 'border-slate-800 bg-slate-900/90' : 'border-slate-200 bg-slate-50'}`}>
+              <button
+                onClick={() => setIsHistoryModalOpen(false)}
+                className={`px-4 py-2 text-xs sm:text-sm font-bold border rounded-xl ${
+                  isDark ? 'bg-slate-800 border-slate-700 text-slate-300' : 'bg-slate-100 border-slate-200 text-slate-700'
+                }`}
+              >
+                Close History
+              </button>
+            </div>
           </div>
         </div>
       )}

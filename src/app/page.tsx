@@ -13,7 +13,9 @@ import {
   Activity, 
   Truck, 
   MessageSquare,
-  Wallet
+  Wallet,
+  History,
+  RotateCcw
 } from 'lucide-react';
 import { useStore, Cylinder } from '@/store/useStore';
 import confetti from 'canvas-confetti';
@@ -27,15 +29,31 @@ export default function Dashboard() {
   useEffect(() => {
     const todayStr = new Date().toDateString();
     const total = sales
-      .filter((s) => new Date(s.createdAt).toDateString() === todayStr)
+      .filter((s) => (s.status || 'Completed') !== 'Refunded' && new Date(s.createdAt).toDateString() === todayStr)
       .reduce((sum, s) => sum + s.total, 0);
     setTodaySales(total);
   }, [sales]);
 
-  // 2. Active Cylinders (Status is "Issued to Customer")
+  // 2. Sales & Net Profit Analytics Calculations
+  const validSales = sales.filter((s) => (s.status || 'Completed') !== 'Refunded');
+  
+  const totalRevenue = validSales.reduce((sum, s) => sum + s.total, 0);
+
+  const totalCogs = validSales.reduce((sum, s) => {
+    const saleCogs = s.items.reduce((itemSum, item) => {
+      const cost = item.costPrice !== undefined ? item.costPrice : item.unitPrice * 0.65;
+      return itemSum + cost * item.quantity;
+    }, 0);
+    return sum + saleCogs;
+  }, 0);
+
+  const netProfit = totalRevenue - totalCogs;
+  const profitMargin = totalRevenue > 0 ? ((netProfit / totalRevenue) * 100).toFixed(1) : '0';
+
+  // 3. Active Cylinders (Status is "Issued to Customer")
   const activeCylinders = cylinders.filter((c) => c.status === 'Issued to Customer');
 
-  // 3. Overdue Cylinders
+  // 4. Overdue Cylinders
   const [overdueCylinders, setOverdueCylinders] = useState<Cylinder[]>([]);
   useEffect(() => {
     const today = new Date();
@@ -45,11 +63,11 @@ export default function Dashboard() {
     setOverdueCylinders(overdue);
   }, [cylinders]);
 
-  // 4. Low Stock Alerts (Hardware inventory)
+  // 5. Low Stock Alerts (Hardware inventory)
   const { products } = useStore();
   const lowStockProducts = products.filter(p => p.stockQuantity <= p.minThreshold);
 
-  // 5. Driver pending collections
+  // 6. Driver pending collections
   const cylindersWithDrivers = cylinders.filter(
     (c) => c.status === 'Issued to Customer' && c.customer?.deliveryType === 'Delivery' && !c.customer.cashReturned
   );
@@ -91,17 +109,17 @@ export default function Dashboard() {
       
       {/* Welcome Banner */}
       <div className={`flex flex-col md:flex-row md:items-center justify-between gap-4 p-6 border rounded-2xl relative overflow-hidden transition-all duration-200 ${
-        isDark ? 'bg-slate-900 -800 shadow-cyan-glow' : 'bg-white border-slate-200 shadow-sm'
+        isDark ? 'bg-slate-900 border-slate-800 shadow-cyan-glow' : 'bg-white border-slate-200 shadow-sm'
       }`}>
         <div className={`absolute top-0 right-0 w-64 h-64 rounded-full blur-3xl -z-10 pointer-events-none ${
-          isDark ? 'bg-cyan-500/10' : 'bg-emerald-600/5'
+          isDark ? 'bg-cyan-500/10' : 'bg-blue-600/5'
         }`}></div>
         <div>
           <h2 className={`text-2xl font-bold tracking-tight sm:text-3xl ${isDark ? 'text-white' : 'text-slate-800'}`}>
             Welcome Back, Operator
           </h2>
           <p className="text-slate-400 text-sm mt-1">
-            Real-time status of Khan Hardware sales and medical/industrial oxygen cylinders.
+            Real-time status of Khan Hardware sales, profit analytics, and medical/industrial oxygen cylinders.
           </p>
         </div>
         <div className="flex flex-wrap gap-3">
@@ -110,7 +128,7 @@ export default function Dashboard() {
             className={`flex items-center gap-2 px-4 py-2.5 rounded-xl font-semibold text-sm transition-all border ${
               isDark 
                 ? 'bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white border-cyan-500/30 shadow-cyan-glow' 
-                : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white border-emerald-500/10 shadow-md shadow-emerald-600/10'
+                : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white border-blue-500/10 shadow-md shadow-blue-600/10'
             }`}
           >
             <PlusCircle className="h-4.5 w-4.5" />
@@ -136,19 +154,19 @@ export default function Dashboard() {
         {/* Metric 1: Today's Sales */}
         <div className={`border p-5 rounded-2xl flex flex-col justify-between transition-all duration-300 group shadow-sm ${
           isDark 
-            ? 'bg-slate-900 border-slate-800 hover:border-emerald-500/40 shadow-emerald-glow' 
+            ? 'bg-slate-900 border-slate-800 hover:border-cyan-500/40 shadow-cyan-glow' 
             : 'bg-white border-slate-200 hover:border-slate-300 hover:shadow-md'
         }`}>
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-slate-500 tracking-wider uppercase">Today's Sales</span>
-            <span className="p-2 rounded-xl bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10 dark:text-emerald-400 group-hover:scale-110 transition-transform">
+            <span className="p-2 rounded-xl bg-blue-50 text-blue-600 dark:bg-blue-500/10 dark:text-cyan-400 group-hover:scale-110 transition-transform">
               <TrendingUp className="h-5 w-5" />
             </span>
           </div>
           <div className="mt-4">
             <h3 className={`text-2xl font-bold ${isDark ? 'text-slate-100' : 'text-slate-800'}`}>{formatCurrency(todaySales)}</h3>
-            <p className="text-xs text-emerald-600 dark:text-emerald-400 flex items-center gap-1 mt-1 font-semibold">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500 animate-ping"></span>
+            <p className="text-xs text-blue-600 dark:text-cyan-400 flex items-center gap-1 mt-1 font-semibold">
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-blue-500 animate-ping"></span>
               Live updates active
             </p>
           </div>
@@ -252,8 +270,8 @@ export default function Dashboard() {
         <div className={`p-5 rounded-2xl flex flex-col justify-between transition-all duration-300 group border shadow-sm ${
           pendingDriverCash > 0 
             ? isDark
-              ? 'bg-emerald-950/20 border-emerald-900/60 hover:border-emerald-500/45 shadow-emerald-glow'
-              : 'bg-emerald-50 border-emerald-200 hover:border-emerald-300'
+              ? 'bg-blue-950/20 border-blue-900/60 hover:border-blue-500/45 shadow-blue-glow'
+              : 'bg-blue-50 border-blue-200 hover:border-blue-300'
             : isDark
               ? 'bg-slate-900 border-slate-800 hover:border-cyan-500/45 shadow-cyan-glow-hover'
               : 'bg-white border-slate-200 hover:border-slate-300'
@@ -263,8 +281,8 @@ export default function Dashboard() {
             <span className={`p-2 rounded-xl group-hover:scale-110 transition-transform ${
               pendingDriverCash > 0 
                 ? isDark 
-                  ? 'bg-emerald-500/20 text-emerald-400 animate-pulse' 
-                  : 'bg-emerald-100 text-emerald-600 animate-pulse' 
+                  ? 'bg-blue-500/20 text-cyan-400 animate-pulse' 
+                  : 'bg-blue-100 text-blue-600 animate-pulse' 
                 : 'bg-slate-100 text-slate-400 dark:bg-slate-800 dark:text-slate-500'
             }`}>
               <Wallet className="h-5 w-5" />
@@ -273,7 +291,7 @@ export default function Dashboard() {
           <div className="mt-4">
             <h3 className={`text-2xl font-bold ${
               pendingDriverCash > 0 
-                ? isDark ? 'text-emerald-400' : 'text-emerald-600' 
+                ? isDark ? 'text-cyan-400' : 'text-blue-600' 
                 : isDark ? 'text-slate-100' : 'text-slate-800'
             }`}>
               {formatCurrency(pendingDriverCash)}
@@ -284,6 +302,71 @@ export default function Dashboard() {
           </div>
         </div>
 
+      </div>
+
+      {/* 2. Sales & Net Profit Analytics Section */}
+      <div className={`p-6 border rounded-2xl space-y-6 shadow-sm ${
+        isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
+      }`}>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b pb-4 border-slate-100 dark:border-slate-800">
+          <div>
+            <h3 className="text-xl font-bold flex items-center gap-2">
+              <TrendingUp className={`h-6 w-6 ${isDark ? 'text-cyan-400' : 'text-blue-600'}`} />
+              Sales & Net Profit Analytics
+            </h3>
+            <p className="text-xs sm:text-sm text-slate-500 mt-0.5 font-medium">
+              Real-time sales revenue, Cost of Goods Sold (COGS), net profit margins, and refund tracking.
+            </p>
+          </div>
+
+          <Link
+            href="/pos"
+            className={`px-4 py-2 text-xs font-bold rounded-xl border flex items-center gap-1.5 self-start sm:self-auto transition-all ${
+              isDark
+                ? 'bg-slate-800 hover:bg-slate-700 text-cyan-400 border-slate-700'
+                : 'bg-blue-50 hover:bg-blue-100 text-blue-700 border-blue-200'
+            }`}
+          >
+            <History className="h-4 w-4" />
+            Open Invoice History
+          </Link>
+        </div>
+
+        {/* Financial Metrics Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          
+          {/* Card 1: Gross Revenue */}
+          <div className={`p-4 rounded-xl border space-y-2 ${isDark ? 'bg-slate-950/60 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Gross Sales Revenue</span>
+            <h4 className={`text-2xl font-extrabold ${isDark ? 'text-white' : 'text-slate-900'}`}>{formatCurrency(totalRevenue)}</h4>
+            <p className="text-[11px] text-slate-400 font-medium">Valid non-refunded transactions</p>
+          </div>
+
+          {/* Card 2: Cost of Goods Sold (COGS) */}
+          <div className={`p-4 rounded-xl border space-y-2 ${isDark ? 'bg-slate-950/60 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
+            <span className="text-xs font-bold text-slate-500 uppercase tracking-wider">Cost of Goods (COGS)</span>
+            <h4 className={`text-2xl font-extrabold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>{formatCurrency(totalCogs)}</h4>
+            <p className="text-[11px] text-slate-400 font-medium">Inventory item unit cost base</p>
+          </div>
+
+          {/* Card 3: Net Profit */}
+          <div className={`p-4 rounded-xl border space-y-2 ${isDark ? 'bg-blue-950/30 border-blue-900/50' : 'bg-blue-50/70 border-blue-200'}`}>
+            <span className="text-xs font-bold text-blue-700 dark:text-cyan-400 uppercase tracking-wider flex items-center justify-between">
+              Net Profit
+              <ArrowUpRight className="h-4 w-4 text-blue-600 dark:text-cyan-400" />
+            </span>
+            <h4 className="text-2xl font-extrabold text-blue-700 dark:text-cyan-400">{formatCurrency(netProfit)}</h4>
+            <p className="text-[11px] text-blue-600/80 dark:text-cyan-300/80 font-medium">Total Revenue - Total COGS</p>
+          </div>
+
+          {/* Card 4: Net Margin % */}
+          <div className={`p-4 rounded-xl border space-y-2 ${isDark ? 'bg-indigo-950/30 border-indigo-900/50' : 'bg-indigo-50/70 border-indigo-200'}`}>
+            <span className="text-xs font-bold text-indigo-700 dark:text-indigo-400 uppercase tracking-wider">Profit Margin</span>
+            <h4 className="text-2xl font-extrabold text-indigo-700 dark:text-indigo-300">{profitMargin}%</h4>
+            <p className="text-[11px] text-indigo-600/80 dark:text-indigo-300/80 font-medium">Average return rate per sale</p>
+          </div>
+
+        </div>
       </div>
 
       {/* Main Grid: Overdue Alerts & Cylinder Status breakdown */}

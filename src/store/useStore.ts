@@ -67,6 +67,7 @@ export interface SaleItem {
   quantity: number;
   unitPrice: number;
   totalPrice: number;
+  costPrice?: number;
 }
 
 export interface SalesTransaction {
@@ -79,6 +80,9 @@ export interface SalesTransaction {
   paymentMethod: string;
   items: SaleItem[];
   createdAt: string;
+  status?: 'Completed' | 'Refunded';
+  refundedAt?: string;
+  refundReason?: string;
 }
 
 export interface UserAccount {
@@ -127,6 +131,7 @@ interface AppState {
   updateCartQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
   checkoutCart: (discount: number, taxRate: number, paymentMethod: string) => SalesTransaction | null;
+  refundTransaction: (transactionId: string, reason?: string) => boolean;
   
   // Product actions
   addProduct: (product: Omit<Product, 'id'>) => void;
@@ -348,12 +353,58 @@ const initialProducts: Product[] = [
   }
 ];
 
+const initialSales: SalesTransaction[] = [
+  {
+    id: 's_101',
+    receiptNumber: 'KH-2026-0001',
+    subtotal: 6350,
+    discount: 0,
+    tax: 1079.5,
+    total: 7429.5,
+    paymentMethod: 'Cash',
+    status: 'Completed',
+    items: [
+      { productId: 'p6', productName: 'Adjustable Wrench 10-inch', quantity: 1, unitPrice: 950, totalPrice: 950, costPrice: 600 },
+      { productId: 'p5', productName: 'Electric Wire 3/29 (90m)', quantity: 1, unitPrice: 5400, totalPrice: 5400, costPrice: 4200 }
+    ],
+    createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString()
+  },
+  {
+    id: 's_102',
+    receiptNumber: 'KH-2026-0002',
+    subtotal: 2500,
+    discount: 0,
+    tax: 425,
+    total: 2925,
+    paymentMethod: 'Card',
+    status: 'Completed',
+    items: [
+      { productId: 'p3', productName: 'Ingco Claw Hammer 16oz', quantity: 2, unitPrice: 1250, totalPrice: 2500, costPrice: 850 }
+    ],
+    createdAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString()
+  },
+  {
+    id: 's_103',
+    receiptNumber: 'KH-2026-0003',
+    subtotal: 1300,
+    discount: 0,
+    tax: 221,
+    total: 1521,
+    paymentMethod: 'Cash',
+    status: 'Completed',
+    items: [
+      { productId: 'p1', productName: 'PVC Pipe 3-inch (10ft)', quantity: 2, unitPrice: 650, totalPrice: 1300, costPrice: 450 }
+    ],
+    createdAt: new Date(Date.now() - 48 * 60 * 60 * 1000).toISOString()
+  }
+];
+
 export const useStore = create<AppState>()(
   persist(
     (set, get) => ({
       cylinders: initialCylinders,
       products: initialProducts,
-      sales: [],
+      sales: initialSales,
       cart: [],
       workers: initialWorkers,
       themeMode: 'light',
@@ -613,7 +664,8 @@ export const useStore = create<AppState>()(
           productName: item.product.name,
           quantity: item.quantity,
           unitPrice: item.product.retailPrice,
-          totalPrice: item.product.retailPrice * item.quantity
+          totalPrice: item.product.retailPrice * item.quantity,
+          costPrice: item.product.costPrice
         }));
 
         const newSale: SalesTransaction = {
@@ -625,6 +677,7 @@ export const useStore = create<AppState>()(
           total,
           paymentMethod,
           items: saleItems,
+          status: 'Completed',
           createdAt: new Date().toISOString()
         };
 
@@ -649,6 +702,46 @@ export const useStore = create<AppState>()(
         });
 
         return newSale;
+      },
+
+      refundTransaction: (transactionId, reason) => {
+        let success = false;
+        set((state) => {
+          const saleIndex = state.sales.findIndex(
+            (s) => s.id === transactionId || s.receiptNumber === transactionId
+          );
+          if (saleIndex === -1) return {};
+
+          const sale = state.sales[saleIndex];
+          if (sale.status === 'Refunded') return {};
+
+          const updatedSales = [...state.sales];
+          updatedSales[saleIndex] = {
+            ...sale,
+            status: 'Refunded',
+            refundedAt: new Date().toISOString(),
+            refundReason: reason || 'Customer requested refund'
+          };
+
+          // Restore product stock quantities
+          const updatedProducts = state.products.map((prod) => {
+            const itemToRestore = sale.items.find((i) => i.productId === prod.id);
+            if (itemToRestore) {
+              return {
+                ...prod,
+                stockQuantity: prod.stockQuantity + itemToRestore.quantity
+              };
+            }
+            return prod;
+          });
+
+          success = true;
+          return {
+            sales: updatedSales,
+            products: updatedProducts
+          };
+        });
+        return success;
       },
 
       // Product Actions

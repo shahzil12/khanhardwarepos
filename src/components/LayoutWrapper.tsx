@@ -67,11 +67,11 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
   const getRoleBadgeColor = (role: string) => {
     switch (role) {
       case 'Admin':
-        return isDark ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30' : 'bg-emerald-100 text-emerald-700 border-emerald-200';
+        return isDark ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30' : 'bg-blue-100 text-blue-700 border-blue-200';
       case 'Cashier':
-        return isDark ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' : 'bg-emerald-100 text-emerald-700 border-emerald-200';
-      case 'Driver':
         return isDark ? 'bg-blue-500/20 text-blue-400 border-blue-500/30' : 'bg-blue-100 text-blue-700 border-blue-200';
+      case 'Driver':
+        return isDark ? 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30' : 'bg-indigo-100 text-indigo-700 border-indigo-200';
       default:
         return 'bg-slate-100 text-slate-700';
     }
@@ -94,13 +94,13 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
             <div className={`flex h-10 w-10 items-center justify-center rounded-lg transition-all duration-200 ${
               isDark 
                 ? 'bg-cyan-950 border border-cyan-400/50 shadow-cyan-glow' 
-                : 'bg-emerald-600 shadow-sm shadow-emerald-600/20'
+                : 'bg-blue-600 shadow-sm shadow-blue-600/20'
             }`}>
               <Flame className="h-6 w-6 text-white animate-pulse" />
             </div>
             <div>
               <h1 className={`text-md font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r ${
-                isDark ? 'from-cyan-400 to-blue-200' : 'from-emerald-600 to-teal-600'
+                isDark ? 'from-cyan-400 to-blue-200' : 'from-blue-600 to-indigo-600'
               }`}>
                 Khan Hardware
               </h1>
@@ -124,7 +124,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
                   isActive
                     ? isDark
                       ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border-cyan-500/20 text-white shadow-cyan-glow'
-                      : 'bg-gradient-to-r from-emerald-600 to-teal-600 border-emerald-500/10 text-white shadow-md shadow-emerald-600/10'
+                      : 'bg-gradient-to-r from-blue-600 to-indigo-600 border-blue-500/10 text-white shadow-md shadow-blue-600/10'
                     : isDark
                       ? 'text-slate-400 hover:bg-slate-800 hover:text-slate-200 border-transparent'
                       : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border-transparent'
