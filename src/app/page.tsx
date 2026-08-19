@@ -216,7 +216,7 @@ export default function Dashboard() {
         <div className={`p-5 rounded-2xl flex flex-col justify-between transition-all duration-300 group border shadow-sm ${
           lowStockProducts.length > 0 
             ? isDark
-              ? '-950/20 border-amber-900/60 hover:border-amber-500/45 shadow-amber-glow-hover'
+              ? 'bg-amber-950/20 border-amber-900/60 hover:border-amber-500/45 shadow-amber-glow-hover'
               : 'bg-amber-50 border-amber-200 hover:border-amber-300'
             : isDark
               ? 'bg-slate-900 border-slate-800 hover:border-cyan-500/45 shadow-cyan-glow-hover'
@@ -228,8 +228,8 @@ export default function Dashboard() {
               lowStockProducts.length > 0 
                 ? isDark 
                   ? 'bg-amber-500/20 text-amber-400' 
-                  : 'bg-amber-100 -600' 
-                : 'bg-slate-100 -400 dark:bg-slate-800 dark:text-slate-500'
+                  : 'bg-amber-100 text-amber-600' 
+                : 'bg-slate-100 text-slate-400 dark:bg-slate-800 dark:text-slate-500'
             }`}>
               <ArrowDownLeft className="h-5 w-5" />
             </span>
@@ -237,7 +237,7 @@ export default function Dashboard() {
           <div className="mt-4">
             <h3 className={`text-2xl font-bold ${
               lowStockProducts.length > 0 
-                ? isDark ? 'text-amber-400' : '-600' 
+                ? isDark ? 'text-amber-400' : 'text-amber-600' 
                 : isDark ? 'text-slate-100' : 'text-slate-800'
             }`}>
               {lowStockProducts.length}
@@ -252,7 +252,7 @@ export default function Dashboard() {
         <div className={`p-5 rounded-2xl flex flex-col justify-between transition-all duration-300 group border shadow-sm ${
           pendingDriverCash > 0 
             ? isDark
-              ? '-950/20 border-amber-900/60 hover:border-amber-500/45 shadow-amber-glow-hover'
+              ? 'bg-amber-950/20 border-amber-900/60 hover:border-amber-500/45 shadow-amber-glow-hover'
               : 'bg-amber-50 border-amber-200 hover:border-amber-300'
             : isDark
               ? 'bg-slate-900 border-slate-800 hover:border-cyan-500/45 shadow-cyan-glow-hover'
@@ -263,9 +263,9 @@ export default function Dashboard() {
             <span className={`p-2 rounded-xl group-hover:scale-110 transition-transform ${
               pendingDriverCash > 0 
                 ? isDark 
-                  ? 'bg-amber-500/20 -400 animate-pulse' 
-                  : 'bg-amber-100 -600 animate-pulse' 
-                : 'bg-slate-100 -400 dark:bg-slate-800 dark:text-slate-500'
+                  ? 'bg-amber-500/20 text-amber-400 animate-pulse' 
+                  : 'bg-amber-100 text-amber-600 animate-pulse' 
+                : 'bg-slate-100 text-slate-400 dark:bg-slate-800 dark:text-slate-500'
             }`}>
               <Wallet className="h-5 w-5" />
             </span>
@@ -273,7 +273,7 @@ export default function Dashboard() {
           <div className="mt-4">
             <h3 className={`text-2xl font-bold ${
               pendingDriverCash > 0 
-                ? isDark ? 'text-amber-400' : '-600' 
+                ? isDark ? 'text-amber-400' : 'text-amber-600' 
                 : isDark ? 'text-slate-100' : 'text-slate-800'
             }`}>
               {formatCurrency(pendingDriverCash)}
@@ -332,13 +332,13 @@ export default function Dashboard() {
                     <div className="space-y-1">
                       <div className="flex items-center gap-2">
                         <span className={`font-bold text-sm ${isDark ? 'text-slate-100' : 'text-slate-800'}`}>{cyl.serialNumber}</span>
-                        <span className="text-[10px] bg-red-100 -700 font-bold px-1.5 py-0.2 rounded border border-red-200">
+                        <span className="text-[10px] bg-red-100 text-red-700 font-bold px-1.5 py-0.2 rounded border border-red-200">
                           OVERDUE
                         </span>
                       </div>
                       <div className="grid grid-cols-2 gap-x-4 gap-y-0.5 text-xs text-slate-500">
-                        <p>Customer: <span className={`font-semibold ${isDark ? '-300' : 'text-slate-700'}`}>{cyl.customer?.customerName}</span></p>
-                        <p>Phone: <span className={isDark ? '-300' : 'text-slate-700'}>{cyl.customer?.customerPhone}</span></p>
+                        <p>Customer: <span className={`font-semibold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>{cyl.customer?.customerName}</span></p>
+                        <p>Phone: <span className={isDark ? 'text-slate-300' : 'text-slate-700'}>{cyl.customer?.customerPhone}</span></p>
                         <p>Issued: <FormattedDate dateString={cyl.customer!.issueDate} /></p>
                         <p className="text-red-600 font-semibold">Expected: {returnDateStr}</p>
                       </div>
@@ -358,8 +358,8 @@ export default function Dashboard() {
                         href={`/cylinder?filter=overdue`}
                         className={`px-3 py-1.5 border text-xs font-bold rounded-lg transition-colors ${
                           isDark 
-                            ? 'bg-slate-800 border-slate-700 hover:-700 text-slate-300' 
-                            : 'bg-white -200 hover:bg-slate-50 text-slate-700'
+                            ? 'bg-slate-800 border-slate-700 hover:border-slate-700 text-slate-300' 
+                            : 'bg-white border-slate-200 hover:bg-slate-50 text-slate-700'
                         }`}
                       >
                         Settle Return
@@ -399,7 +399,7 @@ export default function Dashboard() {
               </div>
 
               <div>
-                <div className="flex justify-between text-xs font-semibold mb-1 -600">
+                <div className="flex justify-between text-xs font-semibold mb-1 text-slate-600">
                   <span className="flex items-center gap-1.5">
                     <span className={`h-2 w-2 rounded-full ${isDark ? 'bg-cyan-500' : 'bg-orange-500'}`}></span>
                     With Customers
@@ -415,7 +415,7 @@ export default function Dashboard() {
               </div>
 
               <div>
-                <div className="flex justify-between text-xs font-semibold mb-1 -600">
+                <div className="flex justify-between text-xs font-semibold mb-1 text-slate-600">
                   <span className="flex items-center gap-1.5">
                     <span className="h-2 w-2 rounded-full bg-amber-500"></span>
                     Returned (Empty)
@@ -431,7 +431,7 @@ export default function Dashboard() {
               </div>
 
               <div>
-                <div className="flex justify-between text-xs font-semibold mb-1 -600">
+                <div className="flex justify-between text-xs font-semibold mb-1 text-slate-600">
                   <span className="flex items-center gap-1.5">
                     <span className="h-2 w-2 rounded-full bg-blue-500"></span>
                     Under Refill Process
@@ -455,7 +455,7 @@ export default function Dashboard() {
                 href="/cylinder?action=issue" 
                 className={`w-full flex items-center justify-between p-3 border text-xs font-bold rounded-xl transition-all ${
                   isDark 
-                    ? 'bg-slate-800/40 hover:bg-slate-800 border-slate-800 hover:-700 text-slate-200' 
+                    ? 'bg-slate-800/40 hover:bg-slate-800 border-slate-800 hover:border-slate-700 text-slate-200' 
                     : 'bg-slate-50 hover:bg-slate-100/80 border-slate-200 text-slate-700'
                 }`}
               >
@@ -470,12 +470,12 @@ export default function Dashboard() {
                 href="/cylinder?action=return" 
                 className={`w-full flex items-center justify-between p-3 border text-xs font-bold rounded-xl transition-all ${
                   isDark 
-                    ? 'bg-slate-800/40 hover:bg-slate-800 border-slate-800 hover:-700 text-slate-200' 
+                    ? 'bg-slate-800/40 hover:bg-slate-800 border-slate-800 hover:border-slate-700 text-slate-200' 
                     : 'bg-slate-50 hover:bg-slate-100/80 border-slate-200 text-slate-700'
                 }`}
               >
                 <span className="flex items-center gap-2">
-                  <ArrowDownLeft className="h-4 w-4 -600 dark:text-emerald-400" />
+                  <ArrowDownLeft className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                   Receive Returned Cylinder
                 </span>
                 <ArrowUpRight className="h-4 w-4 text-slate-400" />
@@ -494,7 +494,7 @@ export default function Dashboard() {
         }`}>
           <div className={`flex items-center gap-2 pb-2 border-b ${isDark ? 'border-slate-800' : 'border-slate-100'}`}>
             <Wallet className="h-5 w-5 text-amber-500" />
-            <h3 className={`text-sm font-bold ${isDark ? 'text-slate-200' : '-800'}`}>Pending Driver Cash Collection logs</h3>
+            <h3 className={`text-sm font-bold ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>Pending Driver Cash Collection logs</h3>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
@@ -503,21 +503,21 @@ export default function Dashboard() {
               return (
                 <div 
                   key={cyl.id} 
-                  className={`flex justify-between items-center p-3 border rounded-xl transition-colors ${
+                  className={`flex justify-between items-center p-3 border rounded-xl transition-colors min-w-0 ${
                     isDark 
                       ? 'bg-slate-900/40 border-slate-800 hover:bg-slate-800/30 text-slate-200' 
-                      : 'bg-amber-50/40 border-amber-100 hover:bg-amber-50 -700'
+                      : 'bg-amber-50/40 border-amber-100 hover:bg-amber-50 text-slate-700'
                   }`}
                 >
-                  <div>
-                    <p className={`text-xs font-bold truncate ${isDark ? '-200' : '-800'}`}>Driver: {driver?.name || 'Unknown'}</p>
-                    <p className="text-[10px] text-slate-500 mt-0.5 truncate">Cyl: {cyl.serialNumber} ({cyl.customer?.customerName})</p>
+                  <div className="min-w-0 flex-1 mr-3">
+                    <p className={`text-xs font-bold truncate ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>Driver: {driver?.name || 'Unknown'}</p>
+                    <p className="text-[10px] text-slate-500 mt-0.5 truncate" title={`Cyl: ${cyl.serialNumber} (${cyl.customer?.customerName})`}>Cyl: {cyl.serialNumber} ({cyl.customer?.customerName})</p>
                   </div>
                   <div className="text-right shrink-0">
                     <p className={`text-xs font-bold ${isDark ? 'text-amber-400' : 'text-amber-600'}`}>{formatCurrency((cyl.customer?.securityDeposit || 0) + (cyl.customer?.refillCharges || 0))}</p>
                     <Link 
                       href="/cylinder?filter=deliveries"
-                      className={`text-[10px] font-bold hover:underline block mt-0.5 ${isDark ? 'text-cyan-400' : '-600'}`}
+                      className={`text-[10px] font-bold hover:underline block mt-0.5 ${isDark ? 'text-cyan-400' : 'text-orange-600'}`}
                     >
                       Settle Cash &rarr;
                     </Link>
