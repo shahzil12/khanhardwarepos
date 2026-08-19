@@ -715,31 +715,31 @@ function CylinderPageContent() {
 
       {/* 1. ISSUE CYLINDER MODAL */}
       {isIssueModalOpen && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-start pt-16 sm:pt-24 pb-16 custom-scrollbar">
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 pt-24 sm:pt-32 pb-20 flex justify-center items-start custom-scrollbar">
           <div className={`border rounded-2xl w-full max-w-md relative shadow-2xl flex flex-col max-h-[70vh] sm:max-h-[75vh] animate-scale-in transition-colors duration-200 ${
             isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
           }`}>
             {/* Pinned Modal Header */}
-            <div className="p-5 sm:p-6 pb-4 relative shrink-0 border-b border-slate-100 dark:border-slate-800">
+            <div className="p-6 sm:p-7 pt-7 sm:pt-8 pb-4 relative shrink-0 border-b border-slate-100 dark:border-slate-800">
               <button 
                 onClick={() => setIsIssueModalOpen(false)}
-                className={`absolute top-4 right-4 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
+                className={`absolute top-5 right-5 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
                 title="Close modal"
               >
                 <X className="h-5 w-5" />
               </button>
 
-              <div className="pr-8">
+              <div className="pr-8 pt-2">
                 <h3 className="text-lg sm:text-xl font-bold flex items-center gap-2 mb-1">
                   <UserPlus className={`h-5.5 w-5.5 shrink-0 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
                   Issue Cylinder to Customer
                 </h3>
-                <p className="text-xs text-slate-500 font-medium leading-relaxed">Assign cylinder stock and track deposits.</p>
+                <p className="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed mt-1">Assign cylinder stock and track deposits.</p>
               </div>
             </div>
 
             {/* Scrollable Form Body */}
-            <div className="p-5 sm:p-6 overflow-y-auto flex-1 custom-scrollbar">
+            <div className="p-6 sm:p-7 overflow-y-auto flex-1 custom-scrollbar">
               <form onSubmit={handleIssueSubmit} className="space-y-4 text-xs sm:text-sm">
                 <div>
                   <label className="block text-xs font-bold text-slate-500 mb-1.5">Select Cylinder (In Stock)</label>
@@ -912,35 +912,35 @@ function CylinderPageContent() {
 
       {/* 2. RECEIVE RETURN / FAST RETURN MODAL */}
       {isReturnModalOpen && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-start pt-16 sm:pt-24 pb-16 custom-scrollbar">
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 pt-24 sm:pt-32 pb-20 flex justify-center items-start custom-scrollbar">
           <div className={`border rounded-2xl w-full max-w-md relative shadow-2xl flex flex-col max-h-[70vh] sm:max-h-[75vh] animate-scale-in transition-colors duration-200 ${
             isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
           }`}>
             {/* Pinned Header */}
-            <div className="p-5 sm:p-6 pb-4 relative shrink-0 border-b border-slate-100 dark:border-slate-800">
+            <div className="p-6 sm:p-7 pt-7 sm:pt-8 pb-4 relative shrink-0 border-b border-slate-100 dark:border-slate-800">
               <button 
                 onClick={() => {
                   setIsReturnModalOpen(false);
                   setReturnSearchSerial('');
                   setFoundReturnCylinder(null);
                 }}
-                className={`absolute top-4 right-4 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
+                className={`absolute top-5 right-5 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
                 title="Close modal"
               >
                 <X className="h-5 w-5" />
               </button>
 
-              <div className="pr-8">
+              <div className="pr-8 pt-2">
                 <h3 className="text-lg sm:text-xl font-bold flex items-center gap-2 mb-1">
                   <ArrowLeftRight className={`h-5.5 w-5.5 shrink-0 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
                   Fast Cylinder Return Process
                 </h3>
-                <p className="text-xs text-slate-500 font-medium leading-relaxed">Scan barcode or search serial to refund deposit and settle account.</p>
+                <p className="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed mt-1">Scan barcode or search serial to refund deposit and settle account.</p>
               </div>
             </div>
 
             {/* Scrollable Body */}
-            <div className="p-5 sm:p-6 overflow-y-auto flex-1 custom-scrollbar">
+            <div className="p-6 sm:p-7 overflow-y-auto flex-1 custom-scrollbar">
               <form onSubmit={handleReturnSubmit} className="space-y-4 text-xs sm:text-sm">
                 <div>
                   <label className="block text-xs font-bold text-slate-500 mb-1.5">Cylinder Serial Number / Scan Tag</label>
@@ -1040,31 +1040,31 @@ function CylinderPageContent() {
 
       {/* 3. ADD CYLINDER MODAL */}
       {isAddCylinderModalOpen && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-start pt-16 sm:pt-24 pb-16 custom-scrollbar">
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 pt-24 sm:pt-32 pb-20 flex justify-center items-start custom-scrollbar">
           <div className={`border rounded-2xl w-full max-w-md relative shadow-2xl flex flex-col max-h-[70vh] sm:max-h-[75vh] animate-scale-in transition-colors duration-200 ${
             isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
           }`}>
             {/* Pinned Header */}
-            <div className="p-5 sm:p-6 pb-4 relative shrink-0 border-b border-slate-100 dark:border-slate-800">
+            <div className="p-6 sm:p-7 pt-7 sm:pt-8 pb-4 relative shrink-0 border-b border-slate-100 dark:border-slate-800">
               <button 
                 onClick={() => setIsAddCylinderModalOpen(false)}
-                className={`absolute top-4 right-4 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
+                className={`absolute top-5 right-5 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
                 title="Close modal"
               >
                 <X className="h-5 w-5" />
               </button>
 
-              <div className="pr-8">
+              <div className="pr-8 pt-2">
                 <h3 className="text-lg sm:text-xl font-bold flex items-center gap-2 mb-1">
                   <Database className={`h-5.5 w-5.5 shrink-0 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
                   Register New Cylinder
                 </h3>
-                <p className="text-xs text-slate-500 font-medium leading-relaxed">Create inventory cylinder profile for tracking.</p>
+                <p className="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed mt-1">Create inventory cylinder profile for tracking.</p>
               </div>
             </div>
 
             {/* Scrollable Body */}
-            <div className="p-5 sm:p-6 overflow-y-auto flex-1 custom-scrollbar">
+            <div className="p-6 sm:p-7 overflow-y-auto flex-1 custom-scrollbar">
               <form onSubmit={handleAddCylinderSubmit} className="space-y-4 text-xs sm:text-sm">
                 <div>
                   <label className="block text-xs font-bold text-slate-500 mb-1.5">Serial Number / Tag ID</label>
@@ -1138,31 +1138,31 @@ function CylinderPageContent() {
 
       {/* 4. WORKERS & DRIVERS REGISTRY MODAL */}
       {isWorkerModalOpen && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-start pt-16 sm:pt-24 pb-16 custom-scrollbar">
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 pt-24 sm:pt-32 pb-20 flex justify-center items-start custom-scrollbar">
           <div className={`border rounded-2xl w-full max-w-xl relative shadow-2xl flex flex-col max-h-[70vh] sm:max-h-[75vh] animate-scale-in transition-colors duration-200 ${
             isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
           }`}>
             {/* Pinned Header */}
-            <div className="p-5 sm:p-6 pb-4 relative shrink-0 border-b border-slate-100 dark:border-slate-800">
+            <div className="p-6 sm:p-7 pt-7 sm:pt-8 pb-4 relative shrink-0 border-b border-slate-100 dark:border-slate-800">
               <button 
                 onClick={() => setIsWorkerModalOpen(false)}
-                className={`absolute top-4 right-4 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
+                className={`absolute top-5 right-5 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
                 title="Close modal"
               >
                 <X className="h-5 w-5" />
               </button>
 
-              <div className="pr-8">
+              <div className="pr-8 pt-2">
                 <h3 className="text-lg sm:text-xl font-bold flex items-center gap-2 mb-1">
                   <UserCheck className={`h-5.5 w-5.5 shrink-0 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
                   Workers & Drivers Management
                 </h3>
-                <p className="text-xs text-slate-500 font-medium leading-relaxed">Register and track drivers and loaders responsible for deliveries.</p>
+                <p className="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed mt-1">Register and track drivers and loaders responsible for deliveries.</p>
               </div>
             </div>
 
             {/* Scrollable Body */}
-            <div className="p-5 sm:p-6 overflow-y-auto flex-1 space-y-6 custom-scrollbar">
+            <div className="p-6 sm:p-7 overflow-y-auto flex-1 space-y-6 custom-scrollbar">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
                 {/* Driver Registration Form */}
