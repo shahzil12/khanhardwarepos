@@ -715,15 +715,15 @@ function CylinderPageContent() {
 
       {/* 1. ISSUE CYLINDER MODAL */}
       {isIssueModalOpen && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-start py-8 sm:py-12 custom-scrollbar">
-          <div className={`border rounded-2xl w-full max-w-md relative shadow-2xl flex flex-col max-h-[75vh] sm:max-h-[80vh] animate-scale-in transition-colors duration-200 ${
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-start pt-16 sm:pt-24 pb-16 custom-scrollbar">
+          <div className={`border rounded-2xl w-full max-w-md relative shadow-2xl flex flex-col max-h-[70vh] sm:max-h-[75vh] animate-scale-in transition-colors duration-200 ${
             isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
           }`}>
             {/* Pinned Modal Header */}
-            <div className="p-6 sm:p-7 pb-4 relative shrink-0 border-b border-slate-100 dark:border-slate-800">
+            <div className="p-5 sm:p-6 pb-4 relative shrink-0 border-b border-slate-100 dark:border-slate-800">
               <button 
                 onClick={() => setIsIssueModalOpen(false)}
-                className={`absolute top-5 right-5 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
+                className={`absolute top-4 right-4 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
                 title="Close modal"
               >
                 <X className="h-5 w-5" />
@@ -739,7 +739,7 @@ function CylinderPageContent() {
             </div>
 
             {/* Scrollable Form Body */}
-            <div className="p-6 sm:p-7 overflow-y-auto flex-1 custom-scrollbar">
+            <div className="p-5 sm:p-6 overflow-y-auto flex-1 custom-scrollbar">
               <form onSubmit={handleIssueSubmit} className="space-y-4 text-xs sm:text-sm">
                 <div>
                   <label className="block text-xs font-bold text-slate-500 mb-1.5">Select Cylinder (In Stock)</label>
@@ -912,19 +912,19 @@ function CylinderPageContent() {
 
       {/* 2. RECEIVE RETURN / FAST RETURN MODAL */}
       {isReturnModalOpen && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-start py-8 sm:py-12 custom-scrollbar">
-          <div className={`border rounded-2xl w-full max-w-md relative shadow-2xl flex flex-col max-h-[75vh] sm:max-h-[80vh] animate-scale-in transition-colors duration-200 ${
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-start pt-16 sm:pt-24 pb-16 custom-scrollbar">
+          <div className={`border rounded-2xl w-full max-w-md relative shadow-2xl flex flex-col max-h-[70vh] sm:max-h-[75vh] animate-scale-in transition-colors duration-200 ${
             isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
           }`}>
             {/* Pinned Header */}
-            <div className="p-6 sm:p-7 pb-4 relative shrink-0 border-b border-slate-100 dark:border-slate-800">
+            <div className="p-5 sm:p-6 pb-4 relative shrink-0 border-b border-slate-100 dark:border-slate-800">
               <button 
                 onClick={() => {
                   setIsReturnModalOpen(false);
                   setReturnSearchSerial('');
                   setFoundReturnCylinder(null);
                 }}
-                className={`absolute top-5 right-5 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
+                className={`absolute top-4 right-4 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
                 title="Close modal"
               >
                 <X className="h-5 w-5" />
@@ -940,7 +940,7 @@ function CylinderPageContent() {
             </div>
 
             {/* Scrollable Body */}
-            <div className="p-6 sm:p-7 overflow-y-auto flex-1 custom-scrollbar">
+            <div className="p-5 sm:p-6 overflow-y-auto flex-1 custom-scrollbar">
               <form onSubmit={handleReturnSubmit} className="space-y-4 text-xs sm:text-sm">
                 <div>
                   <label className="block text-xs font-bold text-slate-500 mb-1.5">Cylinder Serial Number / Scan Tag</label>
@@ -1040,15 +1040,15 @@ function CylinderPageContent() {
 
       {/* 3. ADD CYLINDER MODAL */}
       {isAddCylinderModalOpen && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-start py-8 sm:py-12 custom-scrollbar">
-          <div className={`border rounded-2xl w-full max-w-md relative shadow-2xl flex flex-col max-h-[75vh] sm:max-h-[80vh] animate-scale-in transition-colors duration-200 ${
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-start pt-16 sm:pt-24 pb-16 custom-scrollbar">
+          <div className={`border rounded-2xl w-full max-w-md relative shadow-2xl flex flex-col max-h-[70vh] sm:max-h-[75vh] animate-scale-in transition-colors duration-200 ${
             isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
           }`}>
             {/* Pinned Header */}
-            <div className="p-6 sm:p-7 pb-4 relative shrink-0 border-b border-slate-100 dark:border-slate-800">
+            <div className="p-5 sm:p-6 pb-4 relative shrink-0 border-b border-slate-100 dark:border-slate-800">
               <button 
                 onClick={() => setIsAddCylinderModalOpen(false)}
-                className={`absolute top-5 right-5 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
+                className={`absolute top-4 right-4 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
                 title="Close modal"
               >
                 <X className="h-5 w-5" />
@@ -1064,7 +1064,7 @@ function CylinderPageContent() {
             </div>
 
             {/* Scrollable Body */}
-            <div className="p-6 sm:p-7 overflow-y-auto flex-1 custom-scrollbar">
+            <div className="p-5 sm:p-6 overflow-y-auto flex-1 custom-scrollbar">
               <form onSubmit={handleAddCylinderSubmit} className="space-y-4 text-xs sm:text-sm">
                 <div>
                   <label className="block text-xs font-bold text-slate-500 mb-1.5">Serial Number / Tag ID</label>
@@ -1138,15 +1138,15 @@ function CylinderPageContent() {
 
       {/* 4. WORKERS & DRIVERS REGISTRY MODAL */}
       {isWorkerModalOpen && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-start py-8 sm:py-12 custom-scrollbar">
-          <div className={`border rounded-2xl w-full max-w-xl relative shadow-2xl flex flex-col max-h-[75vh] sm:max-h-[80vh] animate-scale-in transition-colors duration-200 ${
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-start pt-16 sm:pt-24 pb-16 custom-scrollbar">
+          <div className={`border rounded-2xl w-full max-w-xl relative shadow-2xl flex flex-col max-h-[70vh] sm:max-h-[75vh] animate-scale-in transition-colors duration-200 ${
             isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
           }`}>
             {/* Pinned Header */}
-            <div className="p-6 sm:p-7 pb-4 relative shrink-0 border-b border-slate-100 dark:border-slate-800">
+            <div className="p-5 sm:p-6 pb-4 relative shrink-0 border-b border-slate-100 dark:border-slate-800">
               <button 
                 onClick={() => setIsWorkerModalOpen(false)}
-                className={`absolute top-5 right-5 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
+                className={`absolute top-4 right-4 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
                 title="Close modal"
               >
                 <X className="h-5 w-5" />
@@ -1162,7 +1162,7 @@ function CylinderPageContent() {
             </div>
 
             {/* Scrollable Body */}
-            <div className="p-6 sm:p-7 overflow-y-auto flex-1 space-y-6 custom-scrollbar">
+            <div className="p-5 sm:p-6 overflow-y-auto flex-1 space-y-6 custom-scrollbar">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
                 {/* Driver Registration Form */}
