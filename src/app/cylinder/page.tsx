@@ -84,6 +84,23 @@ function CylinderPageContent() {
 
   const isDark = themeMode === 'dark';
 
+  // Close modal helpers that clean up URL query params
+  const handleCloseIssueModal = () => {
+    setIsIssueModalOpen(false);
+    if (searchParams.get('action')) {
+      router.replace('/cylinder');
+    }
+  };
+
+  const handleCloseReturnModal = () => {
+    setIsReturnModalOpen(false);
+    setReturnSearchSerial('');
+    setFoundReturnCylinder(null);
+    if (searchParams.get('action')) {
+      router.replace('/cylinder');
+    }
+  };
+
   // Sync state from query params & set defaults
   useEffect(() => {
     const action = searchParams.get('action');
@@ -93,6 +110,9 @@ function CylinderPageContent() {
       setIsIssueModalOpen(true);
     } else if (action === 'return') {
       setIsReturnModalOpen(true);
+    } else {
+      setIsIssueModalOpen(false);
+      setIsReturnModalOpen(false);
     }
     
     if (filter === 'overdue') {
@@ -754,7 +774,7 @@ function CylinderPageContent() {
             {/* Pinned Modal Header */}
             <div className="p-5 sm:p-6 pb-4 relative shrink-0 border-b border-slate-100 dark:border-slate-800">
               <button 
-                onClick={() => setIsIssueModalOpen(false)}
+                onClick={handleCloseIssueModal}
                 className={`absolute top-4 right-4 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
                 title="Close modal"
               >
@@ -963,11 +983,7 @@ function CylinderPageContent() {
             {/* Pinned Header */}
             <div className="p-5 sm:p-6 pb-4 relative shrink-0 border-b border-slate-100 dark:border-slate-800">
               <button 
-                onClick={() => {
-                  setIsReturnModalOpen(false);
-                  setReturnSearchSerial('');
-                  setFoundReturnCylinder(null);
-                }}
+                onClick={handleCloseReturnModal}
                 className={`absolute top-4 right-4 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
                 title="Close modal"
               >
