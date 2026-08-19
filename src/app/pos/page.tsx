@@ -598,7 +598,6 @@ export default function POSPage() {
 
               <div className="text-center pt-4 border-t border-dashed border-slate-300 space-y-1">
                 <p className="font-bold text-[10px] tracking-widest">THANK YOU FOR YOUR VISIT</p>
-                <p className="text-[8px] text-slate-400">Software designed by Antigravity</p>
               </div>
             </div>
 
