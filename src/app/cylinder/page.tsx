@@ -715,22 +715,25 @@ function CylinderPageContent() {
 
       {/* 1. ISSUE CYLINDER MODAL */}
       {isIssueModalOpen && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-start sm:items-center py-6 sm:py-10">
-          <div className={`border rounded-2xl w-full max-w-md my-auto p-6 relative shadow-2xl animate-scale-in transition-colors duration-200 ${
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-start py-10 sm:py-14">
+          <div className={`border rounded-2xl w-full max-w-md my-auto p-6 sm:p-8 pt-8 sm:pt-10 relative shadow-2xl animate-scale-in transition-colors duration-200 ${
             isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
           }`}>
             <button 
               onClick={() => setIsIssueModalOpen(false)}
-              className={`absolute top-4 right-4 ${isDark ? 'text-slate-500 hover:-300' : 'text-slate-400 hover:-600'}`}
+              className={`absolute top-5 right-5 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
+              title="Close modal"
             >
               <X className="h-5 w-5" />
             </button>
 
-            <h3 className="text-lg font-bold flex items-center gap-2 mb-1">
-              <UserPlus className={`h-5 w-5 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
-              Issue Cylinder to Customer
-            </h3>
-            <p className="text-xs text-slate-500 mb-6">Assign cylinder stock and track deposits.</p>
+            <div className="pr-8 mb-6 pt-1">
+              <h3 className="text-lg sm:text-xl font-bold flex items-center gap-2 mb-1.5">
+                <UserPlus className={`h-5.5 w-5.5 shrink-0 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
+                Issue Cylinder to Customer
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed">Assign cylinder stock and track deposits.</p>
+            </div>
 
             <form onSubmit={handleIssueSubmit} className="space-y-4 text-xs sm:text-sm">
               <div>
@@ -903,8 +906,8 @@ function CylinderPageContent() {
 
       {/* 2. RECEIVE RETURN / FAST RETURN MODAL */}
       {isReturnModalOpen && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-start sm:items-center py-6 sm:py-10">
-          <div className={`border rounded-2xl w-full max-w-md my-auto p-6 relative shadow-2xl animate-scale-in transition-colors duration-200 ${
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-start py-10 sm:py-14">
+          <div className={`border rounded-2xl w-full max-w-md my-auto p-6 sm:p-8 pt-8 sm:pt-10 relative shadow-2xl animate-scale-in transition-colors duration-200 ${
             isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
           }`}>
             <button 
@@ -913,16 +916,19 @@ function CylinderPageContent() {
                 setReturnSearchSerial('');
                 setFoundReturnCylinder(null);
               }}
-              className={`absolute top-4 right-4 ${isDark ? 'text-slate-500 hover:text-slate-300' : 'text-slate-400 hover:text-slate-600'}`}
+              className={`absolute top-5 right-5 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
+              title="Close modal"
             >
               <X className="h-5 w-5" />
             </button>
 
-            <h3 className="text-lg font-bold flex items-center gap-2 mb-1">
-              <ArrowLeftRight className={`h-5 w-5 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
-              Fast Cylinder Return Process
-            </h3>
-            <p className="text-xs text-slate-500 mb-6">Scan barcode or search serial to refund deposit and settle account.</p>
+            <div className="pr-8 mb-6 pt-1">
+              <h3 className="text-lg sm:text-xl font-bold flex items-center gap-2 mb-1.5">
+                <ArrowLeftRight className={`h-5.5 w-5.5 shrink-0 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
+                Fast Cylinder Return Process
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed">Scan barcode or search serial to refund deposit and settle account.</p>
+            </div>
 
             <form onSubmit={handleReturnSubmit} className="space-y-4 text-xs sm:text-sm">
               <div>
@@ -1022,22 +1028,25 @@ function CylinderPageContent() {
 
       {/* 3. ADD CYLINDER MODAL */}
       {isAddCylinderModalOpen && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-start sm:items-center py-6 sm:py-10">
-          <div className={`border rounded-2xl w-full max-w-md my-auto p-6 relative shadow-2xl animate-scale-in transition-colors duration-200 ${
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-start py-10 sm:py-14">
+          <div className={`border rounded-2xl w-full max-w-md my-auto p-6 sm:p-8 pt-8 sm:pt-10 relative shadow-2xl animate-scale-in transition-colors duration-200 ${
             isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
           }`}>
             <button 
               onClick={() => setIsAddCylinderModalOpen(false)}
-              className={`absolute top-4 right-4 ${isDark ? 'text-slate-500 hover:text-slate-300' : 'text-slate-400 hover:text-slate-600'}`}
+              className={`absolute top-5 right-5 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
+              title="Close modal"
             >
               <X className="h-5 w-5" />
             </button>
 
-            <h3 className="text-lg font-bold flex items-center gap-2 mb-1">
-              <Database className={`h-5 w-5 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
-              Register New Cylinder
-            </h3>
-            <p className="text-xs text-slate-500 mb-6">Create inventory cylinder profile for tracking.</p>
+            <div className="pr-8 mb-6 pt-1">
+              <h3 className="text-lg sm:text-xl font-bold flex items-center gap-2 mb-1.5">
+                <Database className={`h-5.5 w-5.5 shrink-0 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
+                Register New Cylinder
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed">Create inventory cylinder profile for tracking.</p>
+            </div>
 
             <form onSubmit={handleAddCylinderSubmit} className="space-y-4 text-xs sm:text-sm">
               <div>
@@ -1111,23 +1120,26 @@ function CylinderPageContent() {
 
       {/* 4. WORKERS & DRIVERS REGISTRY MODAL */}
       {isWorkerModalOpen && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-start sm:items-center py-6 sm:py-10">
-          <div className={`border rounded-2xl w-full max-w-xl my-auto p-6 relative shadow-2xl flex flex-col justify-between max-h-[90vh] overflow-y-auto animate-scale-in transition-colors duration-200 ${
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-start py-10 sm:py-14">
+          <div className={`border rounded-2xl w-full max-w-xl my-auto p-6 sm:p-8 pt-8 sm:pt-10 relative shadow-2xl flex flex-col justify-between max-h-[90vh] overflow-y-auto animate-scale-in transition-colors duration-200 ${
             isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
           }`}>
             <button 
               onClick={() => setIsWorkerModalOpen(false)}
-              className={`absolute top-4 right-4 ${isDark ? 'text-slate-500 hover:text-slate-300' : 'text-slate-400 hover:text-slate-600'}`}
+              className={`absolute top-5 right-5 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
+              title="Close modal"
             >
               <X className="h-5 w-5" />
             </button>
 
             <div>
-              <h3 className="text-lg font-bold flex items-center gap-2 mb-1">
-                <UserCheck className={`h-5 w-5 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
-                Workers & Drivers Management
-              </h3>
-              <p className="text-xs text-slate-500 mb-6">Register and track drivers and loaders responsible for deliveries.</p>
+              <div className="pr-8 mb-6 pt-1">
+                <h3 className="text-lg sm:text-xl font-bold flex items-center gap-2 mb-1.5">
+                  <UserCheck className={`h-5.5 w-5.5 shrink-0 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
+                  Workers & Drivers Management
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed">Register and track drivers and loaders responsible for deliveries.</p>
+              </div>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
