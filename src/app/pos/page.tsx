@@ -280,16 +280,22 @@ export default function POSPage() {
                   }`}
                 >
                   <div className="space-y-1">
-                    <div className="flex justify-between items-start">
-                      <span className="px-2 py-0.5 bg-slate-100 dark:bg-slate-800 text-[10px] text-slate-500 dark:text-slate-400 rounded font-semibold border border-slate-200/50 dark:border-slate-700/50">
+                    <div className="flex justify-between items-center gap-1.5 flex-wrap">
+                      <span className={`px-2 py-0.5 text-[10px] rounded font-bold border ${
+                        isDark ? 'bg-slate-800 text-slate-300 border-slate-700' : 'bg-slate-100 text-slate-700 border-slate-200'
+                      }`}>
                         {product.category}
                       </span>
                       {isOutOfStock ? (
-                        <span className="px-1.5 py-0.5 bg-red-50 dark:bg-red-950/20 border border-red-200 dark:border-red-900 text-red-700 dark:text-red-400 text-[9px] font-bold rounded">
+                        <span className={`px-1.5 py-0.5 text-[9px] font-bold rounded border ${
+                          isDark ? 'bg-red-950/40 text-red-400 border-red-900/50' : 'bg-red-100 text-red-700 border-red-200'
+                        }`}>
                           OUT OF STOCK
                         </span>
                       ) : isLowStock ? (
-                        <span className="px-1.5 py-0.5 bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-900 text-emerald-700 dark:text-emerald-400 text-[9px] font-bold rounded animate-pulse">
+                        <span className={`px-1.5 py-0.5 text-[9px] font-bold rounded border animate-pulse ${
+                          isDark ? 'bg-amber-950/40 text-amber-400 border-amber-900/50' : 'bg-amber-100 text-amber-800 border-amber-300'
+                        }`}>
                           LOW STOCK ({product.stockQuantity})
                         </span>
                       ) : (
@@ -299,10 +305,10 @@ export default function POSPage() {
                       )}
                     </div>
 
-                    <h4 className={`font-bold text-sm mt-2 line-clamp-2 ${isDark ? 'text-slate-200 group-hover:text-white' : '-800 group-hover:text-slate-950'}`}>
+                    <h4 className={`font-bold text-sm mt-2 line-clamp-2 ${isDark ? 'text-slate-200 group-hover:text-white' : 'text-slate-800 group-hover:text-slate-950'}`}>
                       {product.name}
                     </h4>
-                    <p className="text-[10px] -400 font-mono tracking-wider">
+                    <p className="text-[10px] text-slate-400 font-mono tracking-wider">
                       SKU: {product.barcode}
                     </p>
                   </div>
@@ -501,12 +507,14 @@ export default function POSPage() {
               <button
                 onClick={handleCheckout}
                 disabled={cart.length === 0}
-                className={`w-full py-3 rounded-xl font-bold transition-all shadow-md text-sm sm:text-base border ${
+                className={`w-full py-3.5 rounded-xl font-bold transition-all shadow-md text-sm sm:text-base border ${
                   cart.length === 0
-                    ? 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-800 text-slate-400 cursor-not-allowed shadow-none'
+                    ? isDark
+                      ? 'bg-slate-800/60 border-slate-800 text-slate-500 cursor-not-allowed shadow-none'
+                      : 'bg-slate-200 border-slate-300 text-slate-500 cursor-not-allowed shadow-none'
                     : isDark
                       ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border-cyan-500/20 text-white shadow-cyan-glow'
-                      : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white border-emerald-500/10 shadow-emerald-600/10'
+                      : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white border-emerald-500/10 shadow-emerald-600/20'
                 }`}
               >
                 Pay & Print Thermal Receipt
