@@ -83,15 +83,13 @@ function CylinderPageContent() {
 
   const isDark = themeMode === 'dark';
 
-  // Sync state from query params
+  // Sync state from query params & set defaults
   useEffect(() => {
     const action = searchParams.get('action');
     const filter = searchParams.get('filter');
     
     if (action === 'issue') {
       setIsIssueModalOpen(true);
-      const available = cylinders.find(c => c.status === 'Filled (In Stock)');
-      if (available) setSelectedSerial(available.serialNumber);
     } else if (action === 'return') {
       setIsReturnModalOpen(true);
     }
@@ -101,7 +99,22 @@ function CylinderPageContent() {
     } else if (filter === 'deliveries') {
       setActiveTab('Deliveries');
     }
-  }, [searchParams, cylinders]);
+  }, [searchParams]);
+
+  // Set default return date (7 days) and auto-select serial when issue modal opens
+  useEffect(() => {
+    if (isIssueModalOpen) {
+      if (!expectedReturnDate) {
+        const nextWeek = new Date();
+        nextWeek.setDate(nextWeek.getDate() + 7);
+        setExpectedReturnDate(nextWeek.toISOString().split('T')[0]);
+      }
+      const available = cylinders.find(c => c.status === 'Filled (In Stock)');
+      if (available && !selectedSerial) {
+        setSelectedSerial(available.serialNumber);
+      }
+    }
+  }, [isIssueModalOpen, cylinders, expectedReturnDate, selectedSerial]);
 
   // Return cylinder lookup
   useEffect(() => {
@@ -743,6 +756,14 @@ function CylinderPageContent() {
               <form onSubmit={handleIssueSubmit} className="space-y-4 text-xs sm:text-sm">
                 <div>
                   <label className="block text-xs font-bold text-slate-500 mb-1.5">Select Cylinder (In Stock)</label>
+                  {availableCylindersForIssue.length === 0 ? (
+                    <div className={`p-3 rounded-xl border flex items-center gap-2 mb-2 text-xs font-medium ${
+                      isDark ? 'bg-amber-950/30 border-amber-900/50 text-amber-400' : 'bg-amber-50 border-amber-200 text-amber-800'
+                    }`}>
+                      <AlertTriangle className="h-4 w-4 shrink-0 text-amber-500" />
+                      <span>No filled cylinders available in stock. Register a new cylinder or complete a refill first.</span>
+                    </div>
+                  ) : null}
                   <select
                     value={selectedSerial}
                     onChange={(e) => setSelectedSerial(e.target.value)}
