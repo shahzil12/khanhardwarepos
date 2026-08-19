@@ -715,233 +715,366 @@ function CylinderPageContent() {
 
       {/* 1. ISSUE CYLINDER MODAL */}
       {isIssueModalOpen && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-start py-10 sm:py-14">
-          <div className={`border rounded-2xl w-full max-w-md my-auto p-6 sm:p-8 pt-8 sm:pt-10 relative shadow-2xl animate-scale-in transition-colors duration-200 ${
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-center py-6">
+          <div className={`border rounded-2xl w-full max-w-md my-auto relative shadow-2xl flex flex-col max-h-[85vh] animate-scale-in transition-colors duration-200 ${
             isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
           }`}>
-            <button 
-              onClick={() => setIsIssueModalOpen(false)}
-              className={`absolute top-5 right-5 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
-              title="Close modal"
-            >
-              <X className="h-5 w-5" />
-            </button>
+            {/* Pinned Modal Header */}
+            <div className="p-6 sm:p-7 pb-4 relative shrink-0 border-b border-slate-100 dark:border-slate-800">
+              <button 
+                onClick={() => setIsIssueModalOpen(false)}
+                className={`absolute top-5 right-5 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
+                title="Close modal"
+              >
+                <X className="h-5 w-5" />
+              </button>
 
-            <div className="pr-8 mb-6 pt-1">
-              <h3 className="text-lg sm:text-xl font-bold flex items-center gap-2 mb-1.5">
-                <UserPlus className={`h-5.5 w-5.5 shrink-0 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
-                Issue Cylinder to Customer
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed">Assign cylinder stock and track deposits.</p>
+              <div className="pr-8">
+                <h3 className="text-lg sm:text-xl font-bold flex items-center gap-2 mb-1">
+                  <UserPlus className={`h-5.5 w-5.5 shrink-0 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
+                  Issue Cylinder to Customer
+                </h3>
+                <p className="text-xs text-slate-500 font-medium leading-relaxed">Assign cylinder stock and track deposits.</p>
+              </div>
             </div>
 
-            <form onSubmit={handleIssueSubmit} className="space-y-4 text-xs sm:text-sm">
-              <div>
-                <label className="block text-xs font-bold text-slate-500 mb-1.5">Select Cylinder (In Stock)</label>
-                <select
-                  value={selectedSerial}
-                  onChange={(e) => setSelectedSerial(e.target.value)}
-                  className={`w-full px-3 py-2 border rounded-xl focus:outline-none shadow-sm ${
-                    isDark 
-                      ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
-                      : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
-                  }`}
-                >
-                  <option value="">-- Choose Cylinder --</option>
-                  {availableCylindersForIssue.map(c => (
-                    <option key={c.id} value={c.serialNumber}>
-                      {c.serialNumber} ({c.capacity} - {c.gasType})
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {/* Scrollable Form Body */}
+            <div className="p-6 sm:p-7 overflow-y-auto flex-1">
+              <form onSubmit={handleIssueSubmit} className="space-y-4 text-xs sm:text-sm">
                 <div>
-                  <label className="block text-xs font-bold text-slate-500 mb-1.5">Customer Full Name</label>
-                  <input
-                    type="text"
-                    required
-                    placeholder="e.g. Asif Raza"
-                    value={customerName}
-                    onChange={(e) => setCustomerName(e.target.value)}
-                    className={`w-full px-3 py-2 border rounded-xl focus:outline-none placeholder:text-slate-400 shadow-sm ${
-                      isDark 
-                        ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
-                        : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
-                    }`}
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 mb-1.5">Phone Number</label>
-                  <input
-                    type="tel"
-                    required
-                    placeholder="e.g. +923001234567"
-                    value={customerPhone}
-                    onChange={(e) => setCustomerPhone(e.target.value)}
-                    className={`w-full px-3 py-2 border rounded-xl focus:outline-none placeholder:text-slate-400 shadow-sm ${
-                      isDark 
-                        ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
-                        : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
-                    }`}
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-500 mb-1.5">National ID / CNIC</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. 35201-1234567-9"
-                  value={customerCnic}
-                  onChange={(e) => setCustomerCnic(e.target.value)}
-                  className={`w-full px-3 py-2 border rounded-xl focus:outline-none placeholder:text-slate-400 shadow-sm ${
-                    isDark 
-                      ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
-                      : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
-                  }`}
-                />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 mb-1.5">Security Deposit (PKR)</label>
-                  <input
-                    type="number"
-                    required
-                    value={securityDeposit}
-                    onChange={(e) => setSecurityDeposit(e.target.value)}
-                    className={`w-full px-3 py-2 border rounded-xl focus:outline-none font-bold shadow-sm ${
-                      isDark 
-                        ? 'bg-slate-950 border-slate-800 text-cyan-400 focus:border-slate-700' 
-                        : 'bg-white border-slate-300 text-emerald-600 focus:border-emerald-500'
-                    }`}
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 mb-1.5">Refill Charges (PKR)</label>
-                  <input
-                    type="number"
-                    required
-                    value={refillCharges}
-                    onChange={(e) => setRefillCharges(e.target.value)}
-                    className={`w-full px-3 py-2 border rounded-xl focus:outline-none font-bold shadow-sm ${
-                      isDark 
-                        ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
-                        : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
-                    }`}
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-500 mb-1.5">Expected Return Date</label>
-                <input
-                  type="date"
-                  required
-                  value={expectedReturnDate}
-                  onChange={(e) => setExpectedReturnDate(e.target.value)}
-                  className={`w-full px-3 py-2 border rounded-xl focus:outline-none shadow-sm ${
-                    isDark 
-                      ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
-                      : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
-                  }`}
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 mb-1.5">Delivery Method</label>
+                  <label className="block text-xs font-bold text-slate-500 mb-1.5">Select Cylinder (In Stock)</label>
                   <select
-                    value={deliveryType}
-                    onChange={(e) => setDeliveryType(e.target.value as any)}
-                    className={`w-full px-3 py-2 border rounded-xl focus:outline-none font-bold shadow-sm ${
+                    value={selectedSerial}
+                    onChange={(e) => setSelectedSerial(e.target.value)}
+                    className={`w-full px-3 py-2 border rounded-xl focus:outline-none shadow-sm ${
                       isDark 
                         ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
                         : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
                     }`}
                   >
-                    <option value="Pickup">Self-Pickup</option>
-                    <option value="Delivery">Driver Delivery</option>
+                    <option value="">-- Choose Cylinder --</option>
+                    {availableCylindersForIssue.map(c => (
+                      <option key={c.id} value={c.serialNumber}>
+                        {c.serialNumber} ({c.capacity} - {c.gasType})
+                      </option>
+                    ))}
                   </select>
                 </div>
-                {deliveryType === 'Delivery' && (
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-bold text-slate-500 mb-1.5">Assign Driver</label>
-                    <select
-                      value={assignedWorkerId}
-                      onChange={(e) => setAssignedWorkerId(e.target.value)}
+                    <label className="block text-xs font-bold text-slate-500 mb-1.5">Customer Full Name</label>
+                    <input
+                      type="text"
                       required
+                      placeholder="e.g. Asif Raza"
+                      value={customerName}
+                      onChange={(e) => setCustomerName(e.target.value)}
+                      className={`w-full px-3 py-2 border rounded-xl focus:outline-none placeholder:text-slate-400 shadow-sm ${
+                        isDark 
+                          ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
+                          : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
+                      }`}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-slate-500 mb-1.5">Phone Number</label>
+                    <input
+                      type="tel"
+                      required
+                      placeholder="e.g. +923001234567"
+                      value={customerPhone}
+                      onChange={(e) => setCustomerPhone(e.target.value)}
+                      className={`w-full px-3 py-2 border rounded-xl focus:outline-none placeholder:text-slate-400 shadow-sm ${
+                        isDark 
+                          ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
+                          : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
+                      }`}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 mb-1.5">National ID / CNIC</label>
+                  <input
+                    type="text"
+                    required
+                    placeholder="e.g. 35201-1234567-9"
+                    value={customerCnic}
+                    onChange={(e) => setCustomerCnic(e.target.value)}
+                    className={`w-full px-3 py-2 border rounded-xl focus:outline-none placeholder:text-slate-400 shadow-sm ${
+                      isDark 
+                        ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
+                        : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
+                    }`}
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-500 mb-1.5">Security Deposit (PKR)</label>
+                    <input
+                      type="number"
+                      required
+                      value={securityDeposit}
+                      onChange={(e) => setSecurityDeposit(e.target.value)}
+                      className={`w-full px-3 py-2 border rounded-xl focus:outline-none font-bold shadow-sm ${
+                        isDark 
+                          ? 'bg-slate-950 border-slate-800 text-cyan-400 focus:border-slate-700' 
+                          : 'bg-white border-slate-300 text-emerald-600 focus:border-emerald-500'
+                      }`}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-slate-500 mb-1.5">Refill Charges (PKR)</label>
+                    <input
+                      type="number"
+                      required
+                      value={refillCharges}
+                      onChange={(e) => setRefillCharges(e.target.value)}
+                      className={`w-full px-3 py-2 border rounded-xl focus:outline-none font-bold shadow-sm ${
+                        isDark 
+                          ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
+                          : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
+                      }`}
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 mb-1.5">Expected Return Date</label>
+                  <input
+                    type="date"
+                    required
+                    value={expectedReturnDate}
+                    onChange={(e) => setExpectedReturnDate(e.target.value)}
+                    className={`w-full px-3 py-2 border rounded-xl focus:outline-none shadow-sm ${
+                      isDark 
+                        ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
+                        : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
+                    }`}
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-500 mb-1.5">Delivery Method</label>
+                    <select
+                      value={deliveryType}
+                      onChange={(e) => setDeliveryType(e.target.value as any)}
                       className={`w-full px-3 py-2 border rounded-xl focus:outline-none font-bold shadow-sm ${
                         isDark 
                           ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
                           : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
                       }`}
                     >
-                      <option value="">-- Select Driver --</option>
-                      {workers.filter(w => w.role === 'Driver' && w.isActive).map(w => (
-                        <option key={w.id} value={w.id}>{w.name}</option>
-                      ))}
+                      <option value="Pickup">Self-Pickup</option>
+                      <option value="Delivery">Driver Delivery</option>
                     </select>
                   </div>
-                )}
-              </div>
+                  {deliveryType === 'Delivery' && (
+                    <div>
+                      <label className="block text-xs font-bold text-slate-500 mb-1.5">Assign Driver</label>
+                      <select
+                        value={assignedWorkerId}
+                        onChange={(e) => setAssignedWorkerId(e.target.value)}
+                        required
+                        className={`w-full px-3 py-2 border rounded-xl focus:outline-none font-bold shadow-sm ${
+                          isDark 
+                            ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
+                            : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
+                        }`}
+                      >
+                        <option value="">-- Select Driver --</option>
+                        {workers.filter(w => w.role === 'Driver' && w.isActive).map(w => (
+                          <option key={w.id} value={w.id}>{w.name}</option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
+                </div>
 
-              <button
-                type="submit"
-                className={`w-full py-2.5 mt-2 text-white font-bold rounded-xl transition-all border ${
-                  isDark 
-                    ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border-cyan-500/20 shadow-cyan-glow' 
-                    : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 border-emerald-500/10 shadow-md shadow-emerald-600/10'
-                }`}
-              >
-                Complete Issue & Collect Deposit
-              </button>
-            </form>
+                <button
+                  type="submit"
+                  className={`w-full py-2.5 mt-2 text-white font-bold rounded-xl transition-all border ${
+                    isDark 
+                      ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border-cyan-500/20 shadow-cyan-glow' 
+                      : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 border-emerald-500/10 shadow-md shadow-emerald-600/10'
+                  }`}
+                >
+                  Complete Issue & Collect Deposit
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       )}
 
       {/* 2. RECEIVE RETURN / FAST RETURN MODAL */}
       {isReturnModalOpen && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-start py-10 sm:py-14">
-          <div className={`border rounded-2xl w-full max-w-md my-auto p-6 sm:p-8 pt-8 sm:pt-10 relative shadow-2xl animate-scale-in transition-colors duration-200 ${
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-center py-6">
+          <div className={`border rounded-2xl w-full max-w-md my-auto relative shadow-2xl flex flex-col max-h-[85vh] animate-scale-in transition-colors duration-200 ${
             isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
           }`}>
-            <button 
-              onClick={() => {
-                setIsReturnModalOpen(false);
-                setReturnSearchSerial('');
-                setFoundReturnCylinder(null);
-              }}
-              className={`absolute top-5 right-5 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
-              title="Close modal"
-            >
-              <X className="h-5 w-5" />
-            </button>
+            {/* Pinned Header */}
+            <div className="p-6 sm:p-7 pb-4 relative shrink-0 border-b border-slate-100 dark:border-slate-800">
+              <button 
+                onClick={() => {
+                  setIsReturnModalOpen(false);
+                  setReturnSearchSerial('');
+                  setFoundReturnCylinder(null);
+                }}
+                className={`absolute top-5 right-5 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
+                title="Close modal"
+              >
+                <X className="h-5 w-5" />
+              </button>
 
-            <div className="pr-8 mb-6 pt-1">
-              <h3 className="text-lg sm:text-xl font-bold flex items-center gap-2 mb-1.5">
-                <ArrowLeftRight className={`h-5.5 w-5.5 shrink-0 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
-                Fast Cylinder Return Process
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed">Scan barcode or search serial to refund deposit and settle account.</p>
+              <div className="pr-8">
+                <h3 className="text-lg sm:text-xl font-bold flex items-center gap-2 mb-1">
+                  <ArrowLeftRight className={`h-5.5 w-5.5 shrink-0 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
+                  Fast Cylinder Return Process
+                </h3>
+                <p className="text-xs text-slate-500 font-medium leading-relaxed">Scan barcode or search serial to refund deposit and settle account.</p>
+              </div>
             </div>
 
-            <form onSubmit={handleReturnSubmit} className="space-y-4 text-xs sm:text-sm">
-              <div>
-                <label className="block text-xs font-bold text-slate-500 mb-1.5">Cylinder Serial Number / Scan Tag</label>
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+            {/* Scrollable Body */}
+            <div className="p-6 sm:p-7 overflow-y-auto flex-1">
+              <form onSubmit={handleReturnSubmit} className="space-y-4 text-xs sm:text-sm">
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 mb-1.5">Cylinder Serial Number / Scan Tag</label>
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+                    <input
+                      type="text"
+                      required
+                      placeholder="Scan or type e.g. CYL-240-003"
+                      value={returnSearchSerial}
+                      onChange={(e) => setReturnSearchSerial(e.target.value)}
+                      className={`w-full pl-9 pr-3 py-2 border rounded-xl focus:outline-none placeholder:text-slate-400 font-bold shadow-sm ${
+                        isDark 
+                          ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
+                          : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
+                      }`}
+                      autoFocus
+                    />
+                  </div>
+                </div>
+
+                {foundReturnCylinder ? (
+                  <div className={`border p-4 rounded-xl space-y-3 animate-fade-in text-xs ${
+                    isDark ? 'bg-slate-950/50 border-slate-800' : 'bg-slate-50 border-slate-200'
+                  }`}>
+                    <div className={`flex justify-between items-start border-b pb-2 ${isDark ? 'border-slate-800' : 'border-slate-100'}`}>
+                      <div>
+                        <span className="text-[10px] text-slate-400 uppercase block font-semibold">Cylinder Info</span>
+                        <span className={`font-bold ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>{foundReturnCylinder.serialNumber}</span>
+                        <span className="text-slate-400 ml-1.5">({foundReturnCylinder.capacity})</span>
+                      </div>
+                      <span className={`px-2 py-0.5 border font-bold rounded-full text-[9px] ${
+                        isDark ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20' : 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                      }`}>
+                        Issued Out
+                      </span>
+                    </div>
+
+                    <div className="space-y-1.5">
+                      <div className="flex justify-between">
+                        <span className="text-slate-400">Customer:</span>
+                        <span className={`font-bold ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>{foundReturnCylinder.customer?.customerName}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-slate-400">Phone:</span>
+                        <span className={isDark ? 'text-slate-300' : 'text-slate-700'}>{foundReturnCylinder.customer?.customerPhone}</span>
+                      </div>
+                      <div className="flex justify-between">
+                        <span className="text-slate-400">Issue Date:</span>
+                        <span className={isDark ? 'text-slate-300' : 'text-slate-700'}><FormattedDate dateString={foundReturnCylinder.customer!.issueDate} /></span>
+                      </div>
+                      <div className={`flex justify-between border-t pt-2 font-bold ${isDark ? 'text-cyan-400 border-slate-800' : 'text-emerald-700 border-slate-100'}`}>
+                        <span>Refundable Security Deposit:</span>
+                        <span>PKR {foundReturnCylinder.customer?.securityDeposit}</span>
+                      </div>
+                    </div>
+
+                    <div className={`p-2.5 rounded-lg flex items-start gap-2 mt-2 border ${
+                      isDark ? 'bg-emerald-950/20 border-emerald-900/40 text-emerald-400' : 'bg-emerald-50 border-emerald-100 text-emerald-700'
+                    }`}>
+                      <ShieldCheck className="h-4.5 w-4.5 shrink-0 mt-0.5" />
+                      <div>
+                        <p className="text-[10px] font-bold uppercase">Ready for Settlement</p>
+                        <p className="text-slate-500 dark:text-slate-400 text-[10px] leading-relaxed mt-0.5 font-medium">Settle deposit refund. The cylinder will be marked as "Returned (Empty)" and ready for refilling.</p>
+                      </div>
+                    </div>
+
+                    <button
+                      type="submit"
+                      className={`w-full py-2.5 mt-2 text-white font-bold rounded-xl transition-all border ${
+                        isDark 
+                          ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border-cyan-500/20 shadow-cyan-glow' 
+                          : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 border-emerald-500/10 shadow-md shadow-emerald-600/10'
+                      }`}
+                    >
+                      Confirm Settle & Return
+                    </button>
+                  </div>
+                ) : (
+                  returnSearchSerial.trim() && (
+                    <div className={`p-4 border rounded-xl flex items-start gap-2.5 text-xs ${
+                      isDark ? 'bg-red-950/20 border-red-900/40 text-red-400' : 'bg-red-50 border-red-100 text-red-700'
+                    }`}>
+                      <AlertTriangle className="h-5 w-5 text-red-500 shrink-0 animate-bounce" />
+                      <div>
+                        <p className="font-bold">No Active Cylinder Found</p>
+                        <p className="text-slate-500 dark:text-slate-400 mt-0.5 leading-normal font-medium">Cylinder is either already in stock, refilling, or serial does not exist. Verify the Serial Number.</p>
+                      </div>
+                    </div>
+                  )
+                )}
+              </form>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 3. ADD CYLINDER MODAL */}
+      {isAddCylinderModalOpen && (
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-center py-6">
+          <div className={`border rounded-2xl w-full max-w-md my-auto relative shadow-2xl flex flex-col max-h-[85vh] animate-scale-in transition-colors duration-200 ${
+            isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
+          }`}>
+            {/* Pinned Header */}
+            <div className="p-6 sm:p-7 pb-4 relative shrink-0 border-b border-slate-100 dark:border-slate-800">
+              <button 
+                onClick={() => setIsAddCylinderModalOpen(false)}
+                className={`absolute top-5 right-5 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
+                title="Close modal"
+              >
+                <X className="h-5 w-5" />
+              </button>
+
+              <div className="pr-8">
+                <h3 className="text-lg sm:text-xl font-bold flex items-center gap-2 mb-1">
+                  <Database className={`h-5.5 w-5.5 shrink-0 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
+                  Register New Cylinder
+                </h3>
+                <p className="text-xs text-slate-500 font-medium leading-relaxed">Create inventory cylinder profile for tracking.</p>
+              </div>
+            </div>
+
+            {/* Scrollable Body */}
+            <div className="p-6 sm:p-7 overflow-y-auto flex-1">
+              <form onSubmit={handleAddCylinderSubmit} className="space-y-4 text-xs sm:text-sm">
+                <div>
+                  <label className="block text-xs font-bold text-slate-500 mb-1.5">Serial Number / Tag ID</label>
                   <input
                     type="text"
                     required
-                    placeholder="Scan or type e.g. CYL-240-003"
-                    value={returnSearchSerial}
-                    onChange={(e) => setReturnSearchSerial(e.target.value)}
-                    className={`w-full pl-9 pr-3 py-2 border rounded-xl focus:outline-none placeholder:text-slate-400 font-bold shadow-sm ${
+                    placeholder="e.g. CYL-240-025"
+                    value={newSerial}
+                    onChange={(e) => setNewSerial(e.target.value)}
+                    className={`w-full px-3 py-2 border rounded-xl focus:outline-none placeholder:text-slate-400 font-bold tracking-wider shadow-sm ${
                       isDark 
                         ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
                         : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
@@ -949,198 +1082,87 @@ function CylinderPageContent() {
                     autoFocus
                   />
                 </div>
-              </div>
 
-              {foundReturnCylinder ? (
-                <div className={`border p-4 rounded-xl space-y-3 animate-fade-in text-xs ${
-                  isDark ? 'bg-slate-950/50 border-slate-800' : 'bg-slate-50 border-slate-200'
-                }`}>
-                  <div className={`flex justify-between items-start border-b pb-2 ${isDark ? 'border-slate-800' : 'border-slate-100'}`}>
-                    <div>
-                      <span className="text-[10px] text-slate-400 uppercase block font-semibold">Cylinder Info</span>
-                      <span className={`font-bold ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>{foundReturnCylinder.serialNumber}</span>
-                      <span className="text-slate-400 ml-1.5">({foundReturnCylinder.capacity})</span>
-                    </div>
-                    <span className={`px-2 py-0.5 border font-bold rounded-full text-[9px] ${
-                      isDark ? 'bg-cyan-500/10 text-cyan-400 border-cyan-500/20' : 'bg-emerald-50 text-emerald-700 border-emerald-200'
-                    }`}>
-                      Issued Out
-                    </span>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-500 mb-1.5">Gas Type</label>
+                    <select
+                      value={newGasType}
+                      onChange={(e) => setNewGasType(e.target.value)}
+                      className={`w-full px-3 py-2 border rounded-xl focus:outline-none font-bold shadow-sm ${
+                        isDark 
+                          ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
+                          : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
+                      }`}
+                    >
+                      <option value="Medical Oxygen">Medical Oxygen</option>
+                      <option value="Industrial Oxygen">Industrial Oxygen</option>
+                      <option value="Argon Gas">Argon Gas</option>
+                      <option value="Nitrous Oxide">Nitrous Oxide</option>
+                    </select>
                   </div>
-
-                  <div className="space-y-1.5">
-                    <div className="flex justify-between">
-                      <span className="text-slate-400">Customer:</span>
-                      <span className={`font-bold ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>{foundReturnCylinder.customer?.customerName}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-slate-400">Phone:</span>
-                      <span className={isDark ? 'text-slate-300' : 'text-slate-700'}>{foundReturnCylinder.customer?.customerPhone}</span>
-                    </div>
-                    <div className="flex justify-between">
-                      <span className="text-slate-400">Issue Date:</span>
-                      <span className={isDark ? 'text-slate-300' : 'text-slate-700'}><FormattedDate dateString={foundReturnCylinder.customer!.issueDate} /></span>
-                    </div>
-                    <div className={`flex justify-between border-t pt-2 font-bold ${isDark ? 'text-cyan-400 border-slate-800' : 'text-emerald-700 border-slate-100'}`}>
-                      <span>Refundable Security Deposit:</span>
-                      <span>PKR {foundReturnCylinder.customer?.securityDeposit}</span>
-                    </div>
+                  <div>
+                    <label className="block text-xs font-bold text-slate-500 mb-1.5">Capacity</label>
+                    <select
+                      value={newCapacity}
+                      onChange={(e) => setNewCapacity(e.target.value)}
+                      className={`w-full px-3 py-2 border rounded-xl focus:outline-none font-bold shadow-sm ${
+                        isDark 
+                          ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
+                          : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
+                      }`}
+                    >
+                      <option value="240 cu ft">240 cu ft (Jumbo)</option>
+                      <option value="40L">40 Liters</option>
+                      <option value="10L">10 Liters</option>
+                      <option value="24L">24 Liters</option>
+                    </select>
                   </div>
-
-                  <div className={`p-2.5 rounded-lg flex items-start gap-2 mt-2 border ${
-                    isDark ? 'bg-emerald-950/20 border-emerald-900/40 text-emerald-400' : 'bg-emerald-50 border-emerald-100 text-emerald-700'
-                  }`}>
-                    <ShieldCheck className="h-4.5 w-4.5 shrink-0 mt-0.5" />
-                    <div>
-                      <p className="text-[10px] font-bold uppercase">Ready for Settlement</p>
-                      <p className="text-slate-500 dark:text-slate-400 text-[10px] leading-relaxed mt-0.5 font-medium">Settle deposit refund. The cylinder will be marked as "Returned (Empty)" and ready for refilling.</p>
-                    </div>
-                  </div>
-
-                  <button
-                    type="submit"
-                    className={`w-full py-2.5 mt-2 text-white font-bold rounded-xl transition-all border ${
-                      isDark 
-                        ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border-cyan-500/20 shadow-cyan-glow' 
-                        : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 border-emerald-500/10 shadow-md shadow-emerald-600/10'
-                    }`}
-                  >
-                    Confirm Settle & Return
-                  </button>
                 </div>
-              ) : (
-                returnSearchSerial.trim() && (
-                  <div className={`p-4 border rounded-xl flex items-start gap-2.5 text-xs ${
-                    isDark ? 'bg-red-950/20 border-red-900/40 text-red-400' : 'bg-red-50 border-red-100 text-red-700'
-                  }`}>
-                    <AlertTriangle className="h-5 w-5 text-red-500 shrink-0 animate-bounce" />
-                    <div>
-                      <p className="font-bold">No Active Cylinder Found</p>
-                      <p className="text-slate-500 dark:text-slate-400 mt-0.5 leading-normal font-medium">Cylinder is either already in stock, refilling, or serial does not exist. Verify the Serial Number.</p>
-                    </div>
-                  </div>
-                )
-              )}
-            </form>
-          </div>
-        </div>
-      )}
 
-      {/* 3. ADD CYLINDER MODAL */}
-      {isAddCylinderModalOpen && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-start py-10 sm:py-14">
-          <div className={`border rounded-2xl w-full max-w-md my-auto p-6 sm:p-8 pt-8 sm:pt-10 relative shadow-2xl animate-scale-in transition-colors duration-200 ${
-            isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
-          }`}>
-            <button 
-              onClick={() => setIsAddCylinderModalOpen(false)}
-              className={`absolute top-5 right-5 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
-              title="Close modal"
-            >
-              <X className="h-5 w-5" />
-            </button>
-
-            <div className="pr-8 mb-6 pt-1">
-              <h3 className="text-lg sm:text-xl font-bold flex items-center gap-2 mb-1.5">
-                <Database className={`h-5.5 w-5.5 shrink-0 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
-                Register New Cylinder
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed">Create inventory cylinder profile for tracking.</p>
-            </div>
-
-            <form onSubmit={handleAddCylinderSubmit} className="space-y-4 text-xs sm:text-sm">
-              <div>
-                <label className="block text-xs font-bold text-slate-500 mb-1.5">Serial Number / Tag ID</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. CYL-240-025"
-                  value={newSerial}
-                  onChange={(e) => setNewSerial(e.target.value)}
-                  className={`w-full px-3 py-2 border rounded-xl focus:outline-none placeholder:text-slate-400 font-bold tracking-wider shadow-sm ${
+                <button
+                  type="submit"
+                  className={`w-full py-2.5 mt-2 text-white font-bold rounded-xl transition-all border ${
                     isDark 
-                      ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
-                      : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
+                      ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border-cyan-500/20 shadow-cyan-glow' 
+                      : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 border-emerald-500/10 shadow-md shadow-emerald-600/10'
                   }`}
-                  autoFocus
-                />
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 mb-1.5">Gas Type</label>
-                  <select
-                    value={newGasType}
-                    onChange={(e) => setNewGasType(e.target.value)}
-                    className={`w-full px-3 py-2 border rounded-xl focus:outline-none font-bold shadow-sm ${
-                      isDark 
-                        ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
-                        : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
-                    }`}
-                  >
-                    <option value="Medical Oxygen">Medical Oxygen</option>
-                    <option value="Industrial Oxygen">Industrial Oxygen</option>
-                    <option value="Argon Gas">Argon Gas</option>
-                    <option value="Nitrous Oxide">Nitrous Oxide</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-xs font-bold text-slate-500 mb-1.5">Capacity</label>
-                  <select
-                    value={newCapacity}
-                    onChange={(e) => setNewCapacity(e.target.value)}
-                    className={`w-full px-3 py-2 border rounded-xl focus:outline-none font-bold shadow-sm ${
-                      isDark 
-                        ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
-                        : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
-                    }`}
-                  >
-                    <option value="240 cu ft">240 cu ft (Jumbo)</option>
-                    <option value="40L">40 Liters</option>
-                    <option value="10L">10 Liters</option>
-                    <option value="24L">24 Liters</option>
-                  </select>
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                className={`w-full py-2.5 mt-2 text-white font-bold rounded-xl transition-all border ${
-                  isDark 
-                    ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border-cyan-500/20 shadow-cyan-glow' 
-                    : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 border-emerald-500/10 shadow-md shadow-emerald-600/10'
-                }`}
-              >
-                Add Cylinder to Inventory
-              </button>
-            </form>
+                >
+                  Add Cylinder to Inventory
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       )}
 
       {/* 4. WORKERS & DRIVERS REGISTRY MODAL */}
       {isWorkerModalOpen && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-start py-10 sm:py-14">
-          <div className={`border rounded-2xl w-full max-w-xl my-auto p-6 sm:p-8 pt-8 sm:pt-10 relative shadow-2xl flex flex-col justify-between max-h-[90vh] overflow-y-auto animate-scale-in transition-colors duration-200 ${
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 flex justify-center items-center py-6">
+          <div className={`border rounded-2xl w-full max-w-xl my-auto relative shadow-2xl flex flex-col max-h-[85vh] animate-scale-in transition-colors duration-200 ${
             isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
           }`}>
-            <button 
-              onClick={() => setIsWorkerModalOpen(false)}
-              className={`absolute top-5 right-5 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
-              title="Close modal"
-            >
-              <X className="h-5 w-5" />
-            </button>
+            {/* Pinned Header */}
+            <div className="p-6 sm:p-7 pb-4 relative shrink-0 border-b border-slate-100 dark:border-slate-800">
+              <button 
+                onClick={() => setIsWorkerModalOpen(false)}
+                className={`absolute top-5 right-5 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
+                title="Close modal"
+              >
+                <X className="h-5 w-5" />
+              </button>
 
-            <div>
-              <div className="pr-8 mb-6 pt-1">
-                <h3 className="text-lg sm:text-xl font-bold flex items-center gap-2 mb-1.5">
+              <div className="pr-8">
+                <h3 className="text-lg sm:text-xl font-bold flex items-center gap-2 mb-1">
                   <UserCheck className={`h-5.5 w-5.5 shrink-0 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
                   Workers & Drivers Management
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed">Register and track drivers and loaders responsible for deliveries.</p>
+                <p className="text-xs text-slate-500 font-medium leading-relaxed">Register and track drivers and loaders responsible for deliveries.</p>
               </div>
-              
+            </div>
+
+            {/* Scrollable Body */}
+            <div className="p-6 sm:p-7 overflow-y-auto flex-1 space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
                 {/* Driver Registration Form */}
@@ -1234,13 +1256,14 @@ function CylinderPageContent() {
               </div>
             </div>
             
-            <div className={`border-t mt-6 pt-4 flex justify-end ${isDark ? 'border-slate-800' : 'border-slate-200'}`}>
+            {/* Pinned Footer */}
+            <div className={`p-4 px-6 border-t flex justify-end shrink-0 ${isDark ? 'border-slate-800' : 'border-slate-200'}`}>
               <button
                 onClick={() => setIsWorkerModalOpen(false)}
                 className={`px-4 py-2 border font-bold rounded-xl text-xs sm:text-sm shadow-sm ${
                   isDark 
                     ? 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700'
-                    : 'bg-slate-100 hover:bg-slate-200 -700 border-slate-200'
+                    : 'bg-slate-100 hover:bg-slate-200 text-slate-700 border-slate-200'
                 }`}
               >
                 Close Window
