@@ -747,32 +747,32 @@ function CylinderPageContent() {
 
       {/* 1. ISSUE CYLINDER MODAL */}
       {isIssueModalOpen && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 pt-24 sm:pt-32 pb-20 flex justify-center items-start custom-scrollbar">
-          <div className={`border rounded-2xl w-full max-w-md relative shadow-2xl flex flex-col max-h-[70vh] sm:max-h-[75vh] animate-scale-in transition-colors duration-200 ${
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 p-4 sm:p-6 flex items-center justify-center animate-fade-in">
+          <div className={`border rounded-2xl w-full max-w-lg relative shadow-2xl flex flex-col max-h-[85vh] sm:max-h-[90vh] animate-scale-in transition-colors duration-200 ${
             isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
           }`}>
             {/* Pinned Modal Header */}
-            <div className="p-6 sm:p-7 pt-7 sm:pt-8 pb-4 relative shrink-0 border-b border-slate-100 dark:border-slate-800">
+            <div className="p-5 sm:p-6 pb-4 relative shrink-0 border-b border-slate-100 dark:border-slate-800">
               <button 
                 onClick={() => setIsIssueModalOpen(false)}
-                className={`absolute top-5 right-5 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
+                className={`absolute top-4 right-4 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
                 title="Close modal"
               >
                 <X className="h-5 w-5" />
               </button>
 
-              <div className="pr-8 pt-2">
+              <div className="pr-8">
                 <h3 className="text-lg sm:text-xl font-bold flex items-center gap-2 mb-1">
                   <UserPlus className={`h-5.5 w-5.5 shrink-0 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
                   Issue Cylinder to Customer
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed mt-1">Assign cylinder stock and track deposits.</p>
+                <p className="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed">Assign cylinder stock and track deposits.</p>
               </div>
             </div>
 
             {/* Scrollable Form Body */}
-            <div className="p-6 sm:p-7 overflow-y-auto flex-1 custom-scrollbar">
-              <form onSubmit={handleIssueSubmit} className="space-y-4 text-xs sm:text-sm">
+            <div className="p-5 sm:p-6 overflow-y-auto flex-1 custom-scrollbar">
+              <form id="issue-form" onSubmit={handleIssueSubmit} className="space-y-4 text-xs sm:text-sm">
                 <div>
                   <label className="block text-xs font-bold text-slate-500 mb-1.5">Select Cylinder (In Stock)</label>
                   {availableCylindersForIssue.length === 0 ? (
@@ -786,7 +786,7 @@ function CylinderPageContent() {
                   <select
                     value={selectedSerial}
                     onChange={(e) => setSelectedSerial(e.target.value)}
-                    className={`w-full px-3 py-2 border rounded-xl focus:outline-none shadow-sm ${
+                    className={`w-full px-3.5 py-2.5 border rounded-xl focus:outline-none shadow-sm ${
                       isDark 
                         ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
                         : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
@@ -810,7 +810,7 @@ function CylinderPageContent() {
                       placeholder="e.g. Asif Raza"
                       value={customerName}
                       onChange={(e) => setCustomerName(e.target.value)}
-                      className={`w-full px-3 py-2 border rounded-xl focus:outline-none placeholder:text-slate-400 shadow-sm ${
+                      className={`w-full px-3.5 py-2.5 border rounded-xl focus:outline-none placeholder:text-slate-400 shadow-sm ${
                         isDark 
                           ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
                           : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
@@ -825,7 +825,7 @@ function CylinderPageContent() {
                       placeholder="e.g. +923001234567"
                       value={customerPhone}
                       onChange={(e) => setCustomerPhone(e.target.value)}
-                      className={`w-full px-3 py-2 border rounded-xl focus:outline-none placeholder:text-slate-400 shadow-sm ${
+                      className={`w-full px-3.5 py-2.5 border rounded-xl focus:outline-none placeholder:text-slate-400 shadow-sm ${
                         isDark 
                           ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
                           : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
@@ -842,7 +842,7 @@ function CylinderPageContent() {
                     placeholder="e.g. 35201-1234567-9"
                     value={customerCnic}
                     onChange={(e) => setCustomerCnic(e.target.value)}
-                    className={`w-full px-3 py-2 border rounded-xl focus:outline-none placeholder:text-slate-400 shadow-sm ${
+                    className={`w-full px-3.5 py-2.5 border rounded-xl focus:outline-none placeholder:text-slate-400 shadow-sm ${
                       isDark 
                         ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
                         : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
@@ -858,7 +858,7 @@ function CylinderPageContent() {
                       required
                       value={securityDeposit}
                       onChange={(e) => setSecurityDeposit(e.target.value)}
-                      className={`w-full px-3 py-2 border rounded-xl focus:outline-none font-bold shadow-sm ${
+                      className={`w-full px-3.5 py-2.5 border rounded-xl focus:outline-none font-bold shadow-sm ${
                         isDark 
                           ? 'bg-slate-950 border-slate-800 text-cyan-400 focus:border-slate-700' 
                           : 'bg-white border-slate-300 text-emerald-600 focus:border-emerald-500'
@@ -872,7 +872,7 @@ function CylinderPageContent() {
                       required
                       value={refillCharges}
                       onChange={(e) => setRefillCharges(e.target.value)}
-                      className={`w-full px-3 py-2 border rounded-xl focus:outline-none font-bold shadow-sm ${
+                      className={`w-full px-3.5 py-2.5 border rounded-xl focus:outline-none font-bold shadow-sm ${
                         isDark 
                           ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
                           : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
@@ -888,7 +888,7 @@ function CylinderPageContent() {
                     required
                     value={expectedReturnDate}
                     onChange={(e) => setExpectedReturnDate(e.target.value)}
-                    className={`w-full px-3 py-2 border rounded-xl focus:outline-none shadow-sm ${
+                    className={`w-full px-3.5 py-2.5 border rounded-xl focus:outline-none shadow-sm ${
                       isDark 
                         ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
                         : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
@@ -902,7 +902,7 @@ function CylinderPageContent() {
                     <select
                       value={deliveryType}
                       onChange={(e) => setDeliveryType(e.target.value as any)}
-                      className={`w-full px-3 py-2 border rounded-xl focus:outline-none font-bold shadow-sm ${
+                      className={`w-full px-3.5 py-2.5 border rounded-xl focus:outline-none font-bold shadow-sm ${
                         isDark 
                           ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
                           : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
@@ -919,7 +919,7 @@ function CylinderPageContent() {
                         value={assignedWorkerId}
                         onChange={(e) => setAssignedWorkerId(e.target.value)}
                         required
-                        className={`w-full px-3 py-2 border rounded-xl focus:outline-none font-bold shadow-sm ${
+                        className={`w-full px-3.5 py-2.5 border rounded-xl focus:outline-none font-bold shadow-sm ${
                           isDark 
                             ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
                             : 'bg-white border-slate-300 text-slate-800 focus:border-emerald-500'
@@ -933,18 +933,22 @@ function CylinderPageContent() {
                     </div>
                   )}
                 </div>
-
-                <button
-                  type="submit"
-                  className={`w-full py-2.5 mt-2 text-white font-bold rounded-xl transition-all border ${
-                    isDark 
-                      ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border-cyan-500/20 shadow-cyan-glow' 
-                      : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 border-emerald-500/10 shadow-md shadow-emerald-600/10'
-                  }`}
-                >
-                  Complete Issue & Collect Deposit
-                </button>
               </form>
+            </div>
+
+            {/* Pinned Modal Footer */}
+            <div className={`p-4 sm:p-5 px-6 border-t flex justify-end shrink-0 ${isDark ? 'border-slate-800 bg-slate-900/90' : 'border-slate-200 bg-slate-50'}`}>
+              <button
+                type="submit"
+                form="issue-form"
+                className={`w-full py-3 text-white font-bold rounded-xl transition-all border shadow-md text-sm ${
+                  isDark 
+                    ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border-cyan-500/20 shadow-cyan-glow' 
+                    : 'bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 border-emerald-500/10 shadow-emerald-600/10'
+                }`}
+              >
+                Complete Issue & Collect Deposit
+              </button>
             </div>
           </div>
         </div>
@@ -952,35 +956,35 @@ function CylinderPageContent() {
 
       {/* 2. RECEIVE RETURN / FAST RETURN MODAL */}
       {isReturnModalOpen && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 pt-24 sm:pt-32 pb-20 flex justify-center items-start custom-scrollbar">
-          <div className={`border rounded-2xl w-full max-w-md relative shadow-2xl flex flex-col max-h-[70vh] sm:max-h-[75vh] animate-scale-in transition-colors duration-200 ${
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 p-4 sm:p-6 flex items-center justify-center animate-fade-in">
+          <div className={`border rounded-2xl w-full max-w-lg relative shadow-2xl flex flex-col max-h-[85vh] sm:max-h-[90vh] animate-scale-in transition-colors duration-200 ${
             isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
           }`}>
             {/* Pinned Header */}
-            <div className="p-6 sm:p-7 pt-7 sm:pt-8 pb-4 relative shrink-0 border-b border-slate-100 dark:border-slate-800">
+            <div className="p-5 sm:p-6 pb-4 relative shrink-0 border-b border-slate-100 dark:border-slate-800">
               <button 
                 onClick={() => {
                   setIsReturnModalOpen(false);
                   setReturnSearchSerial('');
                   setFoundReturnCylinder(null);
                 }}
-                className={`absolute top-5 right-5 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
+                className={`absolute top-4 right-4 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
                 title="Close modal"
               >
                 <X className="h-5 w-5" />
               </button>
 
-              <div className="pr-8 pt-2">
+              <div className="pr-8">
                 <h3 className="text-lg sm:text-xl font-bold flex items-center gap-2 mb-1">
                   <ArrowLeftRight className={`h-5.5 w-5.5 shrink-0 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
                   Fast Cylinder Return Process
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed mt-1">Scan barcode or search serial to refund deposit and settle account.</p>
+                <p className="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed">Scan barcode or search serial to refund deposit and settle account.</p>
               </div>
             </div>
 
             {/* Scrollable Body */}
-            <div className="p-6 sm:p-7 overflow-y-auto flex-1 custom-scrollbar">
+            <div className="p-5 sm:p-6 overflow-y-auto flex-1 custom-scrollbar">
               <form onSubmit={handleReturnSubmit} className="space-y-4 text-xs sm:text-sm">
                 <div>
                   <label className="block text-xs font-bold text-slate-500 mb-1.5">Cylinder Serial Number / Scan Tag</label>
@@ -1080,31 +1084,31 @@ function CylinderPageContent() {
 
       {/* 3. ADD CYLINDER MODAL */}
       {isAddCylinderModalOpen && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 pt-24 sm:pt-32 pb-20 flex justify-center items-start custom-scrollbar">
-          <div className={`border rounded-2xl w-full max-w-md relative shadow-2xl flex flex-col max-h-[70vh] sm:max-h-[75vh] animate-scale-in transition-colors duration-200 ${
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 p-4 sm:p-6 flex items-center justify-center animate-fade-in">
+          <div className={`border rounded-2xl w-full max-w-lg relative shadow-2xl flex flex-col max-h-[85vh] sm:max-h-[90vh] animate-scale-in transition-colors duration-200 ${
             isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
           }`}>
             {/* Pinned Header */}
-            <div className="p-6 sm:p-7 pt-7 sm:pt-8 pb-4 relative shrink-0 border-b border-slate-100 dark:border-slate-800">
+            <div className="p-5 sm:p-6 pb-4 relative shrink-0 border-b border-slate-100 dark:border-slate-800">
               <button 
                 onClick={() => setIsAddCylinderModalOpen(false)}
-                className={`absolute top-5 right-5 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
+                className={`absolute top-4 right-4 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
                 title="Close modal"
               >
                 <X className="h-5 w-5" />
               </button>
 
-              <div className="pr-8 pt-2">
+              <div className="pr-8">
                 <h3 className="text-lg sm:text-xl font-bold flex items-center gap-2 mb-1">
                   <Database className={`h-5.5 w-5.5 shrink-0 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
                   Register New Cylinder
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed mt-1">Create inventory cylinder profile for tracking.</p>
+                <p className="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed">Create inventory cylinder profile for tracking.</p>
               </div>
             </div>
 
             {/* Scrollable Body */}
-            <div className="p-6 sm:p-7 overflow-y-auto flex-1 custom-scrollbar">
+            <div className="p-5 sm:p-6 overflow-y-auto flex-1 custom-scrollbar">
               <form onSubmit={handleAddCylinderSubmit} className="space-y-4 text-xs sm:text-sm">
                 <div>
                   <label className="block text-xs font-bold text-slate-500 mb-1.5">Serial Number / Tag ID</label>
@@ -1178,31 +1182,31 @@ function CylinderPageContent() {
 
       {/* 4. WORKERS & DRIVERS REGISTRY MODAL */}
       {isWorkerModalOpen && (
-        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 overflow-y-auto p-4 sm:p-6 pt-24 sm:pt-32 pb-20 flex justify-center items-start custom-scrollbar">
-          <div className={`border rounded-2xl w-full max-w-xl relative shadow-2xl flex flex-col max-h-[70vh] sm:max-h-[75vh] animate-scale-in transition-colors duration-200 ${
+        <div className="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 p-4 sm:p-6 flex items-center justify-center animate-fade-in">
+          <div className={`border rounded-2xl w-full max-w-xl relative shadow-2xl flex flex-col max-h-[85vh] sm:max-h-[90vh] animate-scale-in transition-colors duration-200 ${
             isDark ? 'bg-slate-900 border-slate-800 text-slate-100 shadow-cyan-glow' : 'bg-white border-slate-200 text-slate-800'
           }`}>
             {/* Pinned Header */}
-            <div className="p-6 sm:p-7 pt-7 sm:pt-8 pb-4 relative shrink-0 border-b border-slate-100 dark:border-slate-800">
+            <div className="p-5 sm:p-6 pb-4 relative shrink-0 border-b border-slate-100 dark:border-slate-800">
               <button 
                 onClick={() => setIsWorkerModalOpen(false)}
-                className={`absolute top-5 right-5 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
+                className={`absolute top-4 right-4 p-1.5 rounded-lg transition-colors ${isDark ? 'text-slate-400 hover:bg-slate-800 hover:text-white' : 'text-slate-400 hover:bg-slate-100 hover:text-slate-700'}`}
                 title="Close modal"
               >
                 <X className="h-5 w-5" />
               </button>
 
-              <div className="pr-8 pt-2">
+              <div className="pr-8">
                 <h3 className="text-lg sm:text-xl font-bold flex items-center gap-2 mb-1">
                   <UserCheck className={`h-5.5 w-5.5 shrink-0 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`} />
                   Workers & Drivers Management
                 </h3>
-                <p className="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed mt-1">Register and track drivers and loaders responsible for deliveries.</p>
+                <p className="text-xs sm:text-sm text-slate-500 font-medium leading-relaxed">Register and track drivers and loaders responsible for deliveries.</p>
               </div>
             </div>
 
             {/* Scrollable Body */}
-            <div className="p-6 sm:p-7 overflow-y-auto flex-1 space-y-6 custom-scrollbar">
+            <div className="p-5 sm:p-6 overflow-y-auto flex-1 space-y-6 custom-scrollbar">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
                 {/* Driver Registration Form */}
