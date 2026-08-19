@@ -83,7 +83,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
     }`}>
       
       {/* Sidebar for Desktop */}
-      <aside className={`hidden md:flex flex-col w-64 shrink-0 border-r transition-colors duration-200 ${
+      <aside className={`hidden md:flex flex-col w-64 shrink-0 border-r sticky top-0 h-screen transition-colors duration-200 ${
         isDark ? 'bg-slate-900 border-slate-800 text-slate-200' : 'bg-white border-slate-200 text-slate-800'
       }`}>
         {/* Header / Logo */}
@@ -335,7 +335,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
       )}
 
       {/* Main Content Area */}
-      <main className="flex-1 flex flex-col min-w-0 overflow-y-auto">
+      <main className="flex-1 flex flex-col min-w-0">
         {/* Banner with system alerts / status */}
         {overdueCount > 0 && pathname !== '/cylinder' && (
           <div className={`border-b py-2.5 px-6 flex items-center justify-between text-xs sm:text-sm font-medium transition-colors duration-200 ${
