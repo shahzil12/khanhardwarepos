@@ -536,7 +536,7 @@ export default function POSPage() {
           }`}>
             
             {/* Real thermal receipt print block */}
-            <div ref={receiptRef} className="bg-white p-4 border border-slate-100 rounded-xl shadow-inner font-mono text-xs text-black print:border-0 print:shadow-none print:p-0">
+            <div id="printable-receipt" ref={receiptRef} className="bg-white p-4 border border-slate-100 rounded-xl shadow-inner font-mono text-xs text-black print:border-0 print:shadow-none print:p-0">
               <div className="text-center space-y-1 pb-4 border-b border-dashed border-slate-300">
                 <h3 className="font-extrabold text-sm sm:text-base uppercase tracking-wider">Khan Hardware</h3>
                 <p className="text-[10px]">Dual Shop & Cylinder Logistics</p>
