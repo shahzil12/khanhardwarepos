@@ -604,7 +604,7 @@ function CylinderPageContent() {
                     <span className={`px-2.5 py-1 text-[10px] font-bold rounded-full border whitespace-nowrap shrink-0 ${
                       cyl.status === 'Filled (In Stock)' ? 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/20' :
                       cyl.status === 'Issued to Customer' ? (isOverdue ? 'bg-red-50 text-red-700 border-red-200 dark:bg-red-500/20 dark:text-red-400 dark:border-red-500/30' : 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-cyan-500/10 dark:text-cyan-400 dark:border-cyan-500/20') :
-                      cyl.status === 'Returned (Empty)' ? 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/20' :
+                      cyl.status === 'Returned (Empty)' ? 'bg-teal-50 text-teal-700 border-teal-200 dark:bg-teal-500/10 dark:text-teal-400 dark:border-teal-500/20' :
                       'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-500/10 dark:text-blue-400 dark:border-blue-500/20'
                     }`}>
                       {isOverdue ? 'Overdue' : cyl.status}
@@ -670,8 +670,8 @@ function CylinderPageContent() {
                         onClick={() => handleSendToRefill(cyl.serialNumber)}
                         className={`w-full py-1.5 border text-xs font-semibold rounded-lg transition-all flex items-center justify-center gap-1.5 ${
                           isDark 
-                            ? 'bg-amber-950/40 hover:bg-amber-900/50 text-amber-400 border-amber-900/50' 
-                            : 'bg-amber-50 hover:bg-amber-100 text-amber-800 border-amber-200'
+                            ? 'bg-teal-950/40 hover:bg-teal-900/50 text-teal-400 border-teal-900/50' 
+                            : 'bg-teal-50 hover:bg-teal-100 text-teal-800 border-teal-200'
                         }`}
                       >
                         <RefreshCw className="h-3.5 w-3.5" />
@@ -975,7 +975,7 @@ function CylinderPageContent() {
                       <span className="text-slate-400">Issue Date:</span>
                       <span className={isDark ? 'text-slate-300' : 'text-slate-700'}><FormattedDate dateString={foundReturnCylinder.customer!.issueDate} /></span>
                     </div>
-                    <div className={`flex justify-between border-t pt-2 font-bold ${isDark ? 'text-cyan-400 border-slate-800' : 'text-amber-700 border-slate-100'}`}>
+                    <div className={`flex justify-between border-t pt-2 font-bold ${isDark ? 'text-cyan-400 border-slate-800' : 'text-emerald-700 border-slate-100'}`}>
                       <span>Refundable Security Deposit:</span>
                       <span>PKR {foundReturnCylinder.customer?.securityDeposit}</span>
                     </div>

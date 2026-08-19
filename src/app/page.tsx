@@ -216,8 +216,8 @@ export default function Dashboard() {
         <div className={`p-5 rounded-2xl flex flex-col justify-between transition-all duration-300 group border shadow-sm ${
           lowStockProducts.length > 0 
             ? isDark
-              ? 'bg-amber-950/20 border-amber-900/60 hover:border-amber-500/45 shadow-amber-glow-hover'
-              : 'bg-amber-50 border-amber-200 hover:border-amber-300'
+              ? 'bg-emerald-950/20 border-emerald-900/60 hover:border-emerald-500/45 shadow-emerald-glow'
+              : 'bg-emerald-50 border-emerald-200 hover:border-emerald-300'
             : isDark
               ? 'bg-slate-900 border-slate-800 hover:border-cyan-500/45 shadow-cyan-glow-hover'
               : 'bg-white border-slate-200 hover:border-slate-300'
@@ -227,8 +227,8 @@ export default function Dashboard() {
             <span className={`p-2 rounded-xl group-hover:scale-110 transition-transform ${
               lowStockProducts.length > 0 
                 ? isDark 
-                  ? 'bg-amber-500/20 text-amber-400' 
-                  : 'bg-amber-100 text-amber-600' 
+                  ? 'bg-emerald-500/20 text-emerald-400' 
+                  : 'bg-emerald-100 text-emerald-600' 
                 : 'bg-slate-100 text-slate-400 dark:bg-slate-800 dark:text-slate-500'
             }`}>
               <ArrowDownLeft className="h-5 w-5" />
@@ -237,7 +237,7 @@ export default function Dashboard() {
           <div className="mt-4">
             <h3 className={`text-2xl font-bold ${
               lowStockProducts.length > 0 
-                ? isDark ? 'text-amber-400' : 'text-amber-600' 
+                ? isDark ? 'text-emerald-400' : 'text-emerald-600' 
                 : isDark ? 'text-slate-100' : 'text-slate-800'
             }`}>
               {lowStockProducts.length}
@@ -252,8 +252,8 @@ export default function Dashboard() {
         <div className={`p-5 rounded-2xl flex flex-col justify-between transition-all duration-300 group border shadow-sm ${
           pendingDriverCash > 0 
             ? isDark
-              ? 'bg-amber-950/20 border-amber-900/60 hover:border-amber-500/45 shadow-amber-glow-hover'
-              : 'bg-amber-50 border-amber-200 hover:border-amber-300'
+              ? 'bg-emerald-950/20 border-emerald-900/60 hover:border-emerald-500/45 shadow-emerald-glow'
+              : 'bg-emerald-50 border-emerald-200 hover:border-emerald-300'
             : isDark
               ? 'bg-slate-900 border-slate-800 hover:border-cyan-500/45 shadow-cyan-glow-hover'
               : 'bg-white border-slate-200 hover:border-slate-300'
@@ -263,8 +263,8 @@ export default function Dashboard() {
             <span className={`p-2 rounded-xl group-hover:scale-110 transition-transform ${
               pendingDriverCash > 0 
                 ? isDark 
-                  ? 'bg-amber-500/20 text-amber-400 animate-pulse' 
-                  : 'bg-amber-100 text-amber-600 animate-pulse' 
+                  ? 'bg-emerald-500/20 text-emerald-400 animate-pulse' 
+                  : 'bg-emerald-100 text-emerald-600 animate-pulse' 
                 : 'bg-slate-100 text-slate-400 dark:bg-slate-800 dark:text-slate-500'
             }`}>
               <Wallet className="h-5 w-5" />
@@ -273,7 +273,7 @@ export default function Dashboard() {
           <div className="mt-4">
             <h3 className={`text-2xl font-bold ${
               pendingDriverCash > 0 
-                ? isDark ? 'text-amber-400' : 'text-amber-600' 
+                ? isDark ? 'text-emerald-400' : 'text-emerald-600' 
                 : isDark ? 'text-slate-100' : 'text-slate-800'
             }`}>
               {formatCurrency(pendingDriverCash)}
@@ -417,14 +417,14 @@ export default function Dashboard() {
               <div>
                 <div className="flex justify-between text-xs font-semibold mb-1 text-slate-600">
                   <span className="flex items-center gap-1.5">
-                    <span className="h-2 w-2 rounded-full bg-amber-500"></span>
+                    <span className="h-2 w-2 rounded-full bg-teal-500"></span>
                     Returned (Empty)
                   </span>
                   <span>{cylindersReturnedEmpty} / {cylinders.length}</span>
                 </div>
                 <div className={`w-full h-2 rounded-full overflow-hidden ${isDark ? 'bg-slate-950' : 'bg-slate-100'}`}>
                   <div 
-                    className="bg-amber-500 h-full transition-all duration-500" 
+                    className="bg-teal-500 h-full transition-all duration-500" 
                     style={{ width: `${(cylindersReturnedEmpty / cylinders.length) * 100}%` }}
                   ></div>
                 </div>
@@ -493,7 +493,7 @@ export default function Dashboard() {
           isDark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'
         }`}>
           <div className={`flex items-center gap-2 pb-2 border-b ${isDark ? 'border-slate-800' : 'border-slate-100'}`}>
-            <Wallet className="h-5 w-5 text-amber-500" />
+            <Wallet className="h-5 w-5 text-emerald-500" />
             <h3 className={`text-sm font-bold ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>Pending Driver Cash Collection logs</h3>
           </div>
           
@@ -506,7 +506,7 @@ export default function Dashboard() {
                   className={`flex justify-between items-center p-3 border rounded-xl transition-colors min-w-0 ${
                     isDark 
                       ? 'bg-slate-900/40 border-slate-800 hover:bg-slate-800/30 text-slate-200' 
-                      : 'bg-amber-50/40 border-amber-100 hover:bg-amber-50 text-slate-700'
+                      : 'bg-emerald-50/40 border-emerald-100 hover:bg-emerald-50 text-slate-700'
                   }`}
                 >
                   <div className="min-w-0 flex-1 mr-3">
@@ -514,7 +514,7 @@ export default function Dashboard() {
                     <p className="text-[10px] text-slate-500 mt-0.5 truncate" title={`Cyl: ${cyl.serialNumber} (${cyl.customer?.customerName})`}>Cyl: {cyl.serialNumber} ({cyl.customer?.customerName})</p>
                   </div>
                   <div className="text-right shrink-0">
-                    <p className={`text-xs font-bold ${isDark ? 'text-amber-400' : 'text-amber-600'}`}>{formatCurrency((cyl.customer?.securityDeposit || 0) + (cyl.customer?.refillCharges || 0))}</p>
+                    <p className={`text-xs font-bold ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`}>{formatCurrency((cyl.customer?.securityDeposit || 0) + (cyl.customer?.refillCharges || 0))}</p>
                     <Link 
                       href="/cylinder?filter=deliveries"
                       className={`text-[10px] font-bold hover:underline block mt-0.5 ${isDark ? 'text-cyan-400' : 'text-emerald-600'}`}
