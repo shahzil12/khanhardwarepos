@@ -9,19 +9,24 @@ import {
   EyeOff, 
   ArrowRight, 
   Sun, 
-  Moon 
+  Moon,
+  Palette 
 } from 'lucide-react';
 import { useStore } from '@/store/useStore';
+import { getThemeStyles } from '@/lib/theme';
+import ThemeCustomizerModal from './ThemeCustomizerModal';
 import confetti from 'canvas-confetti';
 
 export default function LoginPage() {
-  const { login, themeMode, toggleThemeMode } = useStore();
+  const { login, themeMode, toggleThemeMode, colorTheme } = useStore();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [isThemeModalOpen, setIsThemeModalOpen] = useState(false);
 
   const isDark = themeMode === 'dark';
+  const themeStyles = getThemeStyles(colorTheme, isDark);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,24 +67,18 @@ export default function LoginPage() {
       {/* Main Login Card */}
       <div className={`w-full max-w-md border rounded-3xl p-6 sm:p-8 relative z-10 shadow-2xl transition-all duration-200 ${
         isDark 
-          ? 'bg-slate-900/90 border-slate-800 backdrop-blur-md shadow-cyan-glow' 
+          ? `bg-slate-900/90 border-slate-800 backdrop-blur-md ${themeStyles.glow}` 
           : 'bg-white border-slate-200 shadow-xl'
       }`}>
         
         {/* Top Header & Theme Switcher */}
         <div className="flex items-center justify-between pb-6 border-b border-slate-200 dark:border-slate-800">
           <div className="flex items-center gap-3">
-            <div className={`flex h-11 w-11 items-center justify-center rounded-2xl transition-all duration-200 ${
-              isDark 
-                ? 'bg-cyan-950 border border-cyan-400/50 shadow-cyan-glow' 
-                : 'bg-blue-600 shadow-md shadow-blue-600/20'
-            }`}>
-              <Flame className="h-6 w-6 text-white animate-pulse" />
+            <div className={`flex h-11 w-11 items-center justify-center rounded-2xl transition-all duration-200 ${themeStyles.iconBg} ${themeStyles.glow}`}>
+              <Flame className="h-6 w-6 animate-pulse" />
             </div>
             <div>
-              <h1 className={`text-lg font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r ${
-                isDark ? 'from-cyan-400 to-blue-200' : 'from-blue-600 to-indigo-600'
-              }`}>
+              <h1 className={`text-lg font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r ${themeStyles.textGradient}`}>
                 Khan Hardware
               </h1>
               <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">
@@ -88,17 +87,31 @@ export default function LoginPage() {
             </div>
           </div>
 
-          <button
-            onClick={toggleThemeMode}
-            className={`p-2 rounded-xl border transition-colors ${
-              isDark 
-                ? 'bg-slate-800 border-slate-700 text-cyan-400 hover:text-white' 
-                : 'bg-slate-100 border-slate-200 text-slate-600 hover:text-slate-900'
-            }`}
-            title="Toggle Theme"
-          >
-            {isDark ? <Sun className="h-4.5 w-4.5" /> : <Moon className="h-4.5 w-4.5" />}
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setIsThemeModalOpen(true)}
+              className={`p-2 rounded-xl border transition-colors ${
+                isDark 
+                  ? 'bg-slate-800 border-slate-700 text-cyan-400 hover:text-white' 
+                  : 'bg-slate-100 border-slate-200 text-slate-600 hover:text-slate-900'
+              }`}
+              title="Customize Color Theme"
+            >
+              <Palette className="h-4.5 w-4.5" />
+            </button>
+
+            <button
+              onClick={toggleThemeMode}
+              className={`p-2 rounded-xl border transition-colors ${
+                isDark 
+                  ? 'bg-slate-800 border-slate-700 text-cyan-400 hover:text-white' 
+                  : 'bg-slate-100 border-slate-200 text-slate-600 hover:text-slate-900'
+              }`}
+              title="Toggle Light/Dark Mode"
+            >
+              {isDark ? <Sun className="h-4.5 w-4.5" /> : <Moon className="h-4.5 w-4.5" />}
+            </button>
+          </div>
         </div>
 
         {/* Welcome Section */}
@@ -169,11 +182,7 @@ export default function LoginPage() {
 
           <button
             type="submit"
-            className={`w-full py-3 rounded-xl font-bold transition-all shadow-md flex items-center justify-center gap-2 border text-sm sm:text-base ${
-              isDark 
-                ? 'bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white border-cyan-500/20 shadow-cyan-glow' 
-                : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white border-blue-500/10 shadow-blue-600/10'
-            }`}
+            className={`w-full py-3 rounded-xl font-bold transition-all shadow-md flex items-center justify-center gap-2 text-white text-sm sm:text-base bg-gradient-to-r ${themeStyles.gradient} ${themeStyles.glow}`}
           >
             Sign In to Terminal
             <ArrowRight className="h-4.5 w-4.5" />
@@ -181,6 +190,12 @@ export default function LoginPage() {
         </form>
 
       </div>
+
+      <ThemeCustomizerModal 
+        isOpen={isThemeModalOpen} 
+        onClose={() => setIsThemeModalOpen(false)} 
+      />
     </div>
   );
 }
+

@@ -21,18 +21,23 @@ import {
   Building2,
   Wallet,
   BookOpen,
-  BarChart3
+  BarChart3,
+  Palette
 } from 'lucide-react';
 import { useStore } from '@/store/useStore';
+import { getThemeStyles } from '@/lib/theme';
 import LoginPage from './LoginPage';
+import ThemeCustomizerModal from './ThemeCustomizerModal';
 
 export default function LayoutWrapper({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isThemeModalOpen, setIsThemeModalOpen] = useState(false);
   const { 
     cylinders, 
     themeMode, 
     toggleThemeMode, 
+    colorTheme,
     currentUser, 
     isAuthenticated, 
     logout 
@@ -71,6 +76,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
   ];
 
   const isDark = themeMode === 'dark';
+  const themeStyles = getThemeStyles(colorTheme, isDark);
 
   const getRoleBadgeColor = (role: string) => {
     switch (role) {
@@ -99,17 +105,11 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
           isDark ? 'border-slate-800' : 'border-slate-200'
         }`}>
           <div className="flex items-center gap-2">
-            <div className={`flex h-10 w-10 items-center justify-center rounded-lg transition-all duration-200 ${
-              isDark 
-                ? 'bg-cyan-950 border border-cyan-400/50 shadow-cyan-glow' 
-                : 'bg-blue-600 shadow-sm shadow-blue-600/20'
-            }`}>
+            <div className={`flex h-10 w-10 items-center justify-center rounded-lg transition-all duration-200 ${themeStyles.iconBg} ${themeStyles.glow}`}>
               <Flame className="h-6 w-6 text-white animate-pulse" />
             </div>
             <div>
-              <h1 className={`text-md font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r ${
-                isDark ? 'from-cyan-400 to-blue-200' : 'from-blue-600 to-indigo-600'
-              }`}>
+              <h1 className={`text-md font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r ${themeStyles.textGradient}`}>
                 Khan Hardware
               </h1>
               <p className="text-[10px] text-slate-400 font-medium tracking-widest uppercase">
@@ -130,9 +130,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
                 href={item.href}
                 className={`flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200 group border ${
                   isActive
-                    ? isDark
-                      ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border-cyan-500/20 text-white shadow-cyan-glow'
-                      : 'bg-gradient-to-r from-blue-600 to-indigo-600 border-blue-500/10 text-white shadow-md shadow-blue-600/10'
+                    ? `bg-gradient-to-r ${themeStyles.gradient} text-white ${themeStyles.glow}`
                     : isDark
                       ? 'text-slate-400 hover:bg-slate-800 hover:text-slate-200 border-transparent'
                       : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 border-transparent'
@@ -184,18 +182,33 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
                 </div>
               </div>
 
-              {/* Theme Toggle Button */}
-              <button
-                onClick={toggleThemeMode}
-                className={`p-1.5 rounded-lg transition-colors border shadow-sm ${
-                  isDark 
-                    ? 'bg-slate-900 border-slate-700 text-cyan-400 hover:text-white' 
-                    : 'bg-white border-slate-200 text-slate-600 hover:text-slate-900'
-                }`}
-                title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
-              >
-                {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-              </button>
+              <div className="flex items-center gap-1.5">
+                {/* Palette Customizer Button */}
+                <button
+                  onClick={() => setIsThemeModalOpen(true)}
+                  className={`p-1.5 rounded-lg transition-colors border shadow-sm ${
+                    isDark 
+                      ? 'bg-slate-900 border-slate-700 text-cyan-400 hover:text-white' 
+                      : 'bg-white border-slate-200 text-slate-600 hover:text-slate-900'
+                  }`}
+                  title="Customize Color Theme"
+                >
+                  <Palette className="h-4 w-4" />
+                </button>
+
+                {/* Theme Toggle Button */}
+                <button
+                  onClick={toggleThemeMode}
+                  className={`p-1.5 rounded-lg transition-colors border shadow-sm ${
+                    isDark 
+                      ? 'bg-slate-900 border-slate-700 text-cyan-400 hover:text-white' 
+                      : 'bg-white border-slate-200 text-slate-600 hover:text-slate-900'
+                  }`}
+                  title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                >
+                  {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+                </button>
+              </div>
             </div>
 
             {/* Logout Button */}
@@ -245,6 +258,19 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
             </Link>
           )}
 
+          {/* Mobile Theme Palette Button */}
+          <button
+            onClick={() => setIsThemeModalOpen(true)}
+            className={`p-2 rounded-lg border shadow-sm ${
+              isDark 
+                ? 'bg-slate-800 border-slate-700 text-cyan-400' 
+                : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100'
+            }`}
+            title="Customize Theme"
+          >
+            <Palette className="h-4.5 w-4.5" />
+          </button>
+
           {/* Mobile Theme Toggle Button */}
           <button
             onClick={toggleThemeMode}
@@ -284,9 +310,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
                   onClick={() => setMobileMenuOpen(false)}
                   className={`flex items-center justify-between p-4 rounded-xl border ${
                     isActive
-                      ? isDark
-                        ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border-cyan-500/20 text-white shadow-cyan-glow'
-                        : 'bg-gradient-to-r from-emerald-600 to-teal-600 border-emerald-500/10 text-white shadow-md shadow-emerald-600/10'
+                      ? `bg-gradient-to-r ${themeStyles.gradient} text-white ${themeStyles.glow}`
                       : isDark
                         ? 'bg-slate-950 border border-slate-800 text-slate-400'
                         : 'bg-slate-50 border border-slate-200 text-slate-600'
@@ -371,6 +395,11 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
           {children}
         </div>
       </main>
+
+      <ThemeCustomizerModal 
+        isOpen={isThemeModalOpen} 
+        onClose={() => setIsThemeModalOpen(false)} 
+      />
     </div>
   );
 }

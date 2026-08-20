@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { ColorTheme } from '@/lib/theme';
 
 export type CylinderStatus = 
   | 'Filled (In Stock)' 
@@ -206,6 +207,7 @@ interface AppState {
   workers: Worker[];
   openingFloat: number;
   themeMode: 'light' | 'dark';
+  colorTheme: ColorTheme;
   currentUser: UserAccount | null;
   isAuthenticated: boolean;
   
@@ -259,6 +261,7 @@ interface AppState {
   // System actions
   logAuditEvent: (action: string, category: AuditLog['category'], details: string) => void;
   toggleThemeMode: () => void;
+  setColorTheme: (colorTheme: ColorTheme) => void;
 }
 
 // Initial Mock Workers
@@ -609,7 +612,8 @@ export const useStore = create<AppState>()(
       reconciliations: [],
       workers: initialWorkers,
       openingFloat: 5000,
-      themeMode: 'light',
+      themeMode: 'dark',
+      colorTheme: 'cyan',
       currentUser: registeredUsers[0],
       isAuthenticated: true,
 
@@ -1325,6 +1329,10 @@ export const useStore = create<AppState>()(
         set((state) => ({
           themeMode: state.themeMode === 'light' ? 'dark' : 'light'
         }));
+      },
+
+      setColorTheme: (colorTheme: ColorTheme) => {
+        set({ colorTheme });
       },
 
       login: (username, password) => {
