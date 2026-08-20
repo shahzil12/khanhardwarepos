@@ -335,7 +335,7 @@ export default function POSPage() {
       </div>
 
       {/* Category Selection Bar */}
-      <div className={`flex gap-2 overflow-x-auto no-scrollbar pb-1.5 p-2 rounded-2xl border shadow-sm print:hidden ${
+      <div className={`flex flex-wrap items-center gap-2 p-2.5 rounded-2xl border shadow-sm print:hidden ${
         isDark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
       }`}>
         {categories.map((cat) => (
