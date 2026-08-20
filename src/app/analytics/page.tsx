@@ -274,7 +274,7 @@ export default function AnalyticsPage() {
         <div className="space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex gap-1.5 overflow-x-auto no-scrollbar">
-              {['ALL', 'SECURITY', 'POS_SALE', 'CYLINDER', 'VENDOR', 'EXPENSE', 'KHATA'].map((cat) => (
+              {['ALL', 'POS', 'INVENTORY', 'VENDOR', 'DRAWER', 'SYSTEM'].map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setAuditFilter(cat)}
@@ -313,15 +313,15 @@ export default function AnalyticsPage() {
                         <td className={`p-4 text-xs ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>{new Date(log.timestamp).toLocaleString()}</td>
                         <td className="p-4">
                           <span className={`px-2 py-0.5 text-[10px] font-bold rounded border ${
-                            log.category === 'SECURITY' ? 'bg-red-50 text-red-700 border-red-200 dark:bg-red-500/10 dark:text-red-400' :
-                            log.category === 'POS_SALE' ? 'bg-amber-50 text-amber-900 border-amber-200 dark:bg-amber-500/10 dark:text-amber-400' :
+                            log.category === 'SYSTEM' ? 'bg-amber-50 text-amber-900 border-amber-200 dark:bg-amber-500/10 dark:text-amber-400' :
+                            log.category === 'POS' ? 'bg-emerald-50 text-emerald-900 border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400' :
                             'bg-slate-100 text-slate-800 border-slate-200 dark:bg-slate-800 dark:text-slate-300'
                           }`}>
                             {log.category}
                           </span>
                         </td>
                         <td className={`p-4 font-bold ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>{log.action}</td>
-                        <td className={`p-4 font-semibold ${isDark ? 'text-slate-300' : 'text-slate-800'}`}>{log.userName} ({log.userRole})</td>
+                        <td className={`p-4 font-semibold ${isDark ? 'text-slate-300' : 'text-slate-800'}`}>{log.performedBy}</td>
                         <td className={`p-4 text-xs font-mono ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>{log.details}</td>
                       </tr>
                     ))
