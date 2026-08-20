@@ -308,21 +308,21 @@ export default function POSPage() {
       </div>
 
       {/* Category Selection Bar */}
-      <div className={`flex gap-2 overflow-x-auto no-scrollbar pb-1 p-2 rounded-2xl border shadow-sm print:hidden ${
-        isDark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100/70 border-slate-200'
+      <div className={`flex gap-2 overflow-x-auto no-scrollbar pb-1.5 p-2 rounded-2xl border shadow-sm print:hidden ${
+        isDark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
       }`}>
         {categories.map((cat) => (
           <button
             key={cat}
             onClick={() => setSelectedCategory(cat)}
-            className={`px-3.5 py-2 text-xs font-bold rounded-xl transition-all whitespace-nowrap border ${
+            className={`px-4 py-2 text-xs font-extrabold rounded-xl transition-all whitespace-nowrap border shadow-sm ${
               selectedCategory === cat
                 ? isDark
-                  ? 'bg-gradient-to-r from-amber-500 to-orange-600 border-amber-400 text-white shadow-amber-glow font-extrabold scale-105'
-                  : 'bg-gradient-to-r from-amber-600 to-orange-600 text-white border-amber-500 font-extrabold shadow-md shadow-amber-600/20 scale-105'
+                  ? 'bg-gradient-to-r from-amber-500 to-orange-600 border-amber-400 text-white shadow-amber-glow scale-105'
+                  : 'bg-gradient-to-r from-amber-600 to-orange-600 text-white border-amber-500 shadow-md shadow-amber-600/20 scale-105'
                 : isDark
-                  ? 'bg-slate-950/80 text-slate-200 border-slate-800 hover:bg-slate-800 hover:text-white hover:border-slate-700'
-                  : 'bg-white text-slate-800 border-slate-200 hover:bg-slate-50 hover:text-slate-900 hover:border-slate-300 shadow-xs'
+                  ? 'bg-slate-800 text-slate-100 border-slate-700 hover:bg-slate-700 hover:text-white hover:border-slate-600'
+                  : 'bg-white text-slate-900 border-slate-300 hover:bg-amber-100 hover:text-amber-950 hover:border-amber-400'
             }`}
           >
             {cat}

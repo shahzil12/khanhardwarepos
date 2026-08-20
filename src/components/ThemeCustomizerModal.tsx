@@ -94,14 +94,14 @@ export default function ThemeCustomizerModal({ isOpen, onClose }: ThemeCustomize
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between">
-                    <span className="font-bold text-sm text-slate-100">Dark Mode</span>
+                    <span className={`font-bold text-sm ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>Dark Mode</span>
                     {isDark && (
                       <span className={`h-5 w-5 rounded-full flex items-center justify-center ${currentStyles.iconBg}`}>
                         <Check className="h-3 w-3" />
                       </span>
                     )}
                   </div>
-                  <p className="text-xs text-slate-400 mt-0.5">Warm Amber & Sunfire Gold Dark Contrast</p>
+                  <p className={`text-xs mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Warm Amber & Sunfire Gold Dark Contrast</p>
                 </div>
               </button>
 
