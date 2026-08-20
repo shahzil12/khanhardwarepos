@@ -130,8 +130,18 @@ export default function POSPage() {
     return saleStatus === historyFilter;
   });
 
-  // Categories list
-  const categories = ['All', 'Hardware', 'Electrical', 'Plumbing', 'Safety', 'Tools'];
+  // Dynamically compute unique product categories from store catalog
+  const categories = React.useMemo(() => {
+    const set = new Set<string>();
+    products.forEach((p) => {
+      if (p.category && p.category.trim()) {
+        set.add(p.category.trim());
+      }
+    });
+    // Ensure default core hardware categories exist in tab bar
+    ['Electrical', 'Fasteners', 'Hand Tools', 'Plumbing', 'Safety'].forEach((cat) => set.add(cat));
+    return ['All', ...Array.from(set).sort()];
+  }, [products]);
 
   // Add to cart helper with stock checking
   const addToCart = (product: Product) => {
@@ -159,12 +169,29 @@ export default function POSPage() {
     setCashReceived('');
   };
 
-  // Filtering products
+  // Robust Filtering products with smart category mapping and search query
   const filteredProducts = products.filter((p) => {
+    const query = searchQuery.trim().toLowerCase();
     const matchesSearch = 
-      p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-      p.barcode.includes(searchQuery);
-    const matchesCategory = selectedCategory === 'All' || p.category === selectedCategory;
+      !query || 
+      p.name.toLowerCase().includes(query) || 
+      p.barcode.toLowerCase().includes(query) ||
+      p.category.toLowerCase().includes(query) ||
+      (p.description && p.description.toLowerCase().includes(query));
+
+    if (selectedCategory === 'All') {
+      return matchesSearch;
+    }
+
+    const catTarget = selectedCategory.trim().toLowerCase();
+    const pCat = p.category.trim().toLowerCase();
+
+    // Exact category match or subcategory/keyword overlap (e.g. 'Tools' matches 'Hand Tools')
+    const matchesCategory = 
+      pCat === catTarget || 
+      pCat.includes(catTarget) || 
+      catTarget.includes(pCat);
+
     return matchesSearch && matchesCategory;
   });
 
