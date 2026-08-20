@@ -308,21 +308,21 @@ export default function POSPage() {
       </div>
 
       {/* Category Selection Bar */}
-      <div className={`flex gap-1.5 overflow-x-auto no-scrollbar pb-1 p-1.5 rounded-xl border shadow-sm print:hidden ${
-        isDark ? 'bg-slate-950/20 border-slate-900' : 'bg-white border-slate-200'
+      <div className={`flex gap-2 overflow-x-auto no-scrollbar pb-1 p-2 rounded-2xl border shadow-sm print:hidden ${
+        isDark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100/70 border-slate-200'
       }`}>
         {categories.map((cat) => (
           <button
             key={cat}
             onClick={() => setSelectedCategory(cat)}
-            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all whitespace-nowrap border ${
+            className={`px-3.5 py-2 text-xs font-bold rounded-xl transition-all whitespace-nowrap border ${
               selectedCategory === cat
                 ? isDark
-                  ? 'bg-gradient-to-r from-amber-600 to-orange-600 border-amber-500 text-white shadow-amber-glow'
-                  : 'bg-gradient-to-r from-amber-600 to-orange-600 text-white border-amber-500/10 shadow-md shadow-amber-600/15'
+                  ? 'bg-gradient-to-r from-amber-500 to-orange-600 border-amber-400 text-white shadow-amber-glow font-extrabold scale-105'
+                  : 'bg-gradient-to-r from-amber-600 to-orange-600 text-white border-amber-500 font-extrabold shadow-md shadow-amber-600/20 scale-105'
                 : isDark
-                  ? 'text-slate-400 hover:text-slate-200 hover:bg-slate-900 border-transparent'
-                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100 border-transparent'
+                  ? 'bg-slate-950/80 text-slate-200 border-slate-800 hover:bg-slate-800 hover:text-white hover:border-slate-700'
+                  : 'bg-white text-slate-800 border-slate-200 hover:bg-slate-50 hover:text-slate-900 hover:border-slate-300 shadow-xs'
             }`}
           >
             {cat}
@@ -332,28 +332,28 @@ export default function POSPage() {
 
       {/* Mobile Screen Toggle */}
       <div className={`flex md:hidden border rounded-xl p-1 print:hidden shadow-sm ${
-        isDark ? 'bg-slate-950 border-slate-800' : 'bg-slate-100 border-slate-200'
+        isDark ? 'bg-slate-900 border-slate-800' : 'bg-slate-100 border-slate-200'
       }`}>
         <button
           onClick={() => setMobileView('products')}
-          className={`flex-1 py-2 text-center text-xs font-bold rounded-lg ${
+          className={`flex-1 py-2 text-center text-xs font-bold rounded-lg transition-all ${
             mobileView === 'products' 
               ? isDark 
-                ? 'bg-slate-800 text-amber-400 font-bold shadow-amber-glow border border-slate-700' 
-                : 'bg-white text-amber-900 shadow-sm border border-slate-200'
-              : isDark ? 'text-slate-400' : 'text-slate-600'
+                ? 'bg-amber-600 text-white font-extrabold shadow-amber-glow border border-amber-500' 
+                : 'bg-white text-amber-900 shadow-sm border border-amber-200 font-extrabold'
+              : isDark ? 'text-slate-300 hover:text-white' : 'text-slate-700 hover:text-slate-900'
           }`}
         >
           Products ({filteredProducts.length})
         </button>
         <button
           onClick={() => setMobileView('cart')}
-          className={`flex-1 py-2 text-center text-xs font-bold rounded-lg ${
+          className={`flex-1 py-2 text-center text-xs font-bold rounded-lg transition-all ${
             mobileView === 'cart' 
               ? isDark 
-                ? 'bg-slate-800 text-amber-400 font-bold shadow-amber-glow border border-slate-700' 
-                : 'bg-white text-amber-900 shadow-sm border border-slate-200'
-              : isDark ? 'text-slate-400' : 'text-slate-600'
+                ? 'bg-amber-600 text-white font-extrabold shadow-amber-glow border border-amber-500' 
+                : 'bg-white text-amber-900 shadow-sm border border-amber-200 font-extrabold'
+              : isDark ? 'text-slate-300 hover:text-white' : 'text-slate-700 hover:text-slate-900'
           }`}
         >
           Cart ({cart.reduce((s, i) => s + i.quantity, 0)})
