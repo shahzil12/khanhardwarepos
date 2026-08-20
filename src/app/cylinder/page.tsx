@@ -497,20 +497,16 @@ function CylinderPageContent() {
             <div className="overflow-x-auto">
               <table className={`w-full text-left border-collapse text-xs sm:text-sm ${isDark ? 'bg-slate-900' : 'bg-white'}`}>
                 <thead>
-                  <tr className={`border-b ${
-                    isDark 
-                      ? 'border-slate-800 bg-slate-900/80 text-slate-400' 
-                      : 'border-slate-200 bg-slate-50 text-slate-500'
-                  } font-semibold uppercase tracking-wider`}>
-                    <th className="p-4">Cylinder Serial</th>
-                    <th className="p-4">Customer Details</th>
-                    <th className="p-4">Assigned Driver</th>
-                    <th className="p-4">Delivery Status</th>
-                    <th className="p-4">Expected Cash</th>
+                  <tr className={`border-b ${isDark ? 'border-slate-800 bg-slate-900/90 text-slate-300' : 'border-slate-200 bg-slate-100 text-slate-800'} font-bold uppercase tracking-wider`}>
+                    <th className="p-4">Serial & Gas Type</th>
+                    <th className="p-4">Customer Name & Contact</th>
+                    <th className="p-4">Assigned Delivery Worker</th>
+                    <th className="p-4">Logistics Status</th>
+                    <th className="p-4 text-right">Expected Driver Cash Collection</th>
                     <th className="p-4 text-right">Cash Return Settle</th>
                   </tr>
                 </thead>
-                <tbody className={`divide-y ${isDark ? 'divide-slate-800/60' : 'divide-slate-100'}`}>
+                <tbody className={`divide-y ${isDark ? 'divide-slate-800/60' : 'divide-slate-200'}`}>
                   {filteredCylinders.map((cyl) => {
                     if (!cyl.customer) return null;
                     const driver = workers.find(w => w.id === cyl.customer?.assignedWorkerId);
@@ -518,27 +514,25 @@ function CylinderPageContent() {
                     const isSettled = cyl.customer.cashReturned;
 
                     return (
-                      <tr key={cyl.id} className={`hover:bg-slate-50/50 dark:hover:bg-slate-800/20 text-slate-700 dark:text-slate-300 font-medium ${
-                        isDark ? 'border-b border-slate-800/60' : 'border-b border-slate-100'
-                      }`}>
-                        <td className={`p-4 font-bold ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
+                      <tr key={cyl.id} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/30 font-medium">
+                        <td className={`p-4 font-bold ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>
                           <p className="font-bold">{cyl.serialNumber}</p>
-                          <span className="text-[10px] text-slate-400 font-semibold uppercase tracking-wider">
+                          <span className={`text-[10px] font-bold uppercase tracking-wider ${isDark ? 'text-amber-400' : 'text-amber-800'}`}>
                             {cyl.capacity} • {cyl.gasType}
                           </span>
                         </td>
                         
                         <td className="p-4">
-                          <p className={`font-bold ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>{cyl.customer.customerName}</p>
-                          <p className="text-[10px] text-slate-400 mt-0.5">{cyl.customer.customerPhone}</p>
+                          <p className={`font-bold ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>{cyl.customer.customerName}</p>
+                          <p className={`text-[10px] font-semibold mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>{cyl.customer.customerPhone}</p>
                         </td>
                         
-                        <td className="p-4 font-semibold text-slate-600 dark:text-slate-400">
+                        <td className={`p-4 font-bold ${isDark ? 'text-slate-300' : 'text-slate-800'}`}>
                           <div className="flex items-center gap-1.5">
-                            <Truck className="h-3.5 w-3.5 text-slate-400" />
-                            <span>{driver ? driver.name : <span className="text-slate-400 font-normal">Unassigned</span>}</span>
+                            <Truck className={`h-3.5 w-3.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`} />
+                            <span>{driver ? driver.name : <span className={`font-semibold ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>Unassigned</span>}</span>
                           </div>
-                          <p className="text-[10px] text-slate-400 ml-5 font-normal">{driver?.phone}</p>
+                          <p className={`text-[10px] ml-5 font-medium ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>{driver?.phone}</p>
                         </td>
                         
                         <td className="p-4">
@@ -546,13 +540,13 @@ function CylinderPageContent() {
                             value={cyl.customer.deliveryStatus}
                             onChange={(e) => updateDeliveryStatus(cyl.serialNumber, e.target.value as any)}
                             disabled={isSettled}
-                            className={`px-2 py-1 border rounded-lg text-xs focus:outline-none ${
-                              isDark ? 'bg-slate-950 border-slate-800 text-slate-300' : 'bg-white border-slate-200 text-slate-700'
+                            className={`px-2 py-1 border rounded-lg text-xs font-bold focus:outline-none ${
+                              isDark ? 'bg-slate-950 border-slate-800 text-slate-100' : 'bg-white border-slate-300 text-slate-900'
                             } ${
-                              cyl.customer.deliveryStatus === 'Delivered' ? 'text-blue-700 border-blue-200 bg-blue-50/20' :
-                              cyl.customer.deliveryStatus === 'Out for Delivery' ? 'text-indigo-700 border-indigo-200 bg-indigo-50/20' :
-                              cyl.customer.deliveryStatus === 'Failed' ? 'text-red-700 border-red-200 bg-red-50/20' :
-                              'text-slate-600 border-slate-200'
+                              cyl.customer.deliveryStatus === 'Delivered' ? 'text-emerald-700 border-emerald-300 bg-emerald-50/50 dark:bg-emerald-950/40 dark:text-emerald-300' :
+                              cyl.customer.deliveryStatus === 'Out for Delivery' ? 'text-indigo-700 border-indigo-300 bg-indigo-50/50 dark:bg-indigo-950/40 dark:text-indigo-300' :
+                              cyl.customer.deliveryStatus === 'Failed' ? 'text-red-700 border-red-300 bg-red-50/50 dark:bg-red-950/40 dark:text-red-300' :
+                              'text-slate-800 border-slate-300'
                             }`}
                           >
                             <option value="Assigned">Assigned</option>

@@ -248,22 +248,22 @@ export default function VendorsPage() {
                   <th className="p-4 text-right">Payment Action</th>
                 </tr>
               </thead>
-              <tbody className={`divide-y ${isDark ? 'divide-slate-800/60' : 'divide-slate-100'}`}>
+              <tbody className={`divide-y ${isDark ? 'divide-slate-800/60' : 'divide-slate-200'}`}>
                 {filteredVendors.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="p-8 text-center text-slate-400">No suppliers found.</td>
+                    <td colSpan={5} className={`p-8 text-center ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>No suppliers found.</td>
                   </tr>
                 ) : (
                   filteredVendors.map((vendor) => (
-                    <tr key={vendor.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 font-medium">
+                    <tr key={vendor.id} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/30 font-medium">
                       <td className="p-4">
-                        <p className="font-bold text-slate-800 dark:text-slate-200">{vendor.companyName}</p>
-                        <span className="text-[10px] text-slate-400">ID: {vendor.id}</span>
+                        <p className={`font-bold ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>{vendor.companyName}</p>
+                        <span className={`text-[10px] font-mono ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>ID: {vendor.id}</span>
                       </td>
-                      <td className="p-4 text-slate-700 dark:text-slate-300 font-semibold">{vendor.contactPerson}</td>
+                      <td className={`p-4 font-bold ${isDark ? 'text-slate-300' : 'text-slate-800'}`}>{vendor.contactPerson}</td>
                       <td className="p-4">
-                        <p className="text-slate-700 dark:text-slate-300">{vendor.phone}</p>
-                        <p className="text-[10px] text-slate-400">{vendor.email || 'N/A'}</p>
+                        <p className={`font-semibold ${isDark ? 'text-slate-300' : 'text-slate-800'}`}>{vendor.phone}</p>
+                        <p className={`text-[10px] ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>{vendor.email || 'N/A'}</p>
                       </td>
                       <td className="p-4">
                         <span className={`font-extrabold ${vendor.balancePayable > 0 ? 'text-red-600 dark:text-red-400' : 'text-emerald-600 dark:text-emerald-400'}`}>
@@ -281,9 +281,11 @@ export default function VendorsPage() {
                           className={`px-3 py-1.5 font-bold text-xs rounded-xl border transition-all ${
                             vendor.balancePayable > 0
                               ? isDark 
-                                ? 'bg-blue-600 text-white border-blue-500 hover:bg-blue-500' 
-                                : 'bg-blue-600 text-white border-blue-500 hover:bg-blue-500'
-                              : 'bg-slate-100 dark:bg-slate-800 text-slate-400 border-slate-200 dark:border-slate-700 cursor-not-allowed'
+                                ? 'bg-amber-600 text-white border-amber-500 hover:bg-amber-500 shadow-amber-glow' 
+                                : 'bg-amber-600 text-white border-amber-600 hover:bg-amber-700 shadow-sm'
+                              : isDark
+                                ? 'bg-slate-900 text-slate-500 border-slate-800 cursor-not-allowed'
+                                : 'bg-slate-100 text-slate-400 border-slate-200 cursor-not-allowed'
                           }`}
                         >
                           Settle Payment
@@ -303,7 +305,7 @@ export default function VendorsPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-xs sm:text-sm">
               <thead>
-                <tr className={`border-b ${isDark ? 'border-slate-800 bg-slate-900/80 text-slate-400' : 'border-slate-200 bg-slate-50 text-slate-500'} font-semibold uppercase tracking-wider`}>
+                <tr className={`border-b ${isDark ? 'border-slate-800 bg-slate-900/90 text-slate-300' : 'border-slate-200 bg-slate-100 text-slate-800'} font-bold uppercase tracking-wider`}>
                   <th className="p-4">PO Number</th>
                   <th className="p-4">Supplier</th>
                   <th className="p-4">Items Ordered</th>
@@ -312,31 +314,31 @@ export default function VendorsPage() {
                   <th className="p-4 text-right">Receive Stock (GRN)</th>
                 </tr>
               </thead>
-              <tbody className={`divide-y ${isDark ? 'divide-slate-800/60' : 'divide-slate-100'}`}>
+              <tbody className={`divide-y ${isDark ? 'divide-slate-800/60' : 'divide-slate-200'}`}>
                 {filteredPOs.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="p-8 text-center text-slate-400">No purchase orders found.</td>
+                    <td colSpan={6} className={`p-8 text-center ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>No purchase orders found.</td>
                   </tr>
                 ) : (
                   filteredPOs.map((po) => (
-                    <tr key={po.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 font-medium">
-                      <td className="p-4 font-bold text-slate-800 dark:text-slate-200">{po.poNumber}</td>
-                      <td className="p-4 font-semibold text-slate-700 dark:text-slate-300">{po.vendorName}</td>
+                    <tr key={po.id} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/30 font-medium">
+                      <td className={`p-4 font-bold ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>{po.poNumber}</td>
+                      <td className={`p-4 font-bold ${isDark ? 'text-slate-300' : 'text-slate-800'}`}>{po.vendorName}</td>
                       <td className="p-4">
                         <div className="space-y-0.5 text-xs">
                           {po.items.map((i, idx) => (
-                            <p key={idx} className="text-slate-600 dark:text-slate-400">
+                            <p key={idx} className={`font-semibold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>
                               {i.productName} × {i.quantity} @ Rs. {i.unitCost}
                             </p>
                           ))}
                         </div>
                       </td>
-                      <td className="p-4 font-bold text-slate-800 dark:text-slate-200">{formatCurrency(po.totalAmount)}</td>
+                      <td className={`p-4 font-extrabold ${isDark ? 'text-amber-400' : 'text-amber-800'}`}>{formatCurrency(po.totalAmount)}</td>
                       <td className="p-4">
                         <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold border ${
                           po.status === 'Received'
-                            ? 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-500/10 dark:text-blue-400'
-                            : 'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-500/10 dark:text-amber-400'
+                            ? (isDark ? 'bg-emerald-900/40 text-emerald-300 border-emerald-700' : 'bg-emerald-100 text-emerald-900 border-emerald-300')
+                            : (isDark ? 'bg-amber-900/40 text-amber-300 border-amber-700' : 'bg-amber-100 text-amber-900 border-amber-300')
                         }`}>
                           {po.status === 'Received' ? 'GRN Processed' : 'Pending Delivery'}
                         </span>

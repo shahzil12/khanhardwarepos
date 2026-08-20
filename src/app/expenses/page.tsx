@@ -199,7 +199,7 @@ export default function ExpensesPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-xs sm:text-sm">
               <thead>
-                <tr className={`border-b ${isDark ? 'border-slate-800 bg-slate-900/80 text-slate-400' : 'border-slate-200 bg-slate-50 text-slate-500'} font-semibold uppercase tracking-wider`}>
+                <tr className={`border-b ${isDark ? 'border-slate-800 bg-slate-900/90 text-slate-300' : 'border-slate-200 bg-slate-100 text-slate-800'} font-bold uppercase tracking-wider`}>
                   <th className="p-4">Date & Time</th>
                   <th className="p-4">Category</th>
                   <th className="p-4">Description</th>
@@ -207,27 +207,27 @@ export default function ExpensesPage() {
                   <th className="p-4 text-right">Amount (PKR)</th>
                 </tr>
               </thead>
-              <tbody className={`divide-y ${isDark ? 'divide-slate-800/60' : 'divide-slate-100'}`}>
+              <tbody className={`divide-y ${isDark ? 'divide-slate-800/60' : 'divide-slate-200'}`}>
                 {expenses.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="p-8 text-center text-slate-400">No expenses recorded yet.</td>
+                    <td colSpan={5} className={`p-8 text-center ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>No expenses recorded yet.</td>
                   </tr>
                 ) : (
                   expenses.map((expense) => (
-                    <tr key={expense.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 font-medium">
-                      <td className="p-4 text-slate-500 dark:text-slate-400">{new Date(expense.createdAt).toLocaleString()}</td>
+                    <tr key={expense.id} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/30 font-medium">
+                      <td className={`p-4 font-semibold ${isDark ? 'text-slate-300' : 'text-slate-800'}`}>{new Date(expense.createdAt).toLocaleString()}</td>
                       <td className="p-4">
-                        <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold border ${
-                          expense.category === 'Rent' ? 'bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-500/10 dark:text-purple-400' :
-                          expense.category === 'Utilities' ? 'bg-blue-50 text-blue-700 border-blue-200 dark:bg-blue-500/10 dark:text-blue-400' :
-                          expense.category === 'Staff Wages' ? 'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-400' :
-                          'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-500/10 dark:text-amber-400'
+                        <span className={`px-3 py-1 rounded-full text-[11px] font-bold border ${
+                          expense.category === 'Rent' ? (isDark ? 'bg-purple-900/40 text-purple-300 border-purple-700' : 'bg-purple-100 text-purple-900 border-purple-300') :
+                          expense.category === 'Utilities' ? (isDark ? 'bg-blue-900/40 text-blue-300 border-blue-700' : 'bg-blue-100 text-blue-900 border-blue-300') :
+                          expense.category === 'Staff Wages' ? (isDark ? 'bg-emerald-900/40 text-emerald-300 border-emerald-700' : 'bg-emerald-100 text-emerald-900 border-emerald-300') :
+                          (isDark ? 'bg-amber-900/40 text-amber-300 border-amber-700' : 'bg-amber-100 text-amber-900 border-amber-300')
                         }`}>
                           {expense.category}
                         </span>
                       </td>
-                      <td className="p-4 font-semibold text-slate-800 dark:text-slate-200">{expense.description}</td>
-                      <td className="p-4 text-slate-600 dark:text-slate-400">{expense.createdBy}</td>
+                      <td className={`p-4 font-extrabold ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>{expense.description}</td>
+                      <td className={`p-4 font-bold ${isDark ? 'text-slate-300' : 'text-slate-800'}`}>{expense.createdBy}</td>
                       <td className="p-4 text-right font-extrabold text-red-600 dark:text-red-400">
                         {formatCurrency(expense.amount)}
                       </td>
@@ -245,7 +245,7 @@ export default function ExpensesPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-xs sm:text-sm">
               <thead>
-                <tr className={`border-b ${isDark ? 'border-slate-800 bg-slate-900/80 text-slate-400' : 'border-slate-200 bg-slate-50 text-slate-500'} font-semibold uppercase tracking-wider`}>
+                <tr className={`border-b ${isDark ? 'border-slate-800 bg-slate-900/90 text-slate-300' : 'border-slate-200 bg-slate-100 text-slate-800'} font-bold uppercase tracking-wider`}>
                   <th className="p-4">Date</th>
                   <th className="p-4">Opening Float</th>
                   <th className="p-4">Cash Sales</th>
@@ -255,29 +255,29 @@ export default function ExpensesPage() {
                   <th className="p-4 text-right">Closed By</th>
                 </tr>
               </thead>
-              <tbody className={`divide-y ${isDark ? 'divide-slate-800/60' : 'divide-slate-100'}`}>
+              <tbody className={`divide-y ${isDark ? 'divide-slate-800/60' : 'divide-slate-200'}`}>
                 {reconciliations.length === 0 ? (
                   <tr>
-                    <td colSpan={7} className="p-8 text-center text-slate-400">No drawer reconciliation records found.</td>
+                    <td colSpan={7} className={`p-8 text-center ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>No drawer reconciliation records found.</td>
                   </tr>
                 ) : (
                   reconciliations.map((rec) => (
-                    <tr key={rec.id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 font-medium">
-                      <td className="p-4 font-bold text-slate-800 dark:text-slate-200">{rec.date}</td>
-                      <td className="p-4">{formatCurrency(rec.openingFloat)}</td>
-                      <td className="p-4 text-emerald-600 font-bold">{formatCurrency(rec.cashSales)}</td>
-                      <td className="p-4 font-bold">{formatCurrency(rec.expectedClosingCash)}</td>
-                      <td className="p-4 font-extrabold text-blue-600">{formatCurrency(rec.actualClosingCash)}</td>
+                    <tr key={rec.id} className="hover:bg-slate-50/80 dark:hover:bg-slate-800/30 font-medium">
+                      <td className={`p-4 font-bold ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>{rec.date}</td>
+                      <td className={`p-4 font-semibold ${isDark ? 'text-slate-300' : 'text-slate-800'}`}>{formatCurrency(rec.openingFloat)}</td>
+                      <td className="p-4 text-emerald-600 dark:text-emerald-400 font-extrabold">{formatCurrency(rec.cashSales)}</td>
+                      <td className={`p-4 font-bold ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>{formatCurrency(rec.expectedClosingCash)}</td>
+                      <td className="p-4 font-extrabold text-amber-600 dark:text-amber-400">{formatCurrency(rec.actualClosingCash)}</td>
                       <td className="p-4 font-bold">
-                        <span className={`px-2.5 py-0.5 rounded-full text-xs ${
-                          rec.discrepancy === 0 ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' :
-                          rec.discrepancy < 0 ? 'bg-red-50 text-red-700 border border-red-200' :
-                          'bg-amber-50 text-amber-700 border border-amber-200'
+                        <span className={`px-2.5 py-0.5 rounded-full text-xs font-bold ${
+                          rec.discrepancy === 0 ? 'bg-emerald-100 text-emerald-900 border border-emerald-300' :
+                          rec.discrepancy < 0 ? 'bg-red-100 text-red-900 border border-red-300' :
+                          'bg-amber-100 text-amber-900 border border-amber-300'
                         }`}>
                           {rec.discrepancy === 0 ? 'Balanced' : `${rec.discrepancy > 0 ? '+' : ''}${formatCurrency(rec.discrepancy)}`}
                         </span>
                       </td>
-                      <td className="p-4 text-right text-slate-500">{rec.closedBy}</td>
+                      <td className={`p-4 text-right font-semibold ${isDark ? 'text-slate-300' : 'text-slate-800'}`}>{rec.closedBy}</td>
                     </tr>
                   ))
                 )}
