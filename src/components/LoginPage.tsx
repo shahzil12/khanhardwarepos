@@ -57,10 +57,10 @@ export default function LoginPage() {
       {/* Background ambient lighting */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
         <div className={`absolute -top-40 -left-40 w-96 h-96 rounded-full blur-3xl opacity-20 ${
-          isDark ? 'bg-cyan-500' : 'bg-blue-500'
+          isDark ? 'bg-amber-500' : 'bg-amber-400'
         }`}></div>
         <div className={`absolute -bottom-40 -right-40 w-96 h-96 rounded-full blur-3xl opacity-20 ${
-          isDark ? 'bg-blue-600' : 'bg-indigo-500'
+          isDark ? 'bg-orange-600' : 'bg-amber-500'
         }`}></div>
       </div>
 
@@ -92,7 +92,7 @@ export default function LoginPage() {
               onClick={() => setIsThemeModalOpen(true)}
               className={`p-2 rounded-xl border transition-colors ${
                 isDark 
-                  ? 'bg-slate-800 border-slate-700 text-cyan-400 hover:text-white' 
+                  ? 'bg-slate-800 border-slate-700 text-amber-400 hover:text-white' 
                   : 'bg-slate-100 border-slate-200 text-slate-600 hover:text-slate-900'
               }`}
               title="Customize Color Theme"
@@ -104,7 +104,7 @@ export default function LoginPage() {
               onClick={toggleThemeMode}
               className={`p-2 rounded-xl border transition-colors ${
                 isDark 
-                  ? 'bg-slate-800 border-slate-700 text-cyan-400 hover:text-white' 
+                  ? 'bg-slate-800 border-slate-700 text-amber-400 hover:text-white' 
                   : 'bg-slate-100 border-slate-200 text-slate-600 hover:text-slate-900'
               }`}
               title="Toggle Light/Dark Mode"
@@ -146,8 +146,8 @@ export default function LoginPage() {
                 onChange={(e) => setUsername(e.target.value)}
                 className={`w-full pl-10 pr-4 py-2.5 border rounded-xl font-semibold transition-all focus:outline-none shadow-sm ${
                   isDark 
-                    ? 'bg-slate-950 border-slate-800 text-slate-100 focus:border-cyan-500' 
-                    : 'bg-white border-slate-200 text-slate-800 focus:border-blue-500'
+                    ? 'bg-slate-950 border-slate-800 text-slate-100 focus:border-amber-500' 
+                    : 'bg-white border-slate-200 text-slate-800 focus:border-amber-500'
                 }`}
               />
             </div>
@@ -166,8 +166,8 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 className={`w-full pl-10 pr-10 py-2.5 border rounded-xl font-semibold transition-all focus:outline-none shadow-sm ${
                   isDark 
-                    ? 'bg-slate-950 border-slate-800 text-slate-100 focus:border-cyan-500' 
-                    : 'bg-white border-slate-200 text-slate-800 focus:border-blue-500'
+                    ? 'bg-slate-950 border-slate-800 text-slate-100 focus:border-amber-500' 
+                    : 'bg-white border-slate-200 text-slate-800 focus:border-amber-500'
                 }`}
               />
               <button

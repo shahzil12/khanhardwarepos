@@ -81,11 +81,11 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
   const getRoleBadgeColor = (role: string) => {
     switch (role) {
       case 'Admin':
-        return isDark ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30' : 'bg-blue-100 text-blue-700 border-blue-200';
+        return isDark ? 'bg-amber-500/20 text-amber-400 border-amber-500/30' : 'bg-amber-100 text-amber-900 border-amber-200';
       case 'Cashier':
-        return isDark ? 'bg-blue-500/20 text-blue-400 border-blue-500/30' : 'bg-blue-100 text-blue-700 border-blue-200';
+        return isDark ? 'bg-orange-500/20 text-orange-400 border-orange-500/30' : 'bg-amber-100 text-amber-900 border-amber-200';
       case 'Driver':
-        return isDark ? 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30' : 'bg-indigo-100 text-indigo-700 border-indigo-200';
+        return isDark ? 'bg-amber-500/20 text-amber-400 border-amber-500/30' : 'bg-amber-100 text-amber-900 border-amber-200';
       default:
         return 'bg-slate-100 text-slate-700';
     }
@@ -169,8 +169,8 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
           }`}>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2.5 min-w-0">
-                <div className="h-9 w-9 rounded-xl bg-emerald-100 dark:bg-slate-800 flex items-center justify-center shrink-0">
-                  <User className="h-5 w-5 text-emerald-600 dark:text-cyan-400" />
+                <div className="h-9 w-9 rounded-xl bg-amber-100 dark:bg-slate-800 flex items-center justify-center shrink-0">
+                  <User className="h-5 w-5 text-amber-600 dark:text-amber-400" />
                 </div>
                 <div className="truncate">
                   <p className={`text-xs font-bold truncate ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
@@ -188,7 +188,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
                   onClick={() => setIsThemeModalOpen(true)}
                   className={`p-1.5 rounded-lg transition-colors border shadow-sm ${
                     isDark 
-                      ? 'bg-slate-900 border-slate-700 text-cyan-400 hover:text-white' 
+                      ? 'bg-slate-900 border-slate-700 text-amber-400 hover:text-white' 
                       : 'bg-white border-slate-200 text-slate-600 hover:text-slate-900'
                   }`}
                   title="Customize Color Theme"
@@ -201,7 +201,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
                   onClick={toggleThemeMode}
                   className={`p-1.5 rounded-lg transition-colors border shadow-sm ${
                     isDark 
-                      ? 'bg-slate-900 border-slate-700 text-cyan-400 hover:text-white' 
+                      ? 'bg-slate-900 border-slate-700 text-amber-400 hover:text-white' 
                       : 'bg-white border-slate-200 text-slate-600 hover:text-slate-900'
                   }`}
                   title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
@@ -232,17 +232,11 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
         isDark ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-slate-200 text-slate-900'
       }`}>
         <div className="flex items-center gap-2">
-          <div className={`flex h-8 w-8 items-center justify-center rounded-lg transition-all duration-200 ${
-            isDark 
-              ? 'bg-cyan-950 border border-cyan-400/50 shadow-cyan-glow' 
-              : 'bg-emerald-600 shadow-sm'
-          }`}>
+          <div className={`flex h-8 w-8 items-center justify-center rounded-lg transition-all duration-200 ${themeStyles.iconBg} ${themeStyles.glow}`}>
             <Flame className="h-5 w-5 text-white" />
           </div>
           <div>
-            <h1 className={`text-sm font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r ${
-              isDark ? 'from-cyan-400 to-blue-200' : 'from-emerald-600 to-teal-600'
-            }`}>
+            <h1 className={`text-sm font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r ${themeStyles.textGradient}`}>
               Khan Hardware
             </h1>
           </div>
@@ -263,7 +257,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
             onClick={() => setIsThemeModalOpen(true)}
             className={`p-2 rounded-lg border shadow-sm ${
               isDark 
-                ? 'bg-slate-800 border-slate-700 text-cyan-400' 
+                ? 'bg-slate-800 border-slate-700 text-amber-400' 
                 : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100'
             }`}
             title="Customize Theme"
@@ -276,7 +270,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
             onClick={toggleThemeMode}
             className={`p-2 rounded-lg border shadow-sm ${
               isDark 
-                ? 'bg-slate-800 border-slate-700 text-cyan-400' 
+                ? 'bg-slate-800 border-slate-700 text-amber-400' 
                 : 'bg-slate-50 border-slate-200 text-slate-600 hover:bg-slate-100'
             }`}
           >
@@ -341,8 +335,8 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
               isDark ? 'bg-slate-950/40 border-slate-800' : 'bg-slate-50 border-slate-100'
             }`}>
               <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-full bg-emerald-100 dark:bg-slate-800 flex items-center justify-center">
-                  <User className="h-6 w-6 text-emerald-600 dark:text-cyan-400" />
+                <div className="h-10 w-10 rounded-full bg-amber-100 dark:bg-slate-800 flex items-center justify-center">
+                  <User className="h-6 w-6 text-amber-600 dark:text-amber-400" />
                 </div>
                 <div>
                   <p className={`text-sm font-bold ${isDark ? 'text-slate-200' : 'text-slate-700'}`}>

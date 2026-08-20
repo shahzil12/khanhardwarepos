@@ -13,7 +13,7 @@ import {
   ShieldCheck 
 } from 'lucide-react';
 import { useStore } from '@/store/useStore';
-import { ColorTheme, THEME_PRESETS, getThemeStyles } from '@/lib/theme';
+import { getThemeStyles } from '@/lib/theme';
 
 interface ThemeCustomizerModalProps {
   isOpen: boolean;
@@ -21,14 +21,12 @@ interface ThemeCustomizerModalProps {
 }
 
 export default function ThemeCustomizerModal({ isOpen, onClose }: ThemeCustomizerModalProps) {
-  const { themeMode, toggleThemeMode, colorTheme, setColorTheme } = useStore();
+  const { themeMode, toggleThemeMode } = useStore();
 
   if (!isOpen) return null;
 
   const isDark = themeMode === 'dark';
-  const currentStyles = getThemeStyles(colorTheme, isDark);
-
-  const presetsList = Object.values(THEME_PRESETS);
+  const currentStyles = getThemeStyles('amber', isDark);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 animate-fade-in print:hidden">
@@ -39,7 +37,7 @@ export default function ThemeCustomizerModal({ isOpen, onClose }: ThemeCustomize
       />
 
       {/* Modal Container */}
-      <div className={`relative w-full max-w-2xl rounded-2xl shadow-2xl border transition-all duration-200 overflow-hidden z-10 ${
+      <div className={`relative w-full max-w-xl rounded-2xl shadow-2xl border transition-all duration-200 overflow-hidden z-10 ${
         isDark ? 'bg-slate-900 border-slate-800 text-slate-100' : 'bg-white border-slate-200 text-slate-900'
       }`}>
         {/* Header */}
@@ -51,9 +49,9 @@ export default function ThemeCustomizerModal({ isOpen, onClose }: ThemeCustomize
               <Palette className="h-5 w-5" />
             </div>
             <div>
-              <h2 className="text-lg font-bold tracking-tight">Theme & Styling Customizer</h2>
+              <h2 className="text-lg font-bold tracking-tight">Amber Gold Theme</h2>
               <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                Personalize your Khan Hardware POS experience
+                Primary warm gold styling for Khan Hardware POS
               </p>
             </div>
           </div>
@@ -91,7 +89,7 @@ export default function ThemeCustomizerModal({ isOpen, onClose }: ThemeCustomize
                     : 'border-slate-200 bg-slate-50 opacity-70 hover:opacity-100'
                 }`}
               >
-                <div className="h-12 w-12 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-cyan-400 shrink-0 shadow-inner">
+                <div className="h-12 w-12 rounded-xl bg-slate-900 border border-amber-500/30 flex items-center justify-center text-amber-400 shrink-0 shadow-inner">
                   <Moon className="h-6 w-6" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -103,7 +101,7 @@ export default function ThemeCustomizerModal({ isOpen, onClose }: ThemeCustomize
                       </span>
                     )}
                   </div>
-                  <p className="text-xs text-slate-400 mt-0.5">Sleek, eye-friendly contrast for long hours</p>
+                  <p className="text-xs text-slate-400 mt-0.5">Warm Amber & Sunfire Gold Dark Contrast</p>
                 </div>
               </button>
 
@@ -133,67 +131,29 @@ export default function ThemeCustomizerModal({ isOpen, onClose }: ThemeCustomize
                     )}
                   </div>
                   <p className={`text-xs mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                    Crisp, clean layout for high-luminosity areas
+                    Crisp Gold Layout for Day Use
                   </p>
                 </div>
               </button>
             </div>
           </div>
 
-          {/* Section 2: Color Accent Theme Preset */}
-          <div>
-            <label className={`block text-xs font-bold uppercase tracking-wider mb-3 ${
-              isDark ? 'text-slate-400' : 'text-slate-500'
-            }`}>
-              Color Accent Palette
-            </label>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {presetsList.map((preset) => {
-                const isSelected = colorTheme === preset.id;
-                return (
-                  <button
-                    key={preset.id}
-                    onClick={() => setColorTheme(preset.id as ColorTheme)}
-                    className={`relative p-3.5 rounded-2xl border text-left flex items-center justify-between transition-all duration-200 ${
-                      isSelected
-                        ? isDark
-                          ? `${preset.dark.borderAccent} ${preset.dark.bgSoft} ${preset.dark.glow} ring-2 ${preset.dark.ring}`
-                          : `${preset.light.borderAccent} ${preset.light.bgSoft} ${preset.light.glow} ring-2 ${preset.light.ring}`
-                        : isDark
-                          ? 'border-slate-800 bg-slate-950/40 hover:bg-slate-800/60'
-                          : 'border-slate-200 bg-slate-50/50 hover:bg-slate-100/80'
-                    }`}
-                  >
-                    <div className="flex items-center gap-3 min-w-0">
-                      {/* Visual Swatch */}
-                      <div className={`h-10 w-10 rounded-xl bg-gradient-to-br ${preset.swatchGradient} shrink-0 flex items-center justify-center text-white shadow-sm font-bold text-xs`}>
-                        <Sparkles className="h-5 w-5 drop-shadow" />
-                      </div>
-                      <div className="truncate">
-                        <p className={`font-bold text-sm ${
-                          isSelected 
-                            ? isDark ? preset.dark.textAccent : preset.light.textAccent
-                            : isDark ? 'text-slate-200' : 'text-slate-800'
-                        }`}>
-                          {preset.name}
-                        </p>
-                        <p className={`text-[11px] truncate ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
-                          {preset.subtitle}
-                        </p>
-                      </div>
-                    </div>
-
-                    {isSelected && (
-                      <span className={`h-6 w-6 rounded-full flex items-center justify-center shrink-0 ml-2 ${
-                        isDark ? preset.dark.iconBg : preset.light.iconBg
-                      }`}>
-                        <Check className="h-3.5 w-3.5" />
-                      </span>
-                    )}
-                  </button>
-                );
-              })}
+          {/* Section 2: Active Theme Badge */}
+          <div className={`p-4 rounded-2xl border flex items-center justify-between ${
+            isDark ? 'bg-amber-950/30 border-amber-500/30 text-amber-300' : 'bg-amber-50 border-amber-200 text-amber-900'
+          }`}>
+            <div className="flex items-center gap-3">
+              <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center text-white font-bold shadow-md">
+                <Sparkles className="h-5 w-5" />
+              </div>
+              <div>
+                <p className="font-bold text-sm">Active Theme: Amber Gold</p>
+                <p className="text-xs opacity-80">Warm Sunfire Amber & Orange Accent System</p>
+              </div>
             </div>
+            <span className={`px-2.5 py-1 text-xs font-bold rounded-lg border ${currentStyles.badge}`}>
+              Active
+            </span>
           </div>
 
           {/* Section 3: Live Component Preview */}
@@ -209,18 +169,18 @@ export default function ThemeCustomizerModal({ isOpen, onClose }: ThemeCustomize
               {/* Active Tab Preview */}
               <div className={`px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2 ${currentStyles.activeTab}`}>
                 <ShoppingCart className="h-4 w-4" />
-                Active Navigation Tab
+                Active Tab
               </div>
 
               {/* Badge Preview */}
               <div className={`px-3 py-1 text-xs font-bold rounded-lg border flex items-center gap-1.5 ${currentStyles.badge}`}>
                 <ShieldCheck className="h-3.5 w-3.5" />
-                Theme Badge
+                Gold Badge
               </div>
 
               {/* Text Highlight Preview */}
               <span className={`text-xs font-bold bg-clip-text text-transparent bg-gradient-to-r ${currentStyles.textGradient}`}>
-                Khan Hardware & Gas POS
+                Khan Hardware POS
               </span>
             </div>
           </div>
@@ -231,15 +191,15 @@ export default function ThemeCustomizerModal({ isOpen, onClose }: ThemeCustomize
         <div className={`px-6 py-4 border-t flex items-center justify-between ${
           isDark ? 'border-slate-800 bg-slate-950/60' : 'border-slate-100 bg-slate-50/80'
         }`}>
-          <div className="flex items-center gap-2 text-xs text-emerald-500 font-semibold">
+          <div className="flex items-center gap-2 text-xs text-amber-500 font-semibold">
             <CheckCircle2 className="h-4 w-4" />
-            <span>Theme auto-saved to session storage</span>
+            <span>Amber Gold active across entire system</span>
           </div>
           <button
             onClick={onClose}
             className={`px-5 py-2.5 rounded-xl text-xs font-bold text-white transition-all shadow-md bg-gradient-to-r ${currentStyles.gradient} ${currentStyles.glow}`}
           >
-            Apply & Close
+            Close Customizer
           </button>
         </div>
       </div>

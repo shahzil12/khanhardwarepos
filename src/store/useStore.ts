@@ -613,7 +613,7 @@ export const useStore = create<AppState>()(
       workers: initialWorkers,
       openingFloat: 5000,
       themeMode: 'dark',
-      colorTheme: 'cyan',
+      colorTheme: 'amber',
       currentUser: registeredUsers[0],
       isAuthenticated: true,
 
