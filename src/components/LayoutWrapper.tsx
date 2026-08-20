@@ -104,7 +104,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
   };
 
   return (
-    <div className={`h-screen max-h-screen w-screen max-w-full flex flex-col md:flex-row antialiased font-sans transition-colors duration-200 overflow-hidden ${
+    <div className={`h-screen max-h-screen w-full max-w-full flex flex-col md:flex-row antialiased font-sans transition-colors duration-200 overflow-hidden ${
       isDark ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'
     }`}>
       
@@ -397,7 +397,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
         )}
 
         {/* Dynamic page container */}
-        <div className="flex-1 overflow-y-auto custom-scrollbar p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
+        <div className="flex-1 overflow-y-auto overflow-x-hidden custom-scrollbar p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
           {children}
         </div>
       </main>
