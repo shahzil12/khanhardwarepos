@@ -257,7 +257,7 @@ export default function POSPage() {
       {/* POS Header Controls */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4 print:hidden">
         <div>
-          <h2 className="text-2xl font-bold tracking-tight flex items-center gap-2 text-slate-800 dark:text-slate-200">
+          <h2 className={`text-2xl font-bold tracking-tight flex items-center gap-2 ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>
             <ShoppingCart className={`h-6 w-6 ${isDark ? 'text-amber-400' : 'text-amber-700'}`} />
             Hardware POS Billing Terminal
           </h2>
@@ -308,7 +308,7 @@ export default function POSPage() {
       </div>
 
       {/* Category Selection Bar */}
-      <div className={`flex gap-1.5 overflow-x-auto pb-1 p-1.5 rounded-xl border shadow-sm print:hidden ${
+      <div className={`flex gap-1.5 overflow-x-auto no-scrollbar pb-1 p-1.5 rounded-xl border shadow-sm print:hidden ${
         isDark ? 'bg-slate-950/20 border-slate-900' : 'bg-white border-slate-200'
       }`}>
         {categories.map((cat) => (

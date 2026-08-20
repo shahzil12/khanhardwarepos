@@ -364,11 +364,11 @@ function CylinderPageContent() {
       {/* Header bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold tracking-tight flex items-center gap-2 text-slate-800 dark:text-slate-200">
-            <Database className={`h-6 w-6 ${isDark ? 'text-cyan-400' : 'text-blue-600'}`} />
+          <h2 className={`text-2xl font-bold tracking-tight flex items-center gap-2 ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>
+            <Database className={`h-6 w-6 ${isDark ? 'text-amber-400' : 'text-amber-700'}`} />
             Cylinder Lifecycle Management
           </h2>
-          <p className="text-slate-500 text-sm mt-0.5">
+          <p className={`text-sm mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
             Track status, customer issues, driver deliveries, deposits, and returns.
           </p>
         </div>

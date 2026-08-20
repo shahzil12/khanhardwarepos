@@ -120,3 +120,12 @@ body {
 .shadow-amber-glow-hover:hover, .shadow-cyan-glow-hover:hover {
   box-shadow: 0 0 25px rgba(245, 158, 11, 0.45);
 }
+
+/* Hide scrollbar utility */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

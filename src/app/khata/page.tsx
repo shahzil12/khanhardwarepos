@@ -77,13 +77,14 @@ export default function KhataPage() {
     <div className="space-y-6 pb-12">
       
       {/* Header bar */}
+      {/* Header Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold tracking-tight flex items-center gap-2 text-slate-800 dark:text-slate-200">
-            <BookOpen className={`h-6 w-6 ${isDark ? 'text-cyan-400' : 'text-blue-600'}`} />
+          <h2 className={`text-2xl font-bold tracking-tight flex items-center gap-2 ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>
+            <BookOpen className={`h-6 w-6 ${isDark ? 'text-amber-400' : 'text-amber-700'}`} />
             Customer Credit Khata Ledger
           </h2>
-          <p className="text-slate-500 text-sm mt-0.5">
+          <p className={`text-sm mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
             Track customer accounts receivable, credit limits, debt sales, and cash collection receipts.
           </p>
         </div>
@@ -92,8 +93,8 @@ export default function KhataPage() {
           onClick={() => setIsAddCustomerOpen(true)}
           className={`flex items-center gap-2 px-4 py-2 border text-sm font-semibold rounded-xl transition-all shadow-sm ${
             isDark 
-              ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border-cyan-500/20 text-white shadow-cyan-glow' 
-              : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white border-blue-500/10 shadow-md shadow-blue-600/10'
+              ? 'bg-gradient-to-r from-amber-600 to-orange-600 border-amber-500/20 text-white shadow-amber-glow' 
+              : 'bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white border-amber-500/10 shadow-md shadow-amber-600/15'
           }`}
         >
           <Plus className="h-4.5 w-4.5" />
@@ -104,28 +105,28 @@ export default function KhataPage() {
       {/* Analytics Summary */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className={`p-5 border rounded-2xl shadow-sm ${isDark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
-          <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Accounts Receivable</p>
+          <p className={`text-xs font-bold uppercase tracking-wider ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Total Accounts Receivable</p>
           <h3 className="text-2xl font-extrabold mt-1 text-red-600 dark:text-red-400">{formatCurrency(totalReceivables)}</h3>
-          <p className="text-xs text-slate-500 mt-1">Outstanding customer credit debt</p>
+          <p className={`text-xs mt-1 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Outstanding customer credit debt</p>
         </div>
 
         <div className={`p-5 border rounded-2xl shadow-sm ${isDark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
-          <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Active Credit Customers</p>
-          <h3 className="text-2xl font-extrabold mt-1 text-slate-800 dark:text-slate-100">{khatas.length}</h3>
-          <p className="text-xs text-slate-500 mt-1">Verified Khata account holders</p>
+          <p className={`text-xs font-bold uppercase tracking-wider ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Active Credit Customers</p>
+          <h3 className={`text-2xl font-extrabold mt-1 ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>{khatas.length}</h3>
+          <p className={`text-xs mt-1 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Verified Khata account holders</p>
         </div>
 
         <div className={`p-5 border rounded-2xl shadow-sm ${isDark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
-          <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Overdue Reminders</p>
+          <p className={`text-xs font-bold uppercase tracking-wider ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Overdue Reminders</p>
           <h3 className="text-2xl font-extrabold mt-1 text-amber-500">{khatas.filter(k => k.currentBalance > k.creditLimit * 0.8).length}</h3>
-          <p className="text-xs text-slate-500 mt-1">Accounts above 80% credit limit</p>
+          <p className={`text-xs mt-1 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Accounts above 80% credit limit</p>
         </div>
       </div>
 
       {/* Search Bar */}
       <div className={`p-4 border rounded-2xl shadow-sm ${isDark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
         <div className="relative max-w-md">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4.5 w-4.5 text-slate-400" />
+          <Search className={`absolute left-3.5 top-1/2 -translate-y-1/2 h-4.5 w-4.5 ${isDark ? 'text-slate-400' : 'text-slate-500'}`} />
           <input
             type="text"
             placeholder="Search Customer Name or Phone Number..."
@@ -133,8 +134,8 @@ export default function KhataPage() {
             onChange={(e) => setSearchQuery(e.target.value)}
             className={`w-full pl-10 pr-4 py-2 border rounded-xl text-sm transition-colors ${
               isDark 
-                ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700 placeholder:text-slate-500' 
-                : 'bg-white border-slate-200 text-slate-800 focus:border-blue-500 placeholder:text-slate-400'
+                ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-amber-500 placeholder:text-slate-500' 
+                : 'bg-white border-slate-200 text-slate-900 focus:border-amber-500 placeholder:text-slate-500'
             }`}
           />
         </div>

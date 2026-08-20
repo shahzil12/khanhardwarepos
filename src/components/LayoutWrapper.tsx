@@ -43,6 +43,18 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
     logout 
   } = useStore();
   
+  // Synchronize document.documentElement class for Tailwind dark mode
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    if (themeMode === 'dark') {
+      document.documentElement.classList.add('dark');
+      document.documentElement.classList.remove('light');
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+    }
+  }, [themeMode]);
+
   // Calculate overdue cylinders count for warning banner
   const [overdueCount, setOverdueCount] = useState(0);
 

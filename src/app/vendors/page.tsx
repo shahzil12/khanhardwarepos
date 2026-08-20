@@ -127,11 +127,11 @@ export default function VendorsPage() {
       {/* Header bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold tracking-tight flex items-center gap-2 text-slate-800 dark:text-slate-200">
-            <Building2 className={`h-6 w-6 ${isDark ? 'text-cyan-400' : 'text-blue-600'}`} />
+          <h2 className={`text-2xl font-bold tracking-tight flex items-center gap-2 ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>
+            <Building2 className={`h-6 w-6 ${isDark ? 'text-amber-400' : 'text-amber-700'}`} />
             Vendor & Supplier Procurement
           </h2>
-          <p className="text-slate-500 text-sm mt-0.5">
+          <p className={`text-sm mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
             Manage hardware suppliers, purchase orders (PO), goods received notes (GRN), and balance payables.
           </p>
         </div>
@@ -142,10 +142,10 @@ export default function VendorsPage() {
             className={`flex items-center gap-2 px-4 py-2 border text-sm font-semibold rounded-xl transition-all shadow-sm ${
               isDark 
                 ? 'bg-slate-900 border-slate-800 hover:bg-slate-800 text-slate-200' 
-                : 'bg-white border-slate-200 hover:bg-slate-50 text-slate-700'
+                : 'bg-white border-slate-200 hover:bg-slate-50 text-slate-800'
             }`}
           >
-            <Plus className="h-4.5 w-4.5 text-slate-500" />
+            <Plus className={`h-4.5 w-4.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`} />
             Add Supplier
           </button>
 
@@ -158,8 +158,8 @@ export default function VendorsPage() {
             }}
             className={`flex items-center gap-2 px-4 py-2 border text-sm font-semibold rounded-xl transition-all shadow-sm ${
               isDark 
-                ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border-cyan-500/20 text-white shadow-cyan-glow' 
-                : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white border-blue-500/10 shadow-md shadow-blue-600/10'
+                ? 'bg-gradient-to-r from-amber-600 to-orange-600 border-amber-500/20 text-white shadow-amber-glow' 
+                : 'bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white border-amber-500/10 shadow-md shadow-amber-600/15'
             }`}
           >
             <FileText className="h-4.5 w-4.5" />
@@ -171,21 +171,21 @@ export default function VendorsPage() {
       {/* Summary Analytics Card */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className={`p-5 border rounded-2xl shadow-sm ${isDark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
-          <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Active Suppliers</p>
-          <h3 className="text-2xl font-extrabold mt-1 text-slate-800 dark:text-slate-100">{vendors.length}</h3>
-          <p className="text-xs text-slate-500 mt-1">Verified hardware & gas distributors</p>
+          <p className={`text-xs font-bold uppercase tracking-wider ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Total Active Suppliers</p>
+          <h3 className={`text-2xl font-extrabold mt-1 ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>{vendors.length}</h3>
+          <p className={`text-xs mt-1 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Verified hardware & gas distributors</p>
         </div>
 
         <div className={`p-5 border rounded-2xl shadow-sm ${isDark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
-          <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Accounts Payable</p>
+          <p className={`text-xs font-bold uppercase tracking-wider ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Total Accounts Payable</p>
           <h3 className="text-2xl font-extrabold mt-1 text-red-600 dark:text-red-400">{formatCurrency(totalPayables)}</h3>
-          <p className="text-xs text-slate-500 mt-1">Outstanding vendor invoices</p>
+          <p className={`text-xs mt-1 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Outstanding vendor invoices</p>
         </div>
 
         <div className={`p-5 border rounded-2xl shadow-sm ${isDark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
-          <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Pending Purchase Orders</p>
+          <p className={`text-xs font-bold uppercase tracking-wider ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Pending Purchase Orders</p>
           <h3 className="text-2xl font-extrabold mt-1 text-amber-500">{purchaseOrders.filter(p => p.status === 'Pending').length}</h3>
-          <p className="text-xs text-slate-500 mt-1">Awaiting stock arrival & GRN</p>
+          <p className={`text-xs mt-1 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Awaiting stock arrival & GRN</p>
         </div>
       </div>
 

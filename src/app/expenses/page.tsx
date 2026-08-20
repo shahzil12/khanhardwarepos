@@ -96,11 +96,11 @@ export default function ExpensesPage() {
       {/* Header Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h2 className="text-2xl font-bold tracking-tight flex items-center gap-2 text-slate-800 dark:text-slate-200">
-            <Wallet className={`h-6 w-6 ${isDark ? 'text-cyan-400' : 'text-blue-600'}`} />
+          <h2 className={`text-2xl font-bold tracking-tight flex items-center gap-2 ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>
+            <Wallet className={`h-6 w-6 ${isDark ? 'text-amber-400' : 'text-amber-700'}`} />
             Expense & Cash Drawer Management
           </h2>
-          <p className="text-slate-500 text-sm mt-0.5">
+          <p className={`text-sm mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
             Log store operational expenses, track petty cash outflow, and perform end-of-day drawer reconciliation.
           </p>
         </div>
@@ -111,10 +111,10 @@ export default function ExpensesPage() {
             className={`flex items-center gap-2 px-4 py-2 border text-sm font-semibold rounded-xl transition-all shadow-sm ${
               isDark 
                 ? 'bg-slate-900 border-slate-800 hover:bg-slate-800 text-slate-200' 
-                : 'bg-white border-slate-200 hover:bg-slate-50 text-slate-700'
+                : 'bg-white border-slate-200 hover:bg-slate-50 text-slate-800'
             }`}
           >
-            <Plus className="h-4.5 w-4.5 text-slate-500" />
+            <Plus className={`h-4.5 w-4.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`} />
             Log Expense
           </button>
 
@@ -122,8 +122,8 @@ export default function ExpensesPage() {
             onClick={() => setIsReconcileOpen(true)}
             className={`flex items-center gap-2 px-4 py-2 border text-sm font-semibold rounded-xl transition-all shadow-sm ${
               isDark 
-                ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border-cyan-500/20 text-white shadow-cyan-glow' 
-                : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white border-blue-500/10 shadow-md shadow-blue-600/10'
+                ? 'bg-gradient-to-r from-amber-600 to-orange-600 border-amber-500/20 text-white shadow-amber-glow' 
+                : 'bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white border-amber-500/10 shadow-md shadow-amber-600/15'
             }`}
           >
             <ShieldCheck className="h-4.5 w-4.5" />
@@ -135,35 +135,35 @@ export default function ExpensesPage() {
       {/* Live Cash Drawer Breakdown Cards */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <div className={`p-5 border rounded-2xl shadow-sm ${isDark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
-          <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Opening Cash Float</p>
-          <h3 className="text-2xl font-extrabold mt-1 text-slate-800 dark:text-slate-100">{formatCurrency(openingFloat)}</h3>
+          <p className={`text-xs font-bold uppercase tracking-wider ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Opening Cash Float</p>
+          <h3 className={`text-2xl font-extrabold mt-1 ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>{formatCurrency(openingFloat)}</h3>
           <form onSubmit={handleUpdateOpeningFloat} className="mt-2 flex gap-1.5">
             <input
               type="number"
               value={newOpeningFloat}
               onChange={(e) => setNewOpeningFloat(e.target.value)}
-              className={`w-24 px-2 py-0.5 text-xs border rounded-lg ${isDark ? 'bg-slate-950 border-slate-800' : 'bg-slate-50 border-slate-300'}`}
+              className={`w-24 px-2 py-0.5 text-xs border rounded-lg ${isDark ? 'bg-slate-950 border-slate-800 text-slate-100' : 'bg-slate-50 border-slate-300 text-slate-900'}`}
             />
-            <button type="submit" className="px-2 py-0.5 bg-blue-600 text-white text-xs font-bold rounded-lg">Set</button>
+            <button type="submit" className="px-2 py-0.5 bg-amber-600 text-white text-xs font-bold rounded-lg hover:bg-amber-500">Set</button>
           </form>
         </div>
 
         <div className={`p-5 border rounded-2xl shadow-sm ${isDark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
-          <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Today's Cash Sales</p>
+          <p className={`text-xs font-bold uppercase tracking-wider ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Today's Cash Sales</p>
           <h3 className="text-2xl font-extrabold mt-1 text-emerald-600 dark:text-emerald-400">{formatCurrency(todayCashSales)}</h3>
-          <p className="text-xs text-slate-500 mt-1">Net cash collected at checkout</p>
+          <p className={`text-xs mt-1 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Net cash collected at checkout</p>
         </div>
 
         <div className={`p-5 border rounded-2xl shadow-sm ${isDark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
-          <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Today's Petty Expenses</p>
+          <p className={`text-xs font-bold uppercase tracking-wider ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Today's Petty Expenses</p>
           <h3 className="text-2xl font-extrabold mt-1 text-red-600 dark:text-red-400">{formatCurrency(todayExpenses)}</h3>
-          <p className="text-xs text-slate-500 mt-1">Utilities, fuel & wages</p>
+          <p className={`text-xs mt-1 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Utilities, fuel & wages</p>
         </div>
 
         <div className={`p-5 border rounded-2xl shadow-sm ${isDark ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'}`}>
-          <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">Expected Drawer Cash</p>
-          <h3 className="text-2xl font-extrabold mt-1 text-blue-600 dark:text-cyan-400">{formatCurrency(expectedDrawerCash)}</h3>
-          <p className="text-xs text-slate-500 mt-1">Opening + Sales - Expenses</p>
+          <p className={`text-xs font-bold uppercase tracking-wider ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Expected Drawer Cash</p>
+          <h3 className={`text-2xl font-extrabold mt-1 ${isDark ? 'text-amber-400' : 'text-amber-800'}`}>{formatCurrency(expectedDrawerCash)}</h3>
+          <p className={`text-xs mt-1 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Opening + Sales - Expenses</p>
         </div>
       </div>
 
