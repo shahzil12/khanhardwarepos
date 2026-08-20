@@ -92,12 +92,12 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
   };
 
   return (
-    <div className={`min-h-screen flex flex-col md:flex-row antialiased font-sans transition-colors duration-200 ${
+    <div className={`h-screen max-h-screen w-screen max-w-full flex flex-col md:flex-row antialiased font-sans transition-colors duration-200 overflow-hidden ${
       isDark ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'
     }`}>
       
       {/* Sidebar for Desktop */}
-      <aside className={`hidden md:flex flex-col w-64 shrink-0 border-r sticky top-0 h-screen transition-colors duration-200 print:hidden ${
+      <aside className={`hidden md:flex flex-col w-64 shrink-0 border-r h-full overflow-hidden transition-colors duration-200 print:hidden ${
         isDark ? 'bg-slate-900 border-slate-800 text-slate-200' : 'bg-white border-slate-200 text-slate-800'
       }`}>
         {/* Header / Logo */}
@@ -120,7 +120,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
         </div>
 
         {/* Navigation Items */}
-        <nav className="flex-1 py-6 px-4 space-y-1.5">
+        <nav className="flex-1 py-6 px-4 space-y-1.5 overflow-y-auto custom-scrollbar">
           {navigation.map((item) => {
             const isActive = pathname === item.href;
             const Icon = item.icon;
@@ -163,7 +163,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
         </nav>
 
         {/* User Session Info & Theme / Logout Footer */}
-        <div className={`p-4 border-t ${isDark ? 'border-slate-800' : 'border-slate-200'}`}>
+        <div className={`shrink-0 p-4 border-t ${isDark ? 'border-slate-800' : 'border-slate-200'}`}>
           <div className={`p-3 rounded-2xl border space-y-3 ${
             isDark ? 'bg-slate-950/60 border-slate-800' : 'bg-slate-50 border-slate-200'
           }`}>
@@ -367,10 +367,10 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
       )}
 
       {/* Main Content Area */}
-      <main className="flex-1 flex flex-col min-w-0">
+      <main className="flex-1 flex flex-col min-w-0 h-full overflow-hidden">
         {/* Banner with system alerts / status */}
         {overdueCount > 0 && pathname !== '/cylinder' && (
-          <div className={`border-b py-2.5 px-6 flex items-center justify-between text-xs sm:text-sm font-medium transition-colors duration-200 ${
+          <div className={`shrink-0 border-b py-2.5 px-6 flex items-center justify-between text-xs sm:text-sm font-medium transition-colors duration-200 ${
             isDark 
               ? 'bg-gradient-to-r from-red-950/40 via-red-900/35 to-red-950/40 border-red-900 text-red-300' 
               : 'bg-gradient-to-r from-red-50 via-red-100 to-red-50 border-red-200 text-red-800'
@@ -391,7 +391,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
         )}
 
         {/* Dynamic page container */}
-        <div className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
+        <div className="flex-1 overflow-y-auto custom-scrollbar p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
           {children}
         </div>
       </main>
