@@ -258,10 +258,10 @@ export default function POSPage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200 dark:border-slate-800 pb-4 print:hidden">
         <div>
           <h2 className="text-2xl font-bold tracking-tight flex items-center gap-2 text-slate-800 dark:text-slate-200">
-            <ShoppingCart className={`h-6 w-6 ${isDark ? 'text-cyan-400' : 'text-blue-600'}`} />
+            <ShoppingCart className={`h-6 w-6 ${isDark ? 'text-amber-400' : 'text-amber-700'}`} />
             Hardware POS Billing Terminal
           </h2>
-          <p className="text-slate-500 text-sm mt-0.5">
+          <p className={`text-sm mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
             Add items, handle cash drawers, process refunds, and print thermal invoices.
           </p>
         </div>
@@ -281,8 +281,8 @@ export default function POSPage() {
             onClick={() => setIsHistoryModalOpen(true)}
             className={`flex items-center gap-2 px-4 py-2 border rounded-xl text-xs sm:text-sm font-bold transition-all shadow-sm ${
               isDark 
-                ? 'bg-slate-900 border-slate-800 hover:bg-slate-800 text-cyan-400 border-cyan-500/20 shadow-cyan-glow' 
-                : 'bg-white border-slate-200 hover:bg-slate-50 text-blue-600 shadow-sm'
+                ? 'bg-slate-900 border-slate-800 hover:bg-slate-800 text-amber-400 border-amber-500/20 shadow-amber-glow' 
+                : 'bg-white border-slate-200 hover:bg-slate-50 text-amber-900 shadow-sm border-amber-200'
             }`}
           >
             <History className="h-4.5 w-4.5" />
@@ -291,7 +291,7 @@ export default function POSPage() {
 
           {/* Barcode Search Field */}
           <form onSubmit={(e) => e.preventDefault()} className="relative w-full md:w-64">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 h-4.5 w-4.5 text-slate-400" />
+            <Search className={`absolute left-3.5 top-1/2 -translate-y-1/2 h-4.5 w-4.5 ${isDark ? 'text-slate-400' : 'text-slate-500'}`} />
             <input
               type="text"
               placeholder="Search Name or Barcode..."
@@ -299,8 +299,8 @@ export default function POSPage() {
               onChange={(e) => setSearchQuery(e.target.value)}
               className={`w-full pl-10 pr-4 py-2 border rounded-xl text-sm transition-colors shadow-sm ${
                 isDark 
-                  ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700 placeholder:text-slate-500' 
-                  : 'bg-white border-slate-200 text-slate-800 focus:border-blue-500 placeholder:text-slate-400'
+                  ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-amber-500 placeholder:text-slate-500' 
+                  : 'bg-white border-slate-200 text-slate-900 focus:border-amber-500 placeholder:text-slate-500'
               }`}
             />
           </form>
@@ -318,11 +318,11 @@ export default function POSPage() {
             className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all whitespace-nowrap border ${
               selectedCategory === cat
                 ? isDark
-                  ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border-cyan-500 text-white shadow-cyan-glow'
-                  : 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white border-blue-500/10 shadow-md shadow-blue-600/10'
+                  ? 'bg-gradient-to-r from-amber-600 to-orange-600 border-amber-500 text-white shadow-amber-glow'
+                  : 'bg-gradient-to-r from-amber-600 to-orange-600 text-white border-amber-500/10 shadow-md shadow-amber-600/15'
                 : isDark
                   ? 'text-slate-400 hover:text-slate-200 hover:bg-slate-900 border-transparent'
-                  : 'text-slate-500 hover:text-slate-800 hover:bg-slate-100 border-transparent'
+                  : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100 border-transparent'
             }`}
           >
             {cat}
@@ -339,9 +339,9 @@ export default function POSPage() {
           className={`flex-1 py-2 text-center text-xs font-bold rounded-lg ${
             mobileView === 'products' 
               ? isDark 
-                ? 'bg-slate-800 text-cyan-400 font-bold shadow-cyan-glow border border-slate-700' 
-                : 'bg-white text-blue-600 shadow-sm border border-slate-200'
-              : 'text-slate-500'
+                ? 'bg-slate-800 text-amber-400 font-bold shadow-amber-glow border border-slate-700' 
+                : 'bg-white text-amber-900 shadow-sm border border-slate-200'
+              : isDark ? 'text-slate-400' : 'text-slate-600'
           }`}
         >
           Products ({filteredProducts.length})
@@ -351,9 +351,9 @@ export default function POSPage() {
           className={`flex-1 py-2 text-center text-xs font-bold rounded-lg ${
             mobileView === 'cart' 
               ? isDark 
-                ? 'bg-slate-800 text-cyan-400 font-bold shadow-cyan-glow border border-slate-700' 
-                : 'bg-white text-blue-600 shadow-sm border border-slate-200'
-              : 'text-slate-500'
+                ? 'bg-slate-800 text-amber-400 font-bold shadow-amber-glow border border-slate-700' 
+                : 'bg-white text-amber-900 shadow-sm border border-slate-200'
+              : isDark ? 'text-slate-400' : 'text-slate-600'
           }`}
         >
           Cart ({cart.reduce((s, i) => s + i.quantity, 0)})
@@ -382,17 +382,17 @@ export default function POSPage() {
                       ? 'opacity-55 cursor-not-allowed border-slate-200 dark:border-slate-800' 
                       : inCart 
                         ? isDark
-                          ? 'border-cyan-500 bg-cyan-950/10 shadow-cyan-glow'
-                          : 'border-blue-500 bg-blue-50/10 shadow-md shadow-blue-600/5'
+                          ? 'border-amber-500 bg-amber-950/10 shadow-amber-glow'
+                          : 'border-amber-500 bg-amber-50/50 shadow-md shadow-amber-600/5'
                         : isDark
-                          ? 'bg-slate-900 border-slate-800 hover:border-slate-700 hover:scale-[1.01] hover:shadow-cyan-glow'
-                          : 'bg-white border-slate-200 hover:border-slate-300 hover:scale-[1.01] hover:shadow-md text-slate-800'
+                          ? 'bg-slate-900 border-slate-800 hover:border-slate-700 hover:scale-[1.01] hover:shadow-amber-glow'
+                          : 'bg-white border-slate-200 hover:border-slate-300 hover:scale-[1.01] hover:shadow-md text-slate-900'
                   }`}
                 >
                   <div className="space-y-1">
                     <div className="flex justify-between items-center gap-1.5 flex-wrap">
                       <span className={`px-2 py-0.5 text-[10px] rounded font-bold border ${
-                        isDark ? 'bg-slate-800 text-slate-300 border-slate-700' : 'bg-slate-100 text-slate-700 border-slate-200'
+                        isDark ? 'bg-slate-800 text-slate-300 border-slate-700' : 'bg-slate-100 text-slate-800 border-slate-200'
                       }`}>
                         {product.category}
                       </span>
@@ -404,27 +404,27 @@ export default function POSPage() {
                         </span>
                       ) : isLowStock ? (
                         <span className={`px-1.5 py-0.5 text-[9px] font-bold rounded border animate-pulse ${
-                          isDark ? 'bg-amber-950/40 text-amber-400 border-amber-900/50' : 'bg-amber-100 text-amber-800 border-amber-300'
+                          isDark ? 'bg-amber-950/40 text-amber-400 border-amber-900/50' : 'bg-amber-100 text-amber-900 border-amber-300'
                         }`}>
                           LOW STOCK ({product.stockQuantity})
                         </span>
                       ) : (
-                        <span className="text-[10px] text-slate-400 font-semibold font-mono">
+                        <span className={`text-[10px] font-semibold font-mono ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                           QTY: {product.stockQuantity}
                         </span>
                       )}
                     </div>
 
-                    <h4 className={`font-bold text-sm mt-2 line-clamp-2 ${isDark ? 'text-slate-200 group-hover:text-white' : 'text-slate-800 group-hover:text-slate-950'}`}>
+                    <h4 className={`font-bold text-sm mt-2 line-clamp-2 ${isDark ? 'text-slate-200 group-hover:text-white' : 'text-slate-900 group-hover:text-black'}`}>
                       {product.name}
                     </h4>
-                    <p className="text-[10px] text-slate-400 font-mono tracking-wider">
+                    <p className={`text-[10px] font-mono tracking-wider ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                       SKU: {product.barcode}
                     </p>
                   </div>
 
                   <div className={`mt-4 pt-3 border-t flex justify-between items-center ${isDark ? 'border-slate-800/80' : 'border-slate-100'}`}>
-                    <span className={`font-bold text-sm ${isDark ? 'text-slate-100' : 'text-slate-800'}`}>
+                    <span className={`font-bold text-sm ${isDark ? 'text-slate-100' : 'text-slate-900'}`}>
                       {formatCurrency(product.retailPrice)}
                     </span>
                     
@@ -435,11 +435,11 @@ export default function POSPage() {
                           ? 'bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-800 text-slate-400' 
                           : inCart 
                             ? isDark
-                              ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white border-cyan-500/20 shadow-cyan-glow'
-                              : 'bg-blue-600 text-white border-blue-500/10 shadow-sm shadow-blue-600/10'
+                              ? 'bg-gradient-to-r from-amber-600 to-orange-600 text-white border-amber-500/20 shadow-amber-glow'
+                              : 'bg-amber-600 text-white border-amber-500/10 shadow-sm shadow-amber-600/10'
                             : isDark
                               ? 'bg-slate-800 hover:bg-slate-700 border-slate-700 text-slate-300 shadow-sm'
-                              : 'bg-slate-50 hover:bg-slate-100 text-slate-600 border-slate-200 shadow-sm'
+                              : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200 shadow-sm'
                       }`}
                     >
                       <Plus className="h-4 w-4" />
@@ -457,22 +457,22 @@ export default function POSPage() {
         }`}>
           
           <div className={`border rounded-2xl flex flex-col justify-between overflow-hidden shadow-md ${
-            isDark ? 'bg-slate-900 border-slate-800 text-slate-200' : 'bg-white border-slate-200 text-slate-800'
+            isDark ? 'bg-slate-900 border-slate-800 text-slate-200' : 'bg-white border-slate-200 text-slate-900'
           }`}>
             
             {/* Cart Header */}
             <div className={`p-4 border-b flex justify-between items-center ${
               isDark ? 'border-slate-800 bg-slate-900/50' : 'border-slate-200 bg-slate-50'
             }`}>
-              <h3 className={`font-bold flex items-center gap-2 text-sm sm:text-base ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
-                <Receipt className={`h-5 w-5 ${isDark ? 'text-cyan-400' : 'text-blue-600'}`} />
+              <h3 className={`font-bold flex items-center gap-2 text-sm sm:text-base ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>
+                <Receipt className={`h-5 w-5 ${isDark ? 'text-amber-400' : 'text-amber-700'}`} />
                 Checkout Cart
               </h3>
               <div className="flex items-center gap-2">
                 {cart.length > 0 && (
                   <button
                     onClick={() => setIsHoldModalOpen(true)}
-                    className="flex items-center gap-1 text-amber-600 hover:text-amber-500 text-xs font-bold transition-colors"
+                    className="flex items-center gap-1 text-amber-700 dark:text-amber-400 hover:text-amber-800 text-xs font-bold transition-colors"
                   >
                     <Pause className="h-3.5 w-3.5" />
                     Hold Cart
@@ -492,17 +492,17 @@ export default function POSPage() {
             {/* Cart Items List */}
             <div className={`flex-1 overflow-y-auto max-h-[360px] p-4 divide-y ${isDark ? 'divide-slate-800/40' : 'divide-slate-100'}`}>
               {cart.length === 0 ? (
-                <div className="py-16 text-center text-slate-400 text-sm flex flex-col items-center justify-center space-y-2">
-                  <ShoppingCart className="h-8 w-8 text-slate-300 animate-bounce" />
+                <div className={`py-16 text-center text-sm flex flex-col items-center justify-center space-y-2 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
+                  <ShoppingCart className={`h-8 w-8 animate-bounce ${isDark ? 'text-slate-600' : 'text-slate-400'}`} />
                   <p className="font-medium">POS Cart is Empty</p>
-                  <p className="text-[10px] text-slate-400">Click on product cards to add hardware items.</p>
+                  <p className="text-[10px]">Click on product cards to add hardware items.</p>
                 </div>
               ) : (
                 cart.map((item) => (
                   <div key={item.product.id} className="py-3 flex items-center justify-between gap-3 text-xs">
                     <div className="space-y-0.5 pr-2 truncate">
-                      <p className={`font-bold truncate ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>{item.product.name}</p>
-                      <p className="text-[9px] text-slate-400 font-semibold font-mono uppercase tracking-wider">
+                      <p className={`font-bold truncate ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>{item.product.name}</p>
+                      <p className={`text-[9px] font-semibold font-mono uppercase tracking-wider ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                         Price: {formatCurrency(item.product.retailPrice)} • Unit: {item.product.unit || 'piece'}
                       </p>
                     </div>
@@ -517,7 +517,7 @@ export default function POSPage() {
                         >
                           <Minus className="h-3 w-3" />
                         </button>
-                        <span className={`px-2 font-bold text-xs ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
+                        <span className={`px-2 font-bold text-xs ${isDark ? 'text-slate-200' : 'text-slate-900'}`}>
                           {item.quantity}
                         </span>
                         <button 
@@ -547,19 +547,19 @@ export default function POSPage() {
             }`}>
               <div className="space-y-1.5">
                 <div className="flex justify-between">
-                  <span className="text-slate-500">Subtotal:</span>
-                  <span className={`font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>{formatCurrency(subtotal)}</span>
+                  <span className={`font-medium ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Subtotal:</span>
+                  <span className={`font-bold ${isDark ? 'text-slate-300' : 'text-slate-800'}`}>{formatCurrency(subtotal)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-slate-500">GST Sales Tax (17%):</span>
-                  <span className={`font-bold ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>{formatCurrency(taxAmount)}</span>
+                  <span className={`font-medium ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>GST Sales Tax (17%):</span>
+                  <span className={`font-bold ${isDark ? 'text-slate-300' : 'text-slate-800'}`}>{formatCurrency(taxAmount)}</span>
                 </div>
               </div>
 
               {/* Total Row */}
               <div className={`flex justify-between items-center border-t pt-3 ${isDark ? 'border-slate-800' : 'border-slate-200'}`}>
-                <span className="font-bold text-slate-700 dark:text-slate-300 text-sm">Grand Total:</span>
-                <span className={`font-bold text-2xl ${isDark ? 'text-cyan-400' : 'text-blue-600'}`}>{formatCurrency(grandTotal)}</span>
+                <span className={`font-bold text-sm ${isDark ? 'text-slate-300' : 'text-slate-800'}`}>Grand Total:</span>
+                <span className={`font-bold text-2xl ${isDark ? 'text-amber-400' : 'text-amber-800'}`}>{formatCurrency(grandTotal)}</span>
               </div>
 
               {/* Payment Method Selector */}
@@ -578,11 +578,11 @@ export default function POSPage() {
                       className={`py-2 px-1 flex flex-col items-center gap-1 border rounded-xl transition-all shadow-sm ${
                         paymentMethod === p.name 
                           ? isDark
-                            ? 'bg-slate-800 border-cyan-500 text-cyan-400 font-bold shadow-cyan-glow'
-                            : 'bg-blue-50 border-blue-500 text-blue-700 font-bold shadow-sm'
+                            ? 'bg-slate-800 border-amber-500 text-amber-400 font-bold shadow-amber-glow'
+                            : 'bg-amber-50 border-amber-500 text-amber-900 font-bold shadow-sm'
                           : isDark
-                            ? 'bg-slate-900 border-slate-800 text-slate-500 hover:border-slate-700 hover:text-slate-300'
-                            : 'bg-white border-slate-200 text-slate-500 hover:border-slate-300 hover:text-slate-700'
+                            ? 'bg-slate-900 border-slate-800 text-slate-400 hover:border-slate-700 hover:text-slate-200'
+                            : 'bg-white border-slate-200 text-slate-600 hover:border-slate-300 hover:text-slate-900'
                       }`}
                     >
                       <Icon className="h-4 w-4" />
@@ -595,11 +595,11 @@ export default function POSPage() {
               {/* Customer Khata Selector */}
               {paymentMethod === 'Customer Khata' && (
                 <div className={`space-y-2 border-t pt-3 animate-fade-in ${isDark ? 'border-slate-800' : 'border-slate-200'}`}>
-                  <label className="block text-slate-500 font-bold">Select Khata Credit Account:</label>
+                  <label className={`block font-bold ${isDark ? 'text-slate-400' : 'text-slate-700'}`}>Select Khata Credit Account:</label>
                   <select
                     value={selectedKhataId}
                     onChange={(e) => setSelectedKhataId(e.target.value)}
-                    className={`w-full px-3 py-2 border rounded-xl font-bold text-xs ${isDark ? 'bg-slate-950 border-slate-800 text-cyan-400' : 'bg-white border-slate-300 text-blue-600'}`}
+                    className={`w-full px-3 py-2 border rounded-xl font-bold text-xs ${isDark ? 'bg-slate-950 border-slate-800 text-amber-400' : 'bg-white border-slate-300 text-amber-900'}`}
                   >
                     <option value="">-- Select Customer Khata Account --</option>
                     {khatas.map((k) => (
@@ -615,9 +615,9 @@ export default function POSPage() {
               {paymentMethod === 'Cash' && (
                 <div className={`space-y-2 border-t pt-3 animate-fade-in ${isDark ? 'border-slate-800' : 'border-slate-200'}`}>
                   <div className="flex items-center justify-between gap-4">
-                    <label className="text-slate-500 dark:text-slate-400 font-bold">Cash Received (PKR):</label>
+                    <label className={`font-bold ${isDark ? 'text-slate-400' : 'text-slate-700'}`}>Cash Received (PKR):</label>
                     <div className="relative w-28 shrink-0">
-                      <span className="absolute left-2 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-[10px]">Rs.</span>
+                      <span className={`absolute left-2 top-1/2 -translate-y-1/2 font-bold text-[10px] ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>Rs.</span>
                       <input 
                         type="number"
                         placeholder="0"
@@ -625,8 +625,8 @@ export default function POSPage() {
                         onChange={(e) => setCashReceived(e.target.value)}
                         className={`w-full pl-6 pr-2 py-1 border rounded-lg text-xs font-bold text-right focus:outline-none shadow-sm ${
                           isDark 
-                            ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-slate-700' 
-                            : 'bg-white border-slate-300 text-slate-800 focus:border-blue-500'
+                            ? 'bg-slate-950 border-slate-800 text-slate-200 focus:border-amber-500' 
+                            : 'bg-white border-slate-300 text-slate-900 focus:border-amber-500'
                         }`}
                       />
                     </div>
@@ -634,8 +634,8 @@ export default function POSPage() {
                   {cashNum >= grandTotal && (
                     <div className={`flex justify-between items-center p-2 rounded-lg text-[10px] font-bold border ${
                       isDark 
-                        ? 'bg-cyan-950/20 border-cyan-800 text-cyan-400' 
-                        : 'bg-blue-50 border-blue-100 text-blue-800'
+                        ? 'bg-amber-950/20 border-amber-800 text-amber-400' 
+                        : 'bg-amber-50 border-amber-200 text-amber-900'
                     }`}>
                       <span>Change to Return:</span>
                       <span className="text-sm">{formatCurrency(changeDue)}</span>
@@ -654,8 +654,8 @@ export default function POSPage() {
                       ? 'bg-slate-800/60 border-slate-800 text-slate-500 cursor-not-allowed shadow-none'
                       : 'bg-slate-200 border-slate-300 text-slate-500 cursor-not-allowed shadow-none'
                     : isDark
-                      ? 'bg-gradient-to-r from-cyan-600 to-blue-600 border-cyan-500/20 text-white shadow-cyan-glow'
-                      : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white border-blue-500/10 shadow-blue-600/20'
+                      ? 'bg-gradient-to-r from-amber-600 to-orange-600 border-amber-500/20 text-white shadow-amber-glow'
+                      : 'bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-500 hover:to-orange-500 text-white border-amber-500/10 shadow-md shadow-amber-600/15'
                 }`}
               >
                 Pay & Print Thermal Receipt

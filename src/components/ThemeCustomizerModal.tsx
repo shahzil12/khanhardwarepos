@@ -50,7 +50,7 @@ export default function ThemeCustomizerModal({ isOpen, onClose }: ThemeCustomize
             </div>
             <div>
               <h2 className="text-lg font-bold tracking-tight">Amber Gold Theme</h2>
-              <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+              <p className={`text-xs ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                 Primary warm gold styling for Khan Hardware POS
               </p>
             </div>
@@ -60,7 +60,7 @@ export default function ThemeCustomizerModal({ isOpen, onClose }: ThemeCustomize
             className={`p-2 rounded-xl border transition-colors ${
               isDark 
                 ? 'bg-slate-800 border-slate-700 text-slate-400 hover:text-white hover:bg-slate-700' 
-                : 'bg-white border-slate-200 text-slate-500 hover:text-slate-900 hover:bg-slate-100'
+                : 'bg-white border-slate-200 text-slate-600 hover:text-slate-900 hover:bg-slate-100'
             }`}
           >
             <X className="h-5 w-5" />
@@ -73,7 +73,7 @@ export default function ThemeCustomizerModal({ isOpen, onClose }: ThemeCustomize
           {/* Section 1: Appearance Mode */}
           <div>
             <label className={`block text-xs font-bold uppercase tracking-wider mb-3 ${
-              isDark ? 'text-slate-400' : 'text-slate-500'
+              isDark ? 'text-slate-400' : 'text-slate-600'
             }`}>
               Appearance Mode
             </label>
@@ -130,7 +130,7 @@ export default function ThemeCustomizerModal({ isOpen, onClose }: ThemeCustomize
                       </span>
                     )}
                   </div>
-                  <p className={`text-xs mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-500'}`}>
+                  <p className={`text-xs mt-0.5 ${isDark ? 'text-slate-400' : 'text-slate-600'}`}>
                     Crisp Gold Layout for Day Use
                   </p>
                 </div>
@@ -148,7 +148,7 @@ export default function ThemeCustomizerModal({ isOpen, onClose }: ThemeCustomize
               </div>
               <div>
                 <p className="font-bold text-sm">Active Theme: Amber Gold</p>
-                <p className="text-xs opacity-80">Warm Sunfire Amber & Orange Accent System</p>
+                <p className="text-xs opacity-85">Warm Sunfire Amber & Orange Accent System</p>
               </div>
             </div>
             <span className={`px-2.5 py-1 text-xs font-bold rounded-lg border ${currentStyles.badge}`}>
@@ -161,7 +161,7 @@ export default function ThemeCustomizerModal({ isOpen, onClose }: ThemeCustomize
             isDark ? 'bg-slate-950/80 border-slate-800' : 'bg-slate-50 border-slate-200'
           }`}>
             <label className={`block text-[11px] font-bold uppercase tracking-wider mb-2.5 ${
-              isDark ? 'text-slate-400' : 'text-slate-500'
+              isDark ? 'text-slate-400' : 'text-slate-600'
             }`}>
               Live Interface Preview
             </label>
